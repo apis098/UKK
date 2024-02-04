@@ -38,16 +38,11 @@
                         </div>
                         <div class="login-right">
 							<div class="login-right-wrap">
-								<h1>Sign Up</h1>
-								<p class="account-subtitle">Enter details to create your account</p>
+								<h1>Daftar</h1>
+								<p class="account-subtitle">Masukkan kridensial untuk membuat akun</p>
 								
 								<!-- Form -->
 								<form action="https://preschool.dreamstechnologies.com/template/login.html">
-									<div class="form-group">
-										<label >Username <span class="login-danger">*</span></label>
-										<input class="form-control" type="text" >
-										<span class="profile-views"><i class="fas fa-user-circle"></i></span>
-									</div>
 									<div class="form-group">
 										<label >Email <span class="login-danger">*</span></label>
 										<input class="form-control" type="text" >
@@ -59,7 +54,7 @@
 										<span class="profile-views feather-eye toggle-password"></span>
 									</div>
 									<div class="form-group">
-										<label >Confirm password <span class="login-danger">*</span></label>
+										<label >Konfirmasi password <span class="login-danger">*</span></label>
 										<input class="form-control pass-confirm" type="text" >
 										<span class="profile-views feather-eye reg-toggle-password"></span>
 									</div>
@@ -72,15 +67,12 @@
 								
 								<div class="login-or">
 									<span class="or-line"></span>
-									<span class="span-or">or</span>
+									<span class="span-or">Atau</span>
 								</div>
 								
 								<!-- Social Login -->
-								<div class="social-login">
-									<a href="#" ><i class="fab fa-google-plus-g"></i></a>
-									<a href="#" ><i class="fab fa-facebook-f"></i></a>
-									<a href="#" ><i class="fab fa-twitter"></i></a>
-									<a href="#" ><i class="fab fa-linkedin-in"></i></a>
+								<div class="text-center">
+									<a href="{{route('redirect.google')}}" class="btn btn-primary btn-block" >Lanjutkan Dengan Google <i class="fab fa-google-plus-g"></i></a>
 								</div>
 								<!-- /Social Login -->
 								
