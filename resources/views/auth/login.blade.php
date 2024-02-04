@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password <span class="login-danger">*</span></label>
-                                    <input class="form-control pass-input" type="text" name="password" id="password">
+                                    <input class="form-control pass-input" type="password" name="password" id="password">
                                     <span class="profile-views feather-eye toggle-password"></span>
                                 </div>
                                 <div class="forgotpass">
@@ -90,8 +90,8 @@
 
                             <!-- Social Login -->
                             <div class="text-center">
-                                <a href="{{ route('redirect.google') }}" class="btn btn-primary btn-block">Lanjutkan
-                                    Dengan Google <i class="fab fa-google-plus-g"></i></a>
+                                <a href="{{ route('redirect.google') }}" class="btn btn-primary btn-block"> <i class="fab fa-google"></i> Lanjutkan
+                                    Dengan Google</a>
                             </div>
                             <!-- /Social Login -->
 

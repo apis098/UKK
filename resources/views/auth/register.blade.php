@@ -42,20 +42,26 @@
 								<p class="account-subtitle">Masukkan kridensial untuk membuat akun</p>
 								
 								<!-- Form -->
-								<form action="https://preschool.dreamstechnologies.com/template/login.html">
+								<form action="{{route('register')}}" method="POST">
+									@csrf
+									<div class="form-group">
+										<label >Username <span class="login-danger">*</span></label>
+										<input class="form-control" name="name" id="name" type="text" >
+										<span class="profile-views"><i class="fas fa-solid fa-user"></i></span>
+									</div>
 									<div class="form-group">
 										<label >Email <span class="login-danger">*</span></label>
-										<input class="form-control" type="text" >
+										<input class="form-control" name="email" id="email" type="text" >
 										<span class="profile-views"><i class="fas fa-envelope"></i></span>
 									</div>
 									<div class="form-group">
 										<label >Password <span class="login-danger">*</span></label>
-										<input class="form-control pass-input" type="text" >
+										<input class="form-control pass-input" name="password" type="password" >
 										<span class="profile-views feather-eye toggle-password"></span>
 									</div>
 									<div class="form-group">
 										<label >Konfirmasi password <span class="login-danger">*</span></label>
-										<input class="form-control pass-confirm" type="text" >
+										<input class="form-control pass-confirm" name="password_confirmation" id="password_confirmation" type="password" >
 										<span class="profile-views feather-eye reg-toggle-password"></span>
 									</div>
 									<div class=" dont-have">Already Registered?  <a href="/login">Login</a></div>
@@ -72,7 +78,7 @@
 								
 								<!-- Social Login -->
 								<div class="text-center">
-									<a href="{{route('redirect.google')}}" class="btn btn-primary btn-block" >Lanjutkan Dengan Google <i class="fab fa-google-plus-g"></i></a>
+									<a href="{{route('redirect.google')}}" class="btn btn-primary btn-block" > <i class="fab fa-google"></i> Lanjutkan Dengan Google</a>
 								</div>
 								<!-- /Social Login -->
 								
