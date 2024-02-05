@@ -135,11 +135,16 @@
         <li class="nav-item dropdown has-arrow new-user-menus">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <div class="user-img">
-                    <img class="rounded-circle" src="{{ asset('/img/profiles/avatar-01.jpg') }}" width="31"
-                        alt="Ryan Taylor">
+                    @if(Auth::user()->foto != null && Auth::user()->google_id == 1)
+                        <img class="rounded-circle" src="{{auth()->user()->foto}}" width="31" alt="profile">
+                    @elseif(Auth::user()->foto != null && Auth::user()->google_id == 0)
+                        <img class="rounded-circle" src="{{ asset('/storage'. auth()->user()->foto) }}" width="31" alt="Ryan Taylor">
+                    @else
+                        <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31" alt="Ryan Taylor">
+                    @endif
                     <div class="user-text">
-                        <h6>Ryan Taylor</h6>
-                        <p class="text-muted mb-0">Administrator</p>
+                        <h6>{{auth()->user()->name}}</h6>
+                        <p class="text-muted mb-0">{{auth()->user()->role}}</p>
                     </div>
                 </div>
             </a>
