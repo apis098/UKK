@@ -61,4 +61,9 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Email atau Password Salah')->withInput();
         }
     }
+    
+    public function showLoginForm()
+    {
+        return view('auth.login'); // Ganti 'auth.login' dengan nama view yang sesuai.
+    }
 }

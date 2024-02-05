@@ -15,14 +15,20 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::middleware('auth')->group(function(){
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 Route::get('/', function () {
-    return view('auth.login');
+   if(Auth::check()){
+        return redirect('/home');
+   }else{
+        return view('auth.login');
+   }
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/auth/redirect',[SocialiteController::class,'redirectGoogle'])->name('redirect.google');
 Route::get('/google/redirect',[SocialiteController::class,'googleCallback'])->name('google.callback');
 Route::post('login/action',[LoginController::class, 'actionlogin'])->name('loginAction');
