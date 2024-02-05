@@ -34,7 +34,7 @@
             	<div class="container">
                 	<div class="loginbox">
                     	<div class="login-left">
-							<img class="img-fluid" src="{{asset('/img/login.png')}}" alt="Logo">
+							<img class="img-fluid" src="{{ asset('/img/login2.png') }}" alt="Logo">
                         </div>
                         <div class="login-right">
 							<div class="login-right-wrap">
