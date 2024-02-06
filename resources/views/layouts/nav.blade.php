@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="header-left ">
         <a href="index.html" class="logo">
-            <img class="ms-5" src="{{ asset('/img/logo.png') }}"  alt="Logo">
+            <img class="ms-4" src="{{ asset('/img/logo.png') }}"  alt="Logo">
         </a>
         <a href="index.html" class="logo logo-small">
             <img src="{{ asset('/img/logo-small.png') }}" alt="Logo" width="30" height="30">

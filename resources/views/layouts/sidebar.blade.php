@@ -6,64 +6,26 @@
                 <li class="menu-title">
                     <span>Main Menu</span>
                 </li>
-                <li class="submenu active">
-                    <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="index.html" class="active">Admin Dashboard</a></li>
-                        <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
-                        <li><a href="student-dashboard.html">Student Dashboard</a></li>
-                    </ul>
+                <li class="submenu {{request()->is('home') ? 'active' : ''}}">
+                    <a href="#"><i class="fa-solid fa-house"></i> <span> Beranda</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="students.html">Student List</a></li>
-                        <li><a href="student-details.html">Student View</a></li>
-                        <li><a href="add-student.html">Student Add</a></li>
-                        <li><a href="edit-student.html">Student Edit</a></li>
-                    </ul>
+                    <a href="#"><i class="fa-solid fa-book-bookmark"></i> <span> Materi</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="teachers.html">Teacher List</a></li>
-                        <li><a href="teacher-details.html">Teacher View</a></li>
-                        <li><a href="add-teacher.html">Teacher Add</a></li>
-                        <li><a href="edit-teacher.html">Teacher Edit</a></li>
-                    </ul>
+                    <a href="#"><i class="fa-solid fa-clipboard-list"></i><span> Tugas</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="departments.html">Department List</a></li>
-                        <li><a href="add-department.html">Department Add</a></li>
-                        <li><a href="edit-department.html">Department Edit</a></li>
-                    </ul>
+                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Murid</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="subjects.html">Subject List</a></li>
-                        <li><a href="add-subject.html">Subject Add</a></li>
-                        <li><a href="edit-subject.html">Subject Edit</a></li>
-                    </ul>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M1.637 1.637C.732 1.637 0 2.369 0 3.273v17.454c0 .904.732 1.636 1.637 1.636h20.726c.905 0 1.637-.732 1.637-1.636V3.273c0-.904-.732-1.636-1.637-1.636zm.545 2.181h19.636v16.364h-2.726v-1.09h-4.91v1.09h-12zM12 8.182a1.636 1.636 0 1 0 0 3.273a1.636 1.636 0 1 0 0-3.273m-4.363 1.91c-.678 0-1.229.55-1.229 1.226a1.228 1.228 0 0 0 2.455 0c0-.677-.549-1.226-1.226-1.226m8.726 0a1.227 1.227 0 1 0 0 2.453a1.227 1.227 0 0 0 0-2.453M12 12.545c-1.179 0-2.413.401-3.148 1.006a4.136 4.136 0 0 0-1.215-.188c-1.314 0-2.729.695-2.729 1.559v.896h14.184v-.896c0-.864-1.415-1.559-2.729-1.559c-.41 0-.83.068-1.215.188c-.735-.605-1.969-1.006-3.148-1.006"/></svg> 
+                        <span> Kelas</span>
+                    </a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-clipboard"></i> <span> Invoices</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="invoices.html">Invoices List</a></li>
-                        <li><a href="invoice-grid.html">Invoices Grid</a></li>
-                        <li><a href="add-invoice.html">Add Invoices</a></li>
-                        <li><a href="edit-invoice.html">Edit Invoices</a></li>
-                        <li><a href="view-invoice.html">Invoices Details</a></li>
-                        <li><a href="invoices-settings.html">Invoices Settings</a></li>
-                    </ul>
+                    <a href="#"><i class="fa-solid fa-person-chalkboard"></i> <span> Mata Pelajaran</span></a>
                 </li>
                 <li class="menu-title">
                     <span>Management</span>

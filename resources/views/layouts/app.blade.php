@@ -40,6 +40,7 @@
         @include('layouts.nav')
         @include('layouts.sidebar')
         @yield('content')
+        @include('layouts.modal')
     </div>
     <!-- /Main Wrapper -->
 
@@ -57,7 +58,6 @@
 	<script src="{{asset('/plugins/apexchart/apexcharts.min.js')}}"></script>
 	<script src="{{asset('/plugins/apexchart/chart-data.js')}}"></script>
     <!-- Custom JS -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script src="{{ asset('/js/script.js') }}"></script>
     <script>
         @if (session('success'))

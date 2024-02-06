@@ -13,10 +13,8 @@
                     </ul>
                 </div>
                 <div class="col-md-3 text-md-end">
-                    <a data-bs-toggle="modal" data-bs-target="#add-class-modal" class="btn btn-primary btn-blog mb-3">
-						<i class="feather-plus-circle me-1"></i>
-                        Tambah kelas
-					</a>
+                    <a href="add-blog.html" class="btn btn-primary btn-blog mb-3"><i class="feather-plus-circle me-1"></i>
+                        Add New</a>
                 </div>
             </div>
 
