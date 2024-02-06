@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('room')->nullable();
             $table->string('user_id');
             $table->string('image')->nullable();
+            $table->string('code')->default(Str::random(10));
             $table->timestamps();
         });
     }

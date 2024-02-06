@@ -28,7 +28,7 @@ Route::post('login/action',[LoginController::class, 'actionlogin'])->name('login
 
 Route::middleware('auth')->group(function(){
      Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+     Route::get('/completeness',[HomeController::class,'completeness'])->name('completeness.index');
      // Kelas
      Route::resource('classes',ClassesController::class);
  });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,9 @@ class HomeController extends Controller
         if(auth()->user()->role == 'student'){
             return view('student.home');
         }else{
-            return view('theacer.home');
+            $classes = Classes::where('user_id',auth()->user()->id)->paginate(6);
+            // dd($classes);
+            return view('theacer.home',compact('classes'));
         }
     }
     public function welcome(){
@@ -36,5 +39,8 @@ class HomeController extends Controller
        }else{
             return view('auth.login');
        }
+    }
+    public function completeness(){
+        return view('complete');
     }
 }

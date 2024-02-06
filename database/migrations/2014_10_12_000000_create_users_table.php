@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->integer('google_id')->nullable();
             $table->string('foto')->nullable();
+            $table->integer('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('institute')->default('-');
+            $table->string('user_code')->default(Str::random(10));
             $table->rememberToken();
             $table->timestamps();
         });

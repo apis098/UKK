@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="col-md-9">
                     <ul class="list-links mb-4">
-                        <li class="active"><a href="blog.html">Active Blog</a></li>
-                        <li><a href="pending-blog.html">Pending Blog</a></li>
+                        <li class="active"><a href="blog.html">Kelas aktif</a></li>
+                        <li><a href="pending-blog.html">Kelas nonaktif</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 text-md-end">
@@ -21,12 +21,12 @@
             </div>
 
             <div class="row">
-
+                @foreach($classes as $row)
                 <!-- Blog Post -->
                 <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                     <div class="blog grid-blog flex-fill">
                         <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/class1.jpg')}}"
+                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/'.$row->image)}}"
                                     alt="Post Image"></a>
                             <div class="blog-views">
                                 <i class="feather-eye me-1"></i> 225
@@ -38,18 +38,23 @@
                                 <li>
                                     <div class="post-author">
                                         <a href="profile.html">
-                                            <img src="{{asset('/img/profiles/avatar-01.jpg')}}" alt="Post Author">
+                                            @if($row->user->google_id != null)
+                                                <img src="{{$row->user->foto}}" alt="3">
+                                            @elseif($row->user->foto != null && $row->google_id == null)
+                                                <img src="{{asset('storage/profile'.$row->user->foto)}}" alt="1">
+                                            @else
+                                                <img src="{{asset('img/male.jpg')}}" alt="2">
+                                            @endif
                                             <span>
-                                                <span class="post-title">Vincent</span>
-                                                <span class="post-date"><i class="far fa-clock"></i> 4 Dec 2022</span>
+                                                <span class="post-title">{{$row->user->name}}</span>
+                                                <span class="post-date"><i class="far fa-clock"></i> {{ \Carbon\Carbon::parse($row->created_at)->locale('id_ID')->diffForHumans() }}</span>
                                             </span>
                                         </a>
                                     </div>
                                 </li>
-                            </ul>th
-                            <h3 class="blog-title"><a href="blog-details.html">Learning is an objective, Lorem Ipsum is not
-                                </a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
+                            </ul>
+                            <h3 class="blog-title"><a href="blog-details.html">{{$row->name}}</a></h3>
+                            <p>{{$row->lesson}}</p>
                         </div>
                         <div class="row">
                             <div class="edit-options">
@@ -69,246 +74,7 @@
                     </div>
                 </div>
                 <!-- /Blog Post -->
-
-                <!-- Blog Post -->
-                <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
-                    <div class="blog grid-blog flex-fill">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/class2.jpg')}}"
-                                    alt="Post Image"></a>
-                            <div class="blog-views">
-                                <i class="feather-eye me-1"></i> 132
-                            </div>
-
-                        </div>
-                        <div class="blog-content">
-                            <ul class="entry-meta meta-item">
-                                <li>
-                                    <div class="post-author">
-                                        <a href="profile.html">
-                                            <img src="{{asset('/img/profiles/avatar-02.jpg')}}" alt="Post Author">
-                                            <span>
-                                                <span class="post-title">Lois A</span>
-                                                <span class="post-date"><i class="far fa-clock"></i> 4 Dec 2022</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title"><a href="blog-details.html">Discussion Increase student learning</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-                        </div>
-                        <div class="row">
-                            <div class="edit-options">
-                                <div class= "edit-delete-btn">
-                                    <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
-                                        Edit</a>
-                                    <a href="edit-blog.html" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i></i> Delete</a>
-                                </div>
-                                <div class="text-end inactive-style">
-                                    <a href="javascript:void(0);" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteNotConfirmModal"><i class="feather-eye-off me-1"></i>
-                                        Inactive</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Blog Post -->
-
-                <!-- Blog Post -->
-                <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
-                    <div class="blog grid-blog flex-fill">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/class3.jpg')}}"
-                                    alt="Post Image"></a>
-                            <div class="blog-views">
-                                <i class="feather-eye me-1"></i> 344
-                            </div>
-
-                        </div>
-                        <div class="blog-content">
-                            <ul class="entry-meta meta-item">
-                                <li>
-                                    <div class="post-author">
-                                        <a href="profile.html">
-                                            <img src="{{asset('/img/profiles/avatar-03.jpg')}}" alt="Post Author">
-                                            <span>
-                                                <span class="post-title">Levell Scott</span>
-                                                <span class="post-date"><i class="far fa-clock"></i> 4 Dec 2022</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title"><a href="blog-details.html">Music reduces stress,Lorem Ipsum is not
-                                </a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-                        </div>
-                        <div class="row">
-                            <div class="edit-options">
-                                <div class= "edit-delete-btn">
-                                    <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
-                                        Edit</a>
-                                    <a href="edit-blog.html" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i></i> Delete</a>
-                                </div>
-                                <div class="text-end inactive-style">
-                                    <a href="javascript:void(0);" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteNotConfirmModal"><i class="feather-eye-off me-1"></i>
-                                        Inactive</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Blog Post -->
-
-                <!-- Blog Post -->
-                <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
-                    <div class="blog grid-blog flex-fill">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/class4.jpg')}}"
-                                    alt="Post Image"></a>
-                            <div class="blog-views">
-                                <i class="feather-eye me-1"></i> 215
-                            </div>
-
-                        </div>
-                        <div class="blog-content">
-                            <ul class="entry-meta meta-item">
-                                <li>
-                                    <div class="post-author">
-                                        <a href="profile.html">
-                                            <img src="{{asset('/img/profiles/avatar-04.jpg')}}" alt="Post Author">
-                                            <span>
-                                                <span class="post-title">Calvin</span>
-                                                <span class="post-date"><i class="far fa-clock"></i> 4 Dec 2022</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title"><a href="blog-details.html">Sports reduced risk of obesity, Lorem Ipsum
-                                    is not </a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-                        </div>
-                        <div class="row">
-                            <div class="edit-options">
-                                <div class= "edit-delete-btn">
-                                    <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
-                                        Edit</a>
-                                    <a href="edit-blog.html" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i></i> Delete</a>
-                                </div>
-                                <div class="text-end inactive-style">
-                                    <a href="javascript:void(0);" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteNotConfirmModal"><i class="feather-eye-off me-1"></i>
-                                        Inactive</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Blog Post -->
-
-                <!-- Blog Post -->
-                <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
-                    <div class="blog grid-blog flex-fill">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/class5.jpg')}}"
-                                    alt="Post Image"></a>
-                            <div class="blog-views">
-                                <i class="feather-eye me-1"></i> 285
-                            </div>
-
-                        </div>
-                        <div class="blog-content">
-                            <ul class="entry-meta meta-item">
-                                <li>
-                                    <div class="post-author">
-                                        <a href="profile.html">
-                                            <img src="{{asset('/img/profiles/avatar-05.jpg')}}" alt="Post Author">
-                                            <span>
-                                                <span class="post-title">Aaliyah </span>
-                                                <span class="post-date"><i class="far fa-clock"></i> 4 Dec 2022</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title"><a href="blog-details.html">Yoga can ease arthritis symptoms</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-                        </div>
-                        <div class="row">
-                            <div class="edit-options">
-                                <div class= "edit-delete-btn">
-                                    <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
-                                        Edit</a>
-                                    <a href="edit-blog.html" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i></i> Delete</a>
-                                </div>
-                                <div class="text-end inactive-style">
-                                    <a href="javascript:void(0);" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteNotConfirmModal"><i class="feather-eye-off me-1"></i>
-                                        Inactive</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Blog Post -->
-
-                <!-- Blog Post -->
-                <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
-                    <div class="blog grid-blog flex-fill">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="{{asset('/img/class6.jpg')}}"
-                                    alt="Post Image"></a>
-                            <div class="blog-views">
-                                <i class="feather-eye me-1"></i> 654
-                            </div>
-
-                        </div>
-                        <div class="blog-content">
-                            <ul class="entry-meta meta-item">
-                                <li>
-                                    <div class="post-author">
-                                        <a href="profile.html">
-                                            <img src="{{asset('/img/profiles/avatar-06.jpg')}}" alt="Post Author">
-                                            <span>
-                                                <span class="post-title">Malynne</span>
-                                                <span class="post-date"><i class="far fa-clock"></i> 4 Dec 2022</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title"><a href="blog-details.html">Education gives Greater Sense of
-                                    Disciplinet</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-                        </div>
-                        <div class="row">
-                            <div class="edit-options">
-                                <div class= "edit-delete-btn">
-                                    <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
-                                        Edit</a>
-                                    <a href="edit-blog.html" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i> Delete</a>
-                                </div>
-                                <div class="text-end inactive-style">
-                                    <a href="javascript:void(0);" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteNotConfirmModal"><i class="feather-eye-off me-1"></i>
-                                        Inactive</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Blog Post -->
-
-
+                @endforeach
             </div>
             <!-- Pagination -->
             <div class="row ">
