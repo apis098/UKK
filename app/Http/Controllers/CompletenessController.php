@@ -14,7 +14,11 @@ class CompletenessController extends Controller
     public function index()
     {   
         $user = Auth::user();
-        return view('complete');
+        if($user->role!='student' && $user->role!='theacer'){
+            return view('complete');
+        }else{
+            return redirect('/home');
+        }
     }
 
     /**
@@ -30,10 +34,16 @@ class CompletenessController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // $imageinpu = $request->file('gambar');
+        // $namaFile = time() . '.' . $gambar->getClientOriginalExtension();
+        // $gambar->storeAs('public/gambar', $namaFile);
         $user = User::findOrFail(auth()->user()->id);
         $user->name = $request->name;
         $user->dateofbirth = $request->dateofbirth;
+        $user->gender = $request->gender;
+        $user->role = $request->role;
+        $user->save();
+        return redirect('home')->with('success','Selamat! data diri anda sudah terkirim. Silahkan nikmati fitur yang kami sediakan');
     }
 
     /**

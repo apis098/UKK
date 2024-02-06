@@ -29,7 +29,6 @@ class HomeController extends Controller
             return view('student.home');
         }elseif(auth()->user()->role == 'theacer'){
             $classes = Classes::where('user_id',auth()->user()->id)->paginate(6);
-            // dd($classes);
             return view('theacer.home',compact('classes'));
         }else{
             return redirect()->route('completeness.index');

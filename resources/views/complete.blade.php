@@ -41,7 +41,7 @@
                                     </li>
                                 </ul>
                                 <!-- wizard-nav -->
-                                <form onsubmit="return validateForm()" id="myForm" action="{{route('completeness.store')}}" method="POST">
+                                <form id="myForm" action="{{route('completeness.store')}}" method="POST">
                                     @csrf
                                     <div class="tab-content twitter-bs-wizard-tab-content">
                                         <div class="tab-pane active" id="seller-details">
@@ -54,8 +54,7 @@
                                                         <label for="basicpill-firstname-input" class="form-label">Nama
                                                             lengkap <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <input type="text" class="form-control" name="name"
-                                                            id="basicpill-firstname-input">
+                                                        <input type="text" class="form-control" name="name">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -63,8 +62,7 @@
                                                         <label for="basicpill-lastname-input" class="form-label">Tanggal
                                                             lahir <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <input type="date" class="form-control" name="dateofbirth"
-                                                            id="basicpill-lastname-input">
+                                                        <input type="date" class="form-control" name="dateofbirth">
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,7 +73,7 @@
                                                         <label for="basicpill-phoneno-input" class="form-label">Jenis
                                                             Kelamin <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <select class="form-control form-select" name="gender"id="basicpill-phoneno-input">
+                                                        <select class="form-control form-select" name="gender">
                                                             <option value="male">Laki-laki</option>
                                                             <option value="famale">Perempuan</option>
                                                         </select>
@@ -86,12 +84,20 @@
                                                         <label for="basicpill-email-input" class="form-label">Nama Instansi
                                                             <span class="text-danger">*</span><small
                                                                 class="text-secondary">opsional</small></label>
-                                                        <input type="email" class="form-control"
-                                                            id="basicpill-email-input">
+                                                        <input type="text" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="basicpill-email-input" class="form-label">Foto Profile
+                                                            <span class="text-danger">*</span><small
+                                                                class="text-secondary">opsional</small></label>
+                                                        <input type="file" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <ul class="pager wizard twitter-bs-wizard-pager-link">
                                                 <li class="next"><a href="javascript: void(0);"
                                                         class="btn btn-primary seller-next-btn">Selanjutnya <i
@@ -107,9 +113,9 @@
                                                 <div class="row">
                                                     <div class="radio-tile-group">
                                                         <div class="input-container">
-                                                            <input id="walk" class="radio-button" type="radio"
-                                                                name="radio" />
-                                                            <div class="radio-tile">
+                                                            <input id="walk" class="radio-button" value="theacer" type="radio"
+                                                                name="role" />
+                                                            <div for="walk" class="radio-tile">
                                                                 <div class="icon walk-icon">
                                                                     <svg class="radio-tile-label"
                                                                         xmlns="http://www.w3.org/2000/svg" width="24"
@@ -118,15 +124,14 @@
                                                                             d="M12 2q1.25 0 2.125.875T15 5q0 1.25-.875 2.125T12 8q-1.25 0-2.125-.875T9 5q0-1.25.875-2.125T12 2m0 7q1.175 0 2.325.275t2.075.775q.95.475 1.525 1.125T18.5 12.6v5.8q0 .425-.2.838t-.55.762q-.35.35-.812.65t-1.038.55v-2.25q0-.95-1.312-1.55T12 16.8q-1.25 0-2.412.513T8.15 18.65q.95.375 1.95.525t2.05.175H13v2.6q-.175.05-.362.05h-.388q-.9 0-2.062-.2t-2.213-.625q-1.05-.425-1.762-1.112T5.5 18.4v-5.8q0-.775.575-1.425t1.5-1.125q.95-.5 2.1-.775T12 9m0 6q.825 0 1.413-.587T14 13q0-.825-.587-1.412T12 11q-.825 0-1.412.588T10 13q0 .825.588 1.413T12 15" />
                                                                     </svg>
                                                                 </div>
-                                                                <label for="walk"
-                                                                    class="radio-tile-label">Pengajar</label>
+                                                                <h4 class="radio-tile-label">Pengajar</h4>
                                                             </div>
                                                         </div>
 
                                                         <div class="input-container">
-                                                            <input id="bike" class="radio-button" type="radio"
-                                                                name="radio" />
-                                                            <div class="radio-tile">
+                                                            <input id="bike" class="radio-button" value="student" type="radio"
+                                                                name="role" />
+                                                            <label for="bike" class="radio-tile">
                                                                 <div class="icon bike-icon ">
                                                                     <svg class="radio-tile-label"
                                                                         xmlns="http://www.w3.org/2000/svg" width="24"
@@ -135,9 +140,8 @@
                                                                             d="M3 23q-.425 0-.712-.288T2 22q0-.425.288-.712T3 21h18q.425 0 .713.288T22 22q0 .425-.288.713T21 23zm2-3q-.425 0-.712-.288T4 19v-5q-.825-1.35-1.275-2.863t-.45-3.087q0-1.525.388-3t.912-2.9q.2-.525.65-.837t1-.313Q6 1 6.55 1.525T7 2.775L6.725 5.05q-.15 1.2.213 2.275t1.087 1.887q.725.813 1.75 1.3T12 11q1.5 0 3.013.313t2.637.887q1.125.575 1.738 1.463T20 15.85V19q0 .425-.288.713T19 20zm1-2h12v-2.15q0-.6-.3-1.062t-.85-.738q-1.025-.5-2.375-.775T12 13q-1.65 0-3.062-.675t-2.4-1.812Q5.55 9.375 5.05 7.887T4.75 4.8q-.25.75-.363 1.6t-.112 1.65q0 1.45.513 2.788T6 13.45zm6-8q-1.65 0-2.825-1.175T8 6q0-1.65 1.175-2.825T12 2q1.65 0 2.825 1.175T16 6q0 1.65-1.175 2.825T12 10m0-2q.825 0 1.413-.587T14 6q0-.825-.587-1.412T12 4q-.825 0-1.412.588T10 6q0 .825.588 1.413T12 8M8 20v-.925Q8 17.4 9.163 16.2T12 15h3q.425 0 .713.288T16 16q0 .425-.288.713T15 17h-3q-.85 0-1.425.613T10 19.075V20zm4-14" />
                                                                     </svg>
                                                                 </div>
-                                                                <label for="bike"
-                                                                    class="radio-tile-label">Murid</label>
-                                                            </div>
+                                                                <h4 class="radio-tile-label">Murid</h4>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -280,7 +284,7 @@
                                                     <li class="previous"><a href="javascript: void(0);"
                                                             class="btn btn-secondary seller-previous-btn"><i
                                                                 class="fa-solid fa-arrow-left"></i> Previous</a></li>
-                                                    <li class="float-end"><button type="submit"
+                                                    <li class="float-end"><button type="button" onclick="validateForm()"
                                                             class="btn btn-primary"><i
                                                                 class="fa-solid fa-floppy-disk"></i> Simpan</button></li>
                                                 </ul>
@@ -305,13 +309,13 @@
         function validateForm() {
             const checkbox = document.getElementById('kebijakanPrivasi');
             const errorDiv = document.getElementById('kebijakanPrivasiError');
-
+            const form = document.getElementById('myForm');
             if (!checkbox.checked) {
                 errorDiv.textContent = 'Anda harus menyetujui kebijakan privasi';
                 return false;
             } else {
                 errorDiv.textContent = '';
-                return true;
+                form.submit();
             }
         }
     </script>

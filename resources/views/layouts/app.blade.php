@@ -28,11 +28,10 @@
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="{{ asset('/plugins/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/plugins/fontawesome/css/all.min.css') }}">
-
+     <!-- Wizard CSS -->
+    <link rel="stylesheet" href="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.css') }}">
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
-    <!-- Wizard CSS -->
-    <link rel="stylesheet" href="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.css') }}">
     {{-- izitoast --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
