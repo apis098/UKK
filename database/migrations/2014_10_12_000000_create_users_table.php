@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->integer('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('dateofbirth')->nullable();
             $table->string('gender')->nullable();
             $table->string('institute')->default('-');
             $table->string('user_code')->default(Str::random(10));

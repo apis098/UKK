@@ -29,6 +29,10 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+    {{-- izitoast --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    {{-- end izitoast --}}
 </head>
 
 <body>
@@ -47,7 +51,7 @@
                             <p class="account-subtitle">Masukkan kridensial untuk membuat akun</p>
 
                             <!-- Form -->
-                            <form action="{{ route('register') }}" method="POST">
+                            <form action="{{ route('register.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label>Username <span class="login-danger">*</span></label>
@@ -107,7 +111,29 @@
 
     <!-- Custom JS -->
     <script src="{{ asset('/js/script.js') }}"></script>
-
+    <script>
+        @if (session('success'))
+            iziToast.success({
+                title: 'Sukses',
+                message: '{{ session('success') }}',
+                position: 'topCenter'
+            });
+        @endif
+        @if ($errors->any())
+            iziToast.error({
+                title: 'Gagal',
+                message: '{{ $errors->first() }}',
+                position: 'topCenter'
+            });
+        @endif
+        @if (session('error'))
+            iziToast.error({
+                title: 'Gagal',
+                message: '{{ session('error') }}',
+                position: 'topCenter'
+            });
+        @endif
+    </script>
 </body>
 
 <!-- Mirrored from preschool.dreamstechnologies.com/template/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Feb 2024 17:10:51 GMT -->

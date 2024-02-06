@@ -41,7 +41,8 @@
                                     </li>
                                 </ul>
                                 <!-- wizard-nav -->
-                                <form onsubmit="return validateForm()" id="myForm" action="#">
+                                <form onsubmit="return validateForm()" id="myForm" action="{{route('completeness.store')}}" method="POST">
+                                    @csrf
                                     <div class="tab-content twitter-bs-wizard-tab-content">
                                         <div class="tab-pane active" id="seller-details">
                                             <div class="mb-4">
@@ -74,8 +75,10 @@
                                                         <label for="basicpill-phoneno-input" class="form-label">Jenis
                                                             Kelamin <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <input type="text" class="form-control" name="Gender"
-                                                            id="basicpill-phoneno-input">
+                                                        <select class="form-control form-select" name="gender"id="basicpill-phoneno-input">
+                                                            <option value="male">Laki-laki</option>
+                                                            <option value="famale">Perempuan</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -265,16 +268,21 @@
                                                 <div class="d-flex gap-2 pl-2 mt-3 mb-2">
                                                     <input class="form-check-input" type="checkbox" value=""
                                                         name="kebijakanPrivasi" id="kebijakanPrivasi">
-                                                    <label for="kebijakanPrivasi" type="button" class="form-check-label">
-                                                        <i>Dengan ini saya menyatakan bahwa saya telah membaca, memahami, dan menyetujui kebijakan privasi dari <span class="text-primary">Educlass</span>.</i>
+                                                    <label for="kebijakanPrivasi" type="button"
+                                                        class="form-check-label">
+                                                        <i>Dengan ini saya menyatakan bahwa saya telah membaca, memahami,
+                                                            dan menyetujui kebijakan privasi dari <span
+                                                                class="text-primary">Educlass</span>.</i>
                                                     </label>
                                                 </div>
                                                 <div id="kebijakanPrivasiError" class="text-danger"></div>
                                                 <ul class="pager wizard twitter-bs-wizard-pager-link">
                                                     <li class="previous"><a href="javascript: void(0);"
-                                                            class="btn btn-secondary seller-previous-btn"><i class="fa-solid fa-arrow-left"></i> Previous</a></li>
+                                                            class="btn btn-secondary seller-previous-btn"><i
+                                                                class="fa-solid fa-arrow-left"></i> Previous</a></li>
                                                     <li class="float-end"><button type="submit"
-                                                            class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button></li>
+                                                            class="btn btn-primary"><i
+                                                                class="fa-solid fa-floppy-disk"></i> Simpan</button></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -300,10 +308,10 @@
 
             if (!checkbox.checked) {
                 errorDiv.textContent = 'Anda harus menyetujui kebijakan privasi';
-                return false; // Mencegah pengiriman form
+                return false;
             } else {
                 errorDiv.textContent = '';
-                return true; // Izinkan pengiriman form
+                return true;
             }
         }
     </script>

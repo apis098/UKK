@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -68,5 +69,26 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function store(Request $request){
+        $request->validate(
+        [
+            'email' => 'required|email|unique:users,email',
+            'name' => 'required',
+            'password' => 'required',
+            'password_confirmation' => 'same:password|required'
+        ],
+        [
+            'email.unique' => 'Email sudah digunakan',
+            'name.required' => 'Inputan nama harus di isi',
+            'password.required' => 'Inputan password harus di isi',
+            'password_confirmation.same' => 'Inputan password tidak sama', 
+        ]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect('/login')->with('success','Pendaftaran akun berhasil, silahkan login dihalaman ini');
     }
 }
