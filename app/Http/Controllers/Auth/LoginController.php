@@ -64,6 +64,13 @@ class LoginController extends Controller
     
     public function showLoginForm()
     {
-        return view('auth.login'); // Ganti 'auth.login' dengan nama view yang sesuai.
+        return view('auth.login');
+    }
+    public function home(){
+        if(Auth::check()){
+            return redirect('/home');
+       }else{
+            return view('auth.login');
+       }
     }
 }

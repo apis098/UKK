@@ -6,10 +6,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Preskool - Login</title>
+    <<title>{{config('app.name','Laravel')}}</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('/img/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('/img/logo-small.png') }}">
+
 
     <!-- Fontfamily -->
     <link

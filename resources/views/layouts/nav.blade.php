@@ -151,12 +151,17 @@
             <div class="dropdown-menu">
                 <div class="user-header">
                     <div class="avatar avatar-sm">
-                        <img src="{{ asset('/img/profiles/avatar-01.jpg') }}" alt="User Image"
-                            class="avatar-img rounded-circle">
+                        @if(Auth::user()->foto != null && Auth::user()->google_id == 1)
+                            <img src="{{ auth()->user()->foto }}" alt="User Image"class="avatar-img rounded-circle">
+                        @elseif(Auth::user()->foto != null && Auth::user()->google_id == 0)
+                            <img src="{{ asset('/storage'.auth()->user()->foto) }}" alt="User Image"class="avatar-img rounded-circle">
+                        @else
+                            <img src="{{ asset('/img/male.jpg') }}" alt="User Image"class="avatar-img rounded-circle">
+                        @endif
                     </div>
                     <div class="user-text">
-                        <h6>Ryan Taylor</h6>
-                        <p class="text-muted mb-0">Administrator</p>
+                        <h6>{{auth()->user()->name}}</h6>
+                        <p class="text-muted mb-0">{{auth()->user()->role}}</p>
                     </div>
                 </div>
                 <a class="dropdown-item" href="profile.html">My Profile</a>
