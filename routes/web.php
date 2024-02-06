@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\CompletenessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ Route::post('login/action',[LoginController::class, 'actionlogin'])->name('login
 
 Route::middleware('auth')->group(function(){
      Route::get('/home', [HomeController::class, 'index'])->name('home');
-     Route::get('/completeness',[HomeController::class,'completeness'])->name('completeness.index');
-     // Kelas
+     // classes
      Route::resource('classes',ClassesController::class);
+    //  Completeness
+    Route::resource('completeness',CompletenessController::class);
  });

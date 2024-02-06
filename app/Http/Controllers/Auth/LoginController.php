@@ -56,7 +56,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($data)) {
             $user = Auth::user();
-            return redirect()->route('home')->with('success','berhasil login');
+            if($user->role != 'student' || $user->role != 'theacer'){
+                return redirect()->route('completeness.index');
+            }else{
+                return redirect()->route('home');
+            }
         } else {
             return redirect()->back()->with('error', 'Email atau Password Salah')->withInput();
         }

@@ -269,7 +269,7 @@
                                                         <i>Dengan ini saya menyatakan bahwa saya telah membaca, memahami, dan menyetujui kebijakan privasi dari <span class="text-primary">Educlass</span>.</i>
                                                     </label>
                                                 </div>
-                                                <div id="kebijakanPrivasiError" style="color: red;"></div>
+                                                <div id="kebijakanPrivasiError" class="text-danger"></div>
                                                 <ul class="pager wizard twitter-bs-wizard-pager-link">
                                                     <li class="previous"><a href="javascript: void(0);"
                                                             class="btn btn-secondary seller-previous-btn"><i class="fa-solid fa-arrow-left"></i> Previous</a></li>

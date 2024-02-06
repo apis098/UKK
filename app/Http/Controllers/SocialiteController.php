@@ -18,18 +18,26 @@ class SocialiteController extends Controller
         $data = User::Where('email', $googleUser->email)->first();
         if($data){
             Auth::login($data);
-            return redirect()->route('home');
+            if($data->role != 'student' || $data->role != 'theacer'){
+                return redirect()->route('completeness.index');
+            }else{
+                return redirect()->route('home');
+            }
         }else{
-            $data = User::create([
-                'name' => $googleUser->name,
-                'email'=> $googleUser->email,
-                'foto' => $picture,
-                'password'=>'default_password',
-                'google_id'=>1,
-                'role' => 'user',
-           ]);
-           Auth::login($data);
-           return redirect()->route('home');
+            $data = new User();
+            $data->name = $googleUser->name;
+            $data->email = $googleUser->email;
+            $data->foto = $picture;
+            $data->password = 'default_password';
+            $data->google_id = 1;
+            $data->role = 'user';
+            $data->save();
+            Auth::login($data);
+            if($data->role != 'student' || $data->role != 'theacer'){
+                return redirect()->route('completeness.index');
+            }else{
+                return redirect()->route('home');
+            }
         }
     }
 }

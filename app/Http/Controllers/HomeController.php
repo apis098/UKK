@@ -27,20 +27,24 @@ class HomeController extends Controller
     {
         if(auth()->user()->role == 'student'){
             return view('student.home');
-        }else{
+        }elseif(auth()->user()->role == 'theacer'){
             $classes = Classes::where('user_id',auth()->user()->id)->paginate(6);
             // dd($classes);
             return view('theacer.home',compact('classes'));
+        }else{
+            return redirect()->route('completeness.index');
         }
     }
     public function welcome(){
         if(Auth::check()){
-            return redirect('/home');
+            $data = Auth::User();
+            if($data->role != 'student' || $data->role != 'theacer'){
+                return redirect()->route('completeness.index');
+            }else{
+                return redirect()->route('home');
+            }
        }else{
             return view('auth.login');
        }
-    }
-    public function completeness(){
-        return view('complete');
     }
 }
