@@ -22,9 +22,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
+    public function index()
     {
-        return view('home');
+        if(auth()->user()->role == 'student'){
+            return view('student.home');
+        }else{
+            return view('theacer.home');
+        }
     }
-}
+    public function welcome(){
+        if(Auth::check()){
+            return redirect('/home');
+       }else{
+            return view('auth.login');
+       }
+    }
 }

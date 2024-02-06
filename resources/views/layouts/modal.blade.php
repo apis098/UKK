@@ -6,40 +6,39 @@
                 <div class="modal-body">
                     <div class="text-center mt-2 mb-4">
                         <div class="auth-logo">
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="#" class="logo logo-dark">
                                 <span class="logo-lg">
-                                    <img src="assets/img/logo.png" alt="" height="42">
+                                    <h5>Buat kelas</h5>
                                 </span>
                             </a>
                         </div>
                     </div>
 
-                    <form class="px-3" action="#">
-
+                    <form class="px-3" method="POST" action="{{route('classes.store')}}" enctype="multipart/form-data">
+                        @csrf
                         <div class="mb-3">
-                            <label for="username" class="form-label">Name</label>
-                            <input class="form-control" type="email" id="username" required="" placeholder="Michael Zenaty">
+                            <label for="name" class="form-label">Nama kelas (wajib diisi)</label>
+                            <input class="form-control" type="text" id="name" name="name" required="" placeholder="Masukkan nama kelas...">
                         </div>
 
                         <div class="mb-3">
-                            <label for="emailaddress" class="form-label">Email address</label>
-                            <input class="form-control" type="email" id="emailaddress" required="" placeholder="john@deo.com">
+                            <label for="part" class="form-label">Bagian</label>
+                            <input class="form-control" type="text" id="part" name="part" placeholder="Masukkan Bagian...">
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
+                            <label for="password" class="form-label">Mata Pelajaran</label>
+                            <input class="form-control" type="text" required="" id="lesson" name="lesson" placeholder="Masukkan Mata Pelajaran...">
                         </div>
 
                         <div class="mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                <label class="form-check-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
-                            </div> 
+                            <label for="password" class="form-label">Ruangan (opsional)</label>
+                            <input class="form-control" type="text" required="" id="room" name="room" placeholder="Masukkan Nama Ruangan...">
                         </div>
 
-                        <div class="mb-3 text-center">
-                            <button class="btn btn-primary" type="submit">Sign Up Free</button>
+                        <div class="mb-3 text-end">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Batal</button>
+                            <button class="btn btn-primary" type="submit">Tambahkan</button>
                         </div>
 
                     </form>
