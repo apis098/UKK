@@ -11,9 +11,10 @@ class PivotClass extends Model
     protected $table = 'pivotclass';
     protected $guarded = 'id';
     public function user(){
-        return $this->hasMany(User::class,'user_id');
+        return $this->hasMany(User::class,);
     }
     public function classes(){
-        return $this->hasMany(Classes::class,'class_id');
+        return $this->hasMany(Classes::class,);
     }
+
 }

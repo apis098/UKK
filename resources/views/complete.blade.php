@@ -54,7 +54,7 @@
                                                         <label for="basicpill-firstname-input" class="form-label">Nama
                                                             lengkap <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <input type="text" class="form-control"  name="name" value="{{old('name')}}">
+                                                        <input type="text" class="form-control"  name="name" value="{{auth()->user()->name}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">

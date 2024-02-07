@@ -1,4 +1,4 @@
-	<!-- Signup modal content -->
+	<!-- add class modal content -->
     <div id="add-class-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -41,6 +41,39 @@
                             <button class="btn btn-primary" type="submit">Tambahkan</button>
                         </div>
 
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="join-class-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <div class="auth-logo">
+                            <a href="#" class="logo logo-dark">
+                                <span class="logo-lg">
+                                    <h5>Gabung kelas</h5>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <form class="px-3" method="POST" action="{{route('join.class')}}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <div class="mb-2">
+                                <H5 class="form-label">Kode kelas</H5>
+                                <small class="text-secondary">Mintalah kode kelas kepada pengajar, lalu masukkan kode disini</small>
+                            </div>
+                            <input class="form-control" type="text" id="code" name="code" required="" placeholder="Kode kelas...">
+                        </div>
+                        <div class="mb-3 text-end">
+                            <button class="btn btn-primary" type="submit">Gabung</button>
+                        </div>
                     </form>
 
                 </div>

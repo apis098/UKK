@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function(){
      Route::get('/home', [HomeController::class, 'index'])->name('home');
      // classes
      Route::resource('classes',ClassesController::class);
+     Route::post('join-class',[ClassesController::class,'joinClass'])->name('join.class');
     //  Completeness
     Route::resource('completeness',CompletenessController::class);
  });

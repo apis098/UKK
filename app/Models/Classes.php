@@ -15,4 +15,12 @@ class Classes extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id');
     }
+    public function member()
+    {
+        return $this->belongsToMany(User::class, 'pivotclass', 'class_id', 'user_id');
+    }
+    public function memberCount(){
+        $memberCount = PivotClass::where('class_id',$this->id)->count();
+        return $memberCount;
+    }
 }

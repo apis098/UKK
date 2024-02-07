@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-
+Use Str;
 class SocialiteController extends Controller
 {
     public function redirectGoogle(){
@@ -31,6 +31,7 @@ class SocialiteController extends Controller
             $data->password = 'default_password';
             $data->google_id = 1;
             $data->role = 'user';
+            $data->user_code = Str::random(10);
             $data->save();
             Auth::login($data);
             if($data->role != 'student' || $data->role != 'theacer'){

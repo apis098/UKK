@@ -26,7 +26,7 @@
                                 <a href="blog-details.html"><img class="img-fluid" src="{{ asset('/img/' . $row->image) }}"
                                         alt="Post Image"></a>
                                 <div class="blog-views">
-                                    <i class="feather-eye me-1"></i> 225
+                                    <i class="fa-solid fa-users me-1"></i> {{ $row->memberCount() }}
                                 </div>
 
                             </div>
@@ -58,10 +58,12 @@
                             <div class="row">
                                 <div class="edit-options">
                                     <div class= "edit-delete-btn ">
-                                        <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#edit-class-modal-{{ $row->id }}" class="text-success"><i
+                                                class="feather-edit-3 me-1"></i>
                                             Edit</a>
                                         <a href="#" class="text-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i> Delete</a>
+                                            data-bs-target="#class-delete-modal-{{$row->id}}"><i class="feather-trash-2 me-1"></i> Delete</a>
                                     </div>
                                     <div class="text-end edit-delete-btn">
                                         <a href="#" class="text-primary" data-bs-toggle="modal"
@@ -85,8 +87,10 @@
                                 <div class="modal-body">
                                     <div class="card">
                                         <div class="card-body d-flex justify-content-center align-items-center">
-                                            <h4 class="card-title me-2" id="text-copy-{{$row->id}}">{{ $row->code }}</h4>
-                                            <a onclick="copyToClipBoard({{$row->id}})" class="btn clip-btn btn-primary btn-sm"><i class="far fa-copy"></i></a>
+                                            <h4 class="card-title me-2" id="text-copy-{{ $row->id }}">
+                                                {{ $row->code }}</h4>
+                                            <a onclick="copyToClipBoard({{ $row->id }})"
+                                                class="btn clip-btn btn-primary btn-sm"><i class="far fa-copy"></i></a>
                                         </div>
                                         <small class="text-secondary">Berikan kode ini kepada anggota kelas yang ingin anda
                                             undang.</small>
@@ -95,6 +99,92 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+                    <!-- edit class modal content -->
+                    <div id="edit-class-modal-{{ $row->id }}" class="modal fade" tabindex="-1" role="dialog"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    <div class="text-center mt-2 mb-4">
+                                        <div class="auth-logo">
+                                            <a href="#" class="logo logo-dark">
+                                                <span class="logo-lg">
+                                                    <h5>Edit kelas</h5>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <form class="px-3" method="POST"
+                                        action="{{ route('classes.update', $row->id) }}"enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Nama kelas</label>
+                                            <input class="form-control" type="text" id="name" name="name"
+                                                value="{{ $row->name }}" required=""
+                                                placeholder="Masukkan nama kelas...">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="part" class="form-label">Bagian</label>
+                                            <input class="form-control" type="text" id="part" name="part"
+                                                value="{{ $row->part }}" placeholder="Masukkan Bagian...">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Mata Pelajaran</label>
+                                            <input class="form-control" type="text" required="" id="lesson"
+                                                value="{{ $row->lesson }}" name="lesson"
+                                                placeholder="Masukkan Mata Pelajaran...">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Ruangan</label>
+                                            <input class="form-control" type="text" required="" id="room"
+                                                value="{{ $row->room }}" name="room"
+                                                placeholder="Masukkan Nama Ruangan...">
+                                        </div>
+
+                                        <div class="mb-3 text-end">
+                                            <button class="btn btn-secondary" data-bs-dismiss="modal"
+                                                type="button">Batal</button>
+                                            <button class="btn btn-primary" type="submit">Simpan</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    <!-- Modal -->
+                    <div class="modal fade contentmodal" id="class-delete-modal-{{$row->id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content doctor-profile">
+                                <div class="modal-header pb-0 border-bottom-0  justify-content-end">
+                                    <button type="button" class="close-btn" data-bs-dismiss="modal"
+                                        aria-label="Close"><i class="feather-x-circle"></i></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{route('classes.destroy',$row->id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="delete-wrap text-center">
+                                            <div class="del-icon"><i class="feather-x-circle"></i></div>
+                                            <h2>Apakah anda yakin ingin menghapus kelas {{$row->name}}?</h2>
+                                            <div class="submit-section">
+                                                <a href="#" class="btn btn-danger" data-bs-dismiss="modal">Tidak</a>
+                                                <button type="submit" class="btn btn-secondary me-2">Ya, saya yakin</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Modal -->
                     <!-- /Blog Post -->
                 @empty
                     <div class="align-items-center text-center">
@@ -104,36 +194,13 @@
                     </div>
                 @endforelse
             </div>
-
-            <!-- Modal -->
-            <div class="modal fade contentmodal" id="deleteModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content doctor-profile">
-                        <div class="modal-header pb-0 border-bottom-0  justify-content-end">
-                            <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close"><i
-                                    class="feather-x-circle"></i></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="delete-wrap text-center">
-                                <div class="del-icon"><i class="feather-x-circle"></i></div>
-                                <h2>Sure you want to delete</h2>
-                                <div class="submit-section">
-                                    <a href="blog.html" class="btn btn-success me-2">Yes</a>
-                                    <a href="#" class="btn btn-danger" data-bs-dismiss="modal">No</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Modal -->
         </div>
     </div>
     <script>
         function copyToClipBoard(id) {
             // Pilih elemen dengan ID yang diberikan
             var textElement = document.getElementById('text-copy-' + id);
-    
+
             // Buat rangkaian pemilihan dan salin teks ke clipboard
             var range = document.createRange();
             range.selectNode(textElement);
@@ -141,7 +208,7 @@
             window.getSelection().addRange(range);
             document.execCommand('copy');
             window.getSelection().removeAllRanges();
-    
+
             // Tampilkan pesan atau lakukan tindakan lain jika diperlukan
             iziToast.info({
                 title: 'Info',
@@ -150,6 +217,6 @@
             });
         }
     </script>
-    
+
     <!-- /Page Wrapper -->
 @endsection

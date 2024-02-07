@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classes;
+use App\Models\PivotClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Str;
@@ -71,6 +72,19 @@ class ClassesController extends Controller
     
         return basename($imagesInFolder[0]);
     }
+    public function joinClass(Request $request){
+        $code = $request->code;
+        $getClass = Classes::where('code',$code)->first();
+        if($getClass != null){
+            $join = new PivotClass();
+            $join->user_id = auth()->user()->id;
+            $join->class_id = $getClass->id;
+            $join->save();
+            return redirect('/home')->with('success','Berhasil bergabung ke kelas '.$getClass->name);
+        }else{
+            return redirect()->back()->with('error','Kelas tidak ditemukan');
+        }
+    }
     /**
      * Display the specified resource.
      */
@@ -92,7 +106,15 @@ class ClassesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Classes::findOrFail($id);
+        $data->name = $request->name;
+        $data->part = $request->part;
+        $data->lesson = $request->lesson;
+        $data->room = $request->room;
+        $data->user_id = auth()->user()->id;
+        $data->save();
+
+        return redirect()->back()->with('success','Kelas berhasil di edit');
     }
 
     /**
@@ -100,6 +122,8 @@ class ClassesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Classes::findOrFail($id);
+        $data->delete();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 }
