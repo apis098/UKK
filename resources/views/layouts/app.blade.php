@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.css') }}">
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+    <!-- Dragula CSS -->
+		<link rel="stylesheet" href="{{asset('/plugins/dragula/css/dragula.min.css')}}">
     {{-- izitoast --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
@@ -66,6 +68,9 @@
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
+    <!-- Clipboard JS -->
+	<script src="{{asset('/plugins/clipboard/clipboard.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <script>
         @if (session('success'))
             iziToast.success({

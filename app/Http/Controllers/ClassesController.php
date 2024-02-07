@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Str;
 
 class ClassesController extends Controller
 {
@@ -47,6 +48,7 @@ class ClassesController extends Controller
         $data->room = $request->room;
         $data->user_id = auth()->user()->id;
         $data->image = $background;
+        $data->code = Str::random(10);
         $data->save();
         
         return redirect()->back()->with('success','Kelas berhasil dibuat');
