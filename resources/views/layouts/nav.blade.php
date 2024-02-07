@@ -137,8 +137,8 @@
                 <div class="user-img">
                     @if(Auth::user()->foto != null && Auth::user()->google_id == 1)
                         <img class="rounded-circle" src="{{auth()->user()->foto}}" width="31" alt="profile">
-                    @elseif(Auth::user()->foto != null && Auth::user()->google_id == 0)
-                        <img class="rounded-circle" src="{{ asset('/storage'. auth()->user()->foto) }}" width="31" alt="Ryan Taylor">
+                    @elseif(Auth::user()->foto != null)
+                        <img class="rounded-circle" src="{{ asset('/storage/'. auth()->user()->foto) }}" width="31" alt="Ryan Taylor">
                     @else
                         <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31" alt="Ryan Taylor">
                     @endif
@@ -153,8 +153,8 @@
                     <div class="avatar avatar-sm">
                         @if(Auth::user()->foto != null && Auth::user()->google_id == 1)
                             <img src="{{ auth()->user()->foto }}" alt="User Image"class="avatar-img rounded-circle">
-                        @elseif(Auth::user()->foto != null && Auth::user()->google_id == 0)
-                            <img src="{{ asset('/storage'.auth()->user()->foto) }}" alt="User Image"class="avatar-img rounded-circle">
+                        @elseif(Auth::user()->foto != null)
+                            <img src="{{ asset('/storage/'.auth()->user()->foto) }}" alt="User Image"class="avatar-img rounded-circle">
                         @else
                             <img src="{{ asset('/img/male.jpg') }}" alt="User Image"class="avatar-img rounded-circle">
                         @endif

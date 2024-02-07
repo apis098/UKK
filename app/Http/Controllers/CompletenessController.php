@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class CompletenessController extends Controller
 {
@@ -12,11 +13,11 @@ class CompletenessController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $user = Auth::user();
-        if($user->role!='student' && $user->role!='theacer'){
+        if ($user->role != 'student' && $user->role != 'theacer') {
             return view('complete');
-        }else{
+        } else {
             return redirect('/home');
         }
     }
@@ -34,16 +35,39 @@ class CompletenessController extends Controller
      */
     public function store(Request $request)
     {
-        // $imageinpu = $request->file('gambar');
-        // $namaFile = time() . '.' . $gambar->getClientOriginalExtension();
-        // $gambar->storeAs('public/gambar', $namaFile);
+        $request->validate(
+            [
+                'dateofbirth' => 'required|date|before_or_equal:today',
+                'name' => 'required',
+                'gender' => 'required',
+                'role' => 'required',
+                'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ],
+            [
+                'dateofbirth.required' => 'Inputan tanggal lahir belum terisi',
+                'dateofbirth.date' => 'Inputan tanggal lahir harus berupa tanggal',
+                'dateofbirth.before_or_equal' => 'Inputan tanggal lahir tidak diperbolehkan lebih dari hari ini',
+                'name.required' => 'Inputan nama harus di isi',
+                'gender.required' => 'Inputan gender harus di isi',
+                'foto.image' => 'Inputan profile harus berupa gambar',
+                'foto.mimes' => 'Format gambar tidak valid. Gunakan format JPEG, PNG, JPG, atau GIF.',
+                'role.required' => 'Anda belum memilih status pengguna.',
+            ]
+        );
         $user = User::findOrFail(auth()->user()->id);
         $user->name = $request->name;
         $user->dateofbirth = $request->dateofbirth;
         $user->gender = $request->gender;
         $user->role = $request->role;
+        $user->institute = $request->institute;
         $user->save();
-        return redirect('home')->with('success','Selamat! data diri anda sudah terkirim. Silahkan nikmati fitur yang kami sediakan');
+        if ($request->hasFile('foto')) {
+            $profilePicturePath = $request->file('foto')->store('profile_pictures', 'public');
+            $user->google_id = 0;
+            $user->foto = $profilePicturePath;
+            $user->save();
+        }
+        return redirect('home')->with('success', 'Selamat! data diri anda sudah terkirim. Silahkan nikmati fitur yang kami sediakan');
     }
 
     /**

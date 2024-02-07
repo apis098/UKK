@@ -41,7 +41,7 @@
                                     </li>
                                 </ul>
                                 <!-- wizard-nav -->
-                                <form id="myForm" action="{{route('completeness.store')}}" method="POST">
+                                <form id="myForm" action="{{route('completeness.store')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="tab-content twitter-bs-wizard-tab-content">
                                         <div class="tab-pane active" id="seller-details">
@@ -54,7 +54,7 @@
                                                         <label for="basicpill-firstname-input" class="form-label">Nama
                                                             lengkap <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <input type="text" class="form-control" name="name">
+                                                        <input type="text" class="form-control"  name="name" value="{{old('name')}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -62,7 +62,7 @@
                                                         <label for="basicpill-lastname-input" class="form-label">Tanggal
                                                             lahir <span class="text-danger">*</span><small
                                                                 class="text-secondary">wajib di isi</small></label>
-                                                        <input type="date" class="form-control" name="dateofbirth">
+                                                        <input type="date" class="form-control" name="dateofbirth" value="{{old('date')}}" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                                                         <label for="basicpill-email-input" class="form-label">Nama Instansi
                                                             <span class="text-danger">*</span><small
                                                                 class="text-secondary">opsional</small></label>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" name="institute" value="{{old('institute')}}" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,7 +94,7 @@
                                                         <label for="basicpill-email-input" class="form-label">Foto Profile
                                                             <span class="text-danger">*</span><small
                                                                 class="text-secondary">opsional</small></label>
-                                                        <input type="file" class="form-control">
+                                                        <input type="file" name="foto" value="{{old('foto')}}" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
