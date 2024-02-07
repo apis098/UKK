@@ -7,10 +7,7 @@
             <!-- Blog List -->
             <div class="row">
                 <div class="col-md-9">
-                    <ul class="list-links mb-4">
-                        <li class="active"><a href="blog.html">Active Blog</a></li>
-                        <li><a href="pending-blog.html">Pending Blog</a></li>
-                    </ul>
+                    <h4 class="mt-3">Daftar Kelas</h4>
                 </div>
                 <div class="col-md-3 text-md-end">
                     <a data-bs-toggle="modal" data-bs-target="#join-class-modal" class="btn btn-primary btn-blog mb-3">
@@ -108,7 +105,7 @@
                 @endforelse
             </div>
             <!-- Pagination -->
-            <div class="row ">
+            {{-- <div class="row ">
                 <div class="col-md-12">
                     <div class="pagination-tab  d-flex justify-content-center">
                         <ul class="pagination mb-0">
@@ -128,7 +125,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- /Pagination -->
             <!-- Modal -->
             <div class="modal fade contentmodal" id="deleteModal" tabindex="-1" aria-hidden="true">
