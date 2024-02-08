@@ -38,7 +38,7 @@
                                                 @if ($row->user->google_id != null)
                                                     <img src="{{ $row->user->foto }}" alt="3">
                                                 @elseif($row->user->foto != null && $row->google_id == null)
-                                                    <img src="{{ asset('storage/profile' . $row->user->foto) }}"
+                                                    <img src="{{ asset('storage/' . $row->user->foto) }}"
                                                         alt="1">
                                                 @else
                                                     <img src="{{ asset('img/male.jpg') }}" alt="2">
