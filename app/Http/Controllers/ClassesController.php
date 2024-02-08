@@ -26,8 +26,11 @@ class ClassesController extends Controller
     {
         //
     }
-    public function outClass($user_id){
-        $pivotClass = PivotClass::where('user_id',$user_id)->first();
+    public function outClass(Request $request){
+        $user_id = $request->user_id;
+        $class_id = $request->class_id;
+        $pivotClass = PivotClass::where('user_id',$user_id)->where('class_id',$class_id)->first();
+        // dd($pivotClass);
         $pivotClass->delete();
         $class = $pivotClass->classes;
         $member = $pivotClass->user;

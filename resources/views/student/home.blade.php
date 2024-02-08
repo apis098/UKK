@@ -74,7 +74,7 @@
                                                 aria-label="Close"><i class="feather-x-circle"></i></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('out.class',auth()->user()->id)}}" method="POST">
+                                            <form action="{{route('out.class',['class_id'=>$row->id,'user_id'=>Auth::user()->id])}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="delete-wrap text-center">
