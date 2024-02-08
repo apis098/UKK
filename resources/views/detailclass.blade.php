@@ -214,11 +214,6 @@
                                 <table class="table border-0 star-student table-hover table-center mb-0  table-striped">
                                     <thead class="student-thread">
                                         <tr>
-                                            <th>
-                                                <div class="form-check check-tables">
-                                                    <input class="form-check-input" type="checkbox" value="something">
-                                                </div>
-                                            </th>
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Email</th>
@@ -228,14 +223,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($member as $row)
+                                        @foreach ($member as $row)
                                             <tr>
-                                                <td>
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value="something">
-                                                    </div>
-                                                </td>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     <h2 class="table-avatar">
@@ -282,16 +271,19 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <div class="align-items-center text-center">
-                                                <img class="img-fluid" width="230" height="230"
-                                                    src="{{ asset('/img/nodata.png') }}" alt="">
-                                                <p class="text-dark fw-bolder">Belum ada anggota</p>
-                                            </div>
-                                        @endforelse
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                            @forelse($member as $row)
+                            {{--  --}}
+                            @empty
+                                <div class="align-items-center text-center mt-2">
+                                    <img class="img-fluid" width="230" height="230"
+                                        src="{{ asset('/img/nodata.png') }}" alt="">
+                                    <p class="text-dark fw-bolder">Belum ada anggota</p>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
