@@ -35,6 +35,7 @@
     <!-- Dragula CSS -->
 		<link rel="stylesheet" href="{{asset('/plugins/dragula/css/dragula.min.css')}}">
     {{-- izitoast --}}
+    <link rel="stylesheet" href="{{asset('/plugins/datatables/datatables.min.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
     {{-- end izitoast --}}
@@ -71,6 +72,7 @@
     <!-- Clipboard JS -->
 	<script src="{{asset('/plugins/clipboard/clipboard.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+    <script src="{{asset('/plugins/datatables/datatables.min.js')}}"></script>
     <script>
         @if (session('success'))
             iziToast.success({
@@ -90,6 +92,13 @@
             iziToast.error({
                 title: 'Gagal',
                 message: '{{ session('error') }}',
+                position: 'topCenter'
+            });
+        @endif
+        @if (session('info'))
+            iziToast.info({
+                title: 'Info',
+                message: '{{ session('info') }}',
                 position: 'topCenter'
             });
         @endif

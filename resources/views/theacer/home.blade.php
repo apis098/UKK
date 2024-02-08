@@ -23,7 +23,7 @@
                     <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                         <div class="blog grid-blog flex-fill">
                             <div class="blog-image">
-                                <a href="blog-details.html"><img class="img-fluid" src="{{ asset('/img/' . $row->image) }}"
+                                <a href="{{route('classes.show',$row->id)}}"><img class="img-fluid" src="{{ asset('/img/' . $row->image) }}"
                                         alt="Post Image"></a>
                                 <div class="blog-views">
                                     <i class="fa-solid fa-users me-1"></i> {{ $row->memberCount() }}
@@ -34,7 +34,7 @@
                                 <ul class="entry-meta meta-item">
                                     <li>
                                         <div class="post-author">
-                                            <a href="profile.html">
+                                            <a href="#">
                                                 @if ($row->user->google_id != null)
                                                     <img src="{{ $row->user->foto }}" alt="3">
                                                 @elseif($row->user->foto != null && $row->google_id == null)
@@ -52,7 +52,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <h3 class="blog-title"><a href="blog-details.html">{{ $row->name }}</a></h3>
+                                <h3 class="blog-title"><a href="{{route('classes.show',$row->id)}}">{{ $row->name }}</a></h3>
                                 <p>{{ $row->lesson }}</p>
                             </div>
                             <div class="row">
@@ -63,7 +63,7 @@
                                                 class="feather-edit-3 me-1"></i>
                                             Edit</a>
                                         <a href="#" class="text-danger" data-bs-toggle="modal"
-                                            data-bs-target="#class-delete-modal-{{$row->id}}"><i class="feather-trash-2 me-1"></i> Delete</a>
+                                            data-bs-target="#class-delete-modal-{{$row->id}}"><i class="feather-trash-2 me-1"></i> Hapus</a>
                                     </div>
                                     <div class="text-end edit-delete-btn">
                                         <a href="#" class="text-primary" data-bs-toggle="modal"

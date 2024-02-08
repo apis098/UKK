@@ -6745,6 +6745,20 @@ table.table-inbox tbody tr.checked {
 .post-list .post-author a span:hover {
     color: #3d5ee1;
 }
+.button-custom{
+	margin-right: 6px;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 6px 13px;
+	background: rgba(23, 208, 83, 0.21);
+}
+.button-custom-danger{
+	margin-right: 6px;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 6px 13px;
+	background: rgba(255, 0, 0, 0.1);
+}
 .edit-delete-btn a{
     margin-right: 6px;
     font-size: 12px;

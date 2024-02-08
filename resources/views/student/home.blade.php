@@ -11,9 +11,9 @@
                 </div>
                 <div class="col-md-3 text-md-end">
                     <a data-bs-toggle="modal" data-bs-target="#join-class-modal" class="btn btn-primary btn-blog mb-3">
-						<i class="feather-plus-circle me-1"></i>
+                        <i class="feather-plus-circle me-1"></i>
                         Gabung kelas
-					</a>
+                    </a>
                 </div>
             </div>
 
@@ -23,10 +23,10 @@
                     <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                         <div class="blog grid-blog flex-fill">
                             <div class="blog-image">
-                                <a href="blog-details.html"><img class="img-fluid" src="{{ asset('/img/' . $row->image) }}"
-                                        alt="Post Image"></a>
+                                <a href="{{ route('classes.show', $row->id) }}"><img class="img-fluid"
+                                        src="{{ asset('/img/' . $row->image) }}" alt="Post Image"></a>
                                 <div class="blog-views">
-                                    <i class="fa-solid fa-users me-1"></i> {{$row->memberCount()}}
+                                    <i class="fa-solid fa-users me-1"></i> {{ $row->memberCount() }}
                                 </div>
 
                             </div>
@@ -35,11 +35,10 @@
                                     <li>
                                         <div class="post-author">
                                             <a href="profile.html">
-                                                @if ($row->user->google_id == 1 && $row->user->foto !=null)
+                                                @if ($row->user->google_id == 1 && $row->user->foto != null)
                                                     <img src="{{ $row->user->foto }}" alt="3">
                                                 @elseif($row->user->foto != null)
-                                                    <img src="{{ asset('storage/' . $row->user->foto) }}"
-                                                        alt="1">
+                                                    <img src="{{ asset('storage/' . $row->user->foto) }}" alt="1">
                                                 @else
                                                     <img src="{{ asset('img/male.jpg') }}" alt="2">
                                                 @endif
@@ -52,22 +51,42 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <h3 class="blog-title"><a href="blog-details.html">{{ $row->name }}</a></h3>
+                                <h3 class="blog-title"><a
+                                        href="{{ route('classes.show', $row->id) }}">{{ $row->name }}</a></h3>
                                 <p>{{ $row->lesson }}</p>
                             </div>
                             <div class="row">
-                                <div class="edit-options">
-                                    <div class= "edit-delete-btn ">
-                                        <a href="edit-blog.html" class="text-success"><i class="feather-edit-3 me-1"></i>
-                                            Edit</a>
-                                        <a href="#" class="text-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal"><i class="feather-trash-2 me-1"></i> Delete</a>
-                                    </div>
-                                    <div class="text-end edit-delete-btn">
-                                        <a href="#" class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#classCodeModal{{ $row->id }}"><i
-                                                class="fa-solid fa-share-nodes"></i></i>
-                                            Bagikan</a>
+                                <div class= "d-flex justify-content-center ms-1">
+                                    <a href="#" class="button-custom text-primary"><i
+                                            class="fa-solid fa-list-check"></i></i>
+                                        0 Tugas</a>
+                                    <a href="#" class="button-custom text-primary"><i class="fa-solid fa-book"></i> 0
+                                        Materi</a>
+                                    <a href="#" class="button-custom-danger text-danger" data-bs-toggle="modal" data-bs-target="#out-class-modal-{{$row->id}}"><i
+                                            class="fa-solid fa-door-open"></i> Keluar</a>
+                                </div>
+                            </div>
+                            <div class="modal fade contentmodal" id="out-class-modal-{{$row->id}}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content doctor-profile">
+                                        <div class="modal-header pb-0 border-bottom-0  justify-content-end">
+                                            <button type="button" class="close-btn" data-bs-dismiss="modal"
+                                                aria-label="Close"><i class="feather-x-circle"></i></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{route('out.class',auth()->user()->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="delete-wrap text-center">
+                                                    <div class="del-icon"><i class="feather-x-circle"></i></div>
+                                                    <h2>Apakah anda yakin ingin keluar dari kelas {{$row->name}}?</h2>
+                                                    <div class="submit-section">
+                                                        <a href="#" class="btn btn-danger" data-bs-dismiss="modal">Tidak</a>
+                                                        <button type="submit" class="btn btn-secondary me-2">Ya, saya yakin</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -85,8 +104,10 @@
                                 <div class="modal-body">
                                     <div class="card">
                                         <div class="card-body d-flex justify-content-center align-items-center">
-                                            <h4 class="card-title me-2" id="text-copy-{{$row->id}}">{{ $row->code }}</h4>
-                                            <a onclick="copyToClipBoard({{$row->id}})" class="btn clip-btn btn-primary btn-sm"><i class="far fa-copy"></i></a>
+                                            <h4 class="card-title me-2" id="text-copy-{{ $row->id }}">
+                                                {{ $row->code }}</h4>
+                                            <a onclick="copyToClipBoard({{ $row->id }})"
+                                                class="btn clip-btn btn-primary btn-sm"><i class="far fa-copy"></i></a>
                                         </div>
                                         <small class="text-secondary">Berikan kode ini kepada anggota kelas yang ingin anda
                                             undang.</small>

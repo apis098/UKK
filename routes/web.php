@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function(){
      // classes
      Route::resource('classes',ClassesController::class);
      Route::post('join-class',[ClassesController::class,'joinClass'])->name('join.class');
+     Route::delete('outClass/{user_id}',[ClassesController::class,'outClass'])->name('out.class');
     //  Completeness
     Route::resource('completeness',CompletenessController::class);
  });

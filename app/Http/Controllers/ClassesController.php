@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use App\Models\PivotClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Str;
 
@@ -25,7 +26,17 @@ class ClassesController extends Controller
     {
         //
     }
-
+    public function outClass($user_id){
+        $pivotClass = PivotClass::where('user_id',$user_id)->first();
+        $pivotClass->delete();
+        $class = $pivotClass->classes;
+        $member = $pivotClass->user;
+        if($user_id != auth()->user()->id){
+            return redirect()->back()->with('info',$member->name.'telah dikeluarkan');
+        }else{
+            return redirect()->back()->with('info','Anda telah meninggalkan kelas ' .$class->name);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -75,14 +86,16 @@ class ClassesController extends Controller
     public function joinClass(Request $request){
         $code = $request->code;
         $getClass = Classes::where('code',$code)->first();
-        if($getClass != null){
+        if($getClass == null){
+            return redirect()->back()->with('error','Kelas tidak ditemukan');
+        }elseif($getClass && !PivotClass::where('user_id',auth()->user()->id)->where('class_id',$getClass->id)->exists()){
             $join = new PivotClass();
             $join->user_id = auth()->user()->id;
             $join->class_id = $getClass->id;
             $join->save();
             return redirect('/home')->with('success','Berhasil bergabung ke kelas '.$getClass->name);
         }else{
-            return redirect()->back()->with('error','Kelas tidak ditemukan');
+            return redirect()->back()->with('error','Anda telah bergabung ke kelas '.$getClass->name. ' sebelumnya'); 
         }
     }
     /**
@@ -90,7 +103,9 @@ class ClassesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $class = Classes::findOrFail($id);
+        $member = $class->member;
+        return view('detailclass',compact('class','member'));
     }
 
     /**
