@@ -23,8 +23,8 @@
                     <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                         <div class="blog grid-blog flex-fill">
                             <div class="blog-image">
-                                <a href="{{route('classes.show',$row->id)}}"><img class="img-fluid" src="{{ asset('/img/' . $row->image) }}"
-                                        alt="Post Image"></a>
+                                <a href="{{ route('classes.show', $row->id) }}"><img class="img-fluid"
+                                        src="{{ asset('/img/' . $row->image) }}" alt="Post Image"></a>
                                 <div class="blog-views">
                                     <i class="fa-solid fa-users me-1"></i> {{ $row->memberCount() }}
                                 </div>
@@ -35,11 +35,14 @@
                                     <li>
                                         <div class="post-author">
                                             <a href="#">
-                                                @if ($row->user->google_id != null)
+                                                @if ($row->user->google_id != null && $row->user->foto != null)
                                                     <img src="{{ $row->user->foto }}" alt="3">
                                                 @elseif($row->user->foto != null && $row->google_id == null)
-                                                    <img src="{{ asset('storage/' . $row->user->foto) }}"
-                                                        alt="1">
+                                                    <img src="{{ asset('storage/' . $row->user->foto) }}" alt="1">
+                                                @elseif($row->user->foto == null && $row->user->gender == 'male')
+                                                    <img src="{{ asset('img/male.jpg') }}" alt="2">
+                                                @elseif($row->user->foto == null && $row->user->gender == 'famale')
+                                                    <img src="{{ asset('img/famale.jpg') }}" alt="2">
                                                 @else
                                                     <img src="{{ asset('img/male.jpg') }}" alt="2">
                                                 @endif
@@ -52,7 +55,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <h3 class="blog-title"><a href="{{route('classes.show',$row->id)}}">{{ $row->name }}</a></h3>
+                                <h3 class="blog-title"><a
+                                        href="{{ route('classes.show', $row->id) }}">{{ $row->name }}</a></h3>
                                 <p>{{ $row->lesson }}</p>
                             </div>
                             <div class="row">
@@ -63,7 +67,8 @@
                                                 class="feather-edit-3 me-1"></i>
                                             Edit</a>
                                         <a href="#" class="text-danger" data-bs-toggle="modal"
-                                            data-bs-target="#class-delete-modal-{{$row->id}}"><i class="feather-trash-2 me-1"></i> Hapus</a>
+                                            data-bs-target="#class-delete-modal-{{ $row->id }}"><i
+                                                class="feather-trash-2 me-1"></i> Hapus</a>
                                     </div>
                                     <div class="text-end edit-delete-btn">
                                         <a href="#" class="text-primary" data-bs-toggle="modal"
@@ -160,7 +165,8 @@
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
                     <!-- Modal -->
-                    <div class="modal fade contentmodal" id="class-delete-modal-{{$row->id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade contentmodal" id="class-delete-modal-{{ $row->id }}" tabindex="-1"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content doctor-profile">
                                 <div class="modal-header pb-0 border-bottom-0  justify-content-end">
@@ -168,15 +174,17 @@
                                         aria-label="Close"><i class="feather-x-circle"></i></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{route('classes.destroy',$row->id)}}" method="POST">
+                                    <form action="{{ route('classes.destroy', $row->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <div class="delete-wrap text-center">
                                             <div class="del-icon"><i class="feather-x-circle"></i></div>
-                                            <h2>Apakah anda yakin ingin menghapus kelas {{$row->name}}?</h2>
+                                            <h2>Apakah anda yakin ingin menghapus kelas {{ $row->name }}?</h2>
                                             <div class="submit-section">
-                                                <a href="#" class="btn btn-danger" data-bs-dismiss="modal">Tidak</a>
-                                                <button type="submit" class="btn btn-secondary me-2">Ya, saya yakin</button>
+                                                <a href="#" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Tidak</a>
+                                                <button type="submit" class="btn btn-secondary me-2">Ya, saya
+                                                    yakin</button>
                                             </div>
                                         </div>
                                     </form>

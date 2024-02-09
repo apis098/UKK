@@ -22,12 +22,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="part" class="form-label">Bagian</label>
+                            <label for="part" class="form-label">Bagian (opsional)</label>
                             <input class="form-control" type="text" id="part" name="part" placeholder="Masukkan Bagian...">
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Mata Pelajaran</label>
+                            <label for="password" class="form-label">Mata Pelajaran (wajib diisi)</label>
                             <input class="form-control" type="text" required="" id="lesson" name="lesson" placeholder="Masukkan Mata Pelajaran...">
                         </div>
 

@@ -14,7 +14,7 @@ class SocialiteController extends Controller
     }
     public function googleCallback(){
         $googleUser = Socialite::driver('google')->user();
-        $picture = $googleUser->user['picture'];
+        // $picture = $googleUser->user['picture'];
         $data = User::Where('email', $googleUser->email)->first();
         if($data){
             Auth::login($data);
@@ -27,7 +27,7 @@ class SocialiteController extends Controller
             $data = new User();
             $data->name = $googleUser->name;
             $data->email = $googleUser->email;
-            $data->foto = $picture;
+            $data->foto = "";
             $data->password = 'default_password';
             $data->google_id = 1;
             $data->role = 'user';

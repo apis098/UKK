@@ -136,7 +136,7 @@
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3 class="page-title">Add Post</h3>
+                                <h3 class="page-title">Tambah materi di kelas {{$class->name}}</h3>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Lampiran</label>
-                                                <input type="file" name="files[]" class="form-control" multiple>
+                                                <input type="file" name="files[]" id="real-file-input" class="form-control" multiple>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary" type="submit">Kirim</button>

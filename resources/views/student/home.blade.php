@@ -34,11 +34,15 @@
                                 <ul class="entry-meta meta-item">
                                     <li>
                                         <div class="post-author">
-                                            <a href="profile.html">
+                                            <a href="#">
                                                 @if ($row->user->google_id == 1 && $row->user->foto != null)
                                                     <img src="{{ $row->user->foto }}" alt="3">
                                                 @elseif($row->user->foto != null)
                                                     <img src="{{ asset('storage/' . $row->user->foto) }}" alt="1">
+                                                @elseif($row->user->foto == null && $row->user->gender == 'male')
+                                                    <img src="{{ asset('img/male.jpg') }}" alt="2">
+                                                @elseif($row->user->foto == null && $row->user->gender == 'famale')
+                                                    <img src="{{ asset('img/famale.jpg') }}" alt="2">
                                                 @else
                                                     <img src="{{ asset('img/male.jpg') }}" alt="2">
                                                 @endif
@@ -62,11 +66,13 @@
                                         0 Tugas</a>
                                     <a href="#" class="button-custom text-primary"><i class="fa-solid fa-book"></i> 0
                                         Materi</a>
-                                    <a href="#" class="button-custom-danger text-danger" data-bs-toggle="modal" data-bs-target="#out-class-modal-{{$row->id}}"><i
+                                    <a href="#" class="button-custom-danger text-danger" data-bs-toggle="modal"
+                                        data-bs-target="#out-class-modal-{{ $row->id }}"><i
                                             class="fa-solid fa-door-open"></i> Keluar</a>
                                 </div>
                             </div>
-                            <div class="modal fade contentmodal" id="out-class-modal-{{$row->id}}" tabindex="-1" aria-hidden="true">
+                            <div class="modal fade contentmodal" id="out-class-modal-{{ $row->id }}" tabindex="-1"
+                                aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content doctor-profile">
                                         <div class="modal-header pb-0 border-bottom-0  justify-content-end">
@@ -74,15 +80,19 @@
                                                 aria-label="Close"><i class="feather-x-circle"></i></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('out.class',['class_id'=>$row->id,'user_id'=>Auth::user()->id])}}" method="POST">
+                                            <form
+                                                action="{{ route('out.class', ['class_id' => $row->id, 'user_id' => Auth::user()->id]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="delete-wrap text-center">
                                                     <div class="del-icon"><i class="feather-x-circle"></i></div>
-                                                    <h2>Apakah anda yakin ingin keluar dari kelas {{$row->name}}?</h2>
+                                                    <h2>Apakah anda yakin ingin keluar dari kelas {{ $row->name }}?</h2>
                                                     <div class="submit-section">
-                                                        <a href="#" class="btn btn-danger" data-bs-dismiss="modal">Tidak</a>
-                                                        <button type="submit" class="btn btn-secondary me-2">Ya, saya yakin</button>
+                                                        <a href="#" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Tidak</a>
+                                                        <button type="submit" class="btn btn-secondary me-2">Ya, saya
+                                                            yakin</button>
                                                     </div>
                                                 </div>
                                             </form>

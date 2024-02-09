@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="header-left ">
         <a href="index.html" class="logo">
-            <img class="ms-4" src="{{ asset('/img/logo.png') }}"  alt="Logo">
+            <img class="ms-4" src="{{ asset('/img/logo.png') }}" alt="Logo">
         </a>
         <a href="index.html" class="logo logo-small">
             <img src="{{ asset('/img/logo-small.png') }}" alt="Logo" width="30" height="30">
@@ -37,10 +37,13 @@
     <ul class="nav user-menu">
         <!-- Notifications -->
         <li class="nav-item dropdown noti-dropdown me-2">
-            <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown" data-bs-target="#notificationModal" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown"
+                data-bs-target="#notificationModal" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-regular fa-bell"></i>
             </a>
-            <div class="dropdown-menu animated notifications" id="notificationModal" style="position: absolute; inset: 0px 0px auto auto; margin:0px; transform:translate3d(0px,42px,0px);" data-popper-placement="bottom-start">
+            <div class="dropdown-menu animated notifications" id="notificationModal"
+                style="position: absolute; inset: 0px 0px auto auto; margin:0px; transform:translate3d(0px,42px,0px);"
+                data-popper-placement="bottom-start">
                 <div class="topnav-dropdown-header">
                     <span class="notification-title">Notifications</span>
                     <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
@@ -135,38 +138,54 @@
         <li class="nav-item dropdown has-arrow new-user-menus">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <div class="user-img">
-                    @if(Auth::user()->foto != null && Auth::user()->google_id == 1)
-                        <img class="rounded-circle" src="{{auth()->user()->foto}}" width="31" alt="profile">
+                    @if (Auth::user()->foto != null && Auth::user()->google_id == 1)
+                        <img class="rounded-circle" src="{{ auth()->user()->foto }}" width="31" alt="1">
                     @elseif(Auth::user()->foto != null)
-                        <img class="rounded-circle" src="{{ asset('/storage/'. auth()->user()->foto) }}" width="31" alt="Ryan Taylor">
+                        <img class="rounded-circle" src="{{ asset('/storage/' . auth()->user()->foto) }}"
+                            width="31" alt="2">
+                    @elseif(auth()->user()->foto == null && auth()->user()->gender == 'male')
+                        <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31"
+                            alt="3">
+                    @elseif(auth()->user()->foto == null && auth()->user()->gender == 'famale')
+                        <img class="rounded-circle" src="{{ asset('/img/famale.jpg') }}" width="31"
+                            alt="3">
                     @else
-                        <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31" alt="Ryan Taylor">
+                        <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31"
+                            alt="3">
                     @endif
                     <div class="user-text">
-                        <h6>{{auth()->user()->name}}</h6>
-                        <p class="text-muted mb-0">{{auth()->user()->role}}</p>
+                        <h6>{{ auth()->user()->name }}</h6>
+                        <p class="text-muted mb-0">{{ auth()->user()->role }}</p>
                     </div>
                 </div>
             </a>
             <div class="dropdown-menu">
                 <div class="user-header">
                     <div class="avatar avatar-sm">
-                        @if(Auth::user()->foto != null && Auth::user()->google_id == 1)
+                        @if (Auth::user()->foto != null && Auth::user()->google_id == 1)
                             <img src="{{ auth()->user()->foto }}" alt="User Image"class="avatar-img rounded-circle">
                         @elseif(Auth::user()->foto != null)
-                            <img src="{{ asset('/storage/'.auth()->user()->foto) }}" alt="User Image"class="avatar-img rounded-circle">
+                            <img src="{{ asset('/storage/' . auth()->user()->foto) }}"
+                                alt="User Image"class="avatar-img rounded-circle">
+                        @elseif(auth()->user()->foto == null && auth()->user()->gender == 'male')
+                            <img src="{{ asset('/img/male.jpg') }}"
+                                alt="User Image"class="avatar-img rounded-circle">
+                        @elseif(auth()->user()->foto == null && auth()->user()->gender == 'famale')
+                            <img src="{{ asset('/img/famale.jpg') }}"
+                                alt="User Image"class="avatar-img rounded-circle">
                         @else
-                            <img src="{{ asset('/img/male.jpg') }}" alt="User Image"class="avatar-img rounded-circle">
+                            <img src="{{ asset('/img/male.jpg') }}"
+                                alt="User Image"class="avatar-img rounded-circle">
                         @endif
                     </div>
                     <div class="user-text">
-                        <h6>{{auth()->user()->name}}</h6>
-                        <p class="text-muted mb-0">{{auth()->user()->role}}</p>
+                        <h6>{{ auth()->user()->name }}</h6>
+                        <p class="text-muted mb-0">{{ auth()->user()->role }}</p>
                     </div>
                 </div>
                 <a class="dropdown-item" href="profile.html">My Profile</a>
                 <a class="dropdown-item" href="inbox.html">Inbox</a>
-                <form action="{{route('logout')}}" method="POST">
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="dropdown-item">Logout</button>
                 </form>
@@ -176,7 +195,6 @@
 
     </ul>
     <!-- /Header Right Menu -->
-    
+
 </div>
 <!-- /Header -->
-
