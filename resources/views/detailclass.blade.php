@@ -27,7 +27,7 @@
                                     </g>
                                 </svg> Tambah Tugas</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item align-items-center" href="{{route('materials.create')}}"><svg class="mb-1"
+                            <a class="dropdown-item align-items-center" href="{{route('materials.form',$class->id)}}"><svg class="mb-1"
                                     xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
                                     <path fill="none" stroke="currentColor" stroke-linecap="round"
                                         stroke-linejoin="round" stroke-width="2"

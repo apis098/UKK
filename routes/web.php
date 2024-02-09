@@ -40,4 +40,6 @@ Route::middleware('auth')->group(function () {
    Route::resource('completeness', CompletenessController::class);
    // Materials
    Route::resource('materials',MaterialsController::class);
+   Route::get('form/materials/{class_id}',[MaterialsController::class,'materialsCreate'])->name('materials.form');
+   Route::post('add/materials/{class_id}',[MaterialsController::class,'addMaterials'])->name('materials.add');
 });

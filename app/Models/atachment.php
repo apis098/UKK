@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class atachment extends Model
 {
     use HasFactory;
-    protected $table = 'atachment';
+    protected $table = 'atachments';
     protected $primaryKey = 'id';
     protected $guarded = 'id'; 
 }

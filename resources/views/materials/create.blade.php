@@ -146,26 +146,29 @@
                         <div class="card-body">
                             <div class="bank-inner-details">
                                 <div class="row">
-                                    <form id="form" action="#">
+                                    <form id="form" method="POST" action="{{route('materials.add',$class->id)}}" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Judul<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" name="name" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Petunjuk/Deskripsi</label>
-                                                <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+                                                <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Lampiran</label>
+                                                <input type="file" name="files[]" class="form-control" multiple>
                                             </div>
                                         </div>
+                                        <button class="btn btn-primary" type="submit">Kirim</button>
                                     </form>
-                                    <div class="wrapper">
+                                    <div class="wrapper mt-5">
                                         <form class="upload-form" action="#">
                                             <input class="file-input" type="file" name="file" hidden>
                                             <i class="fas fa-cloud-upload-alt"></i>

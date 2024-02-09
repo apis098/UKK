@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('file')->nullable();
             $table->string('link')->nullable();
-            $table->unsignedBigInteger('material_id');
+            $table->unsignedBigInteger('material_id')->nullable();
             $table->timestamps();
 
             $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
