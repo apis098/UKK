@@ -172,9 +172,9 @@
                                     </form>
                                     <div class="wrapper mt-5">
                                         <form class="upload-form" action="#">
-                                            {{-- <input class="file-input" type="file" name="file" hidden> --}}
+                                            {{-- <input class="file-input" type="file" name="file" hidden multiple> --}}
                                             <i class="fas fa-cloud-upload-alt"></i>
-                                            <p>Browse File to Upload</p>
+                                            <p>Unggah File</p>
                                         </form>
                                         <section class="rounded progress-area"></section>
                                         <section class="rounded uploaded-area"></section>
@@ -273,34 +273,6 @@
             let data = new FormData();
             data.append('file', file);
             xhr.send(data);
-        }
-
-        // Fungsi untuk mengirimkan array informasi file ke sisi server
-        function sendFilesToServer() {
-            // Kirim array ke sisi server dengan menggunakan metode POST atau sesuai kebutuhan Anda
-            // Misalnya, Anda dapat menggunakan fetch API atau jQuery.ajax untuk melakukan permintaan HTTP ke sisi server
-            // Pastikan untuk mengonversi array ke dalam format yang dapat digunakan di sisi server (JSON, FormData, dsb.)
-            console.log(uploadedFiles);
-
-            // Di sini, Anda dapat menambahkan logika pengiriman ke sisi server sesuai kebutuhan aplikasi Anda
-            // Misalnya:
-            // fetch('url_ke_endpoint_server', {
-            //     method: 'POST',
-            //     body: JSON.stringify(uploadedFiles),
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     console.log('Success:', data);
-            // })
-            // .catch((error) => {
-            //     console.error('Error:', error);
-            // });
-
-            // Setelah pengiriman, Anda mungkin ingin mengosongkan array untuk persiapan unggahan berikutnya
-            uploadedFiles = [];
         }
     </script>
     <!-- /Page Wrapper -->
