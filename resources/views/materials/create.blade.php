@@ -10,7 +10,7 @@
             margin: 0;
             border-radius: 5px;
             padding-left: 15px;
-            padding-right: 15px; 
+            padding-right: 15px;
         }
 
         .wrapper header {
@@ -136,7 +136,7 @@
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3 class="page-title">Tambah materi di kelas {{$class->name}}</h3>
+                                <h3 class="page-title">Tambah materi di kelas {{ $class->name }}</h3>
                             </div>
                         </div>
                     </div>
@@ -146,7 +146,8 @@
                         <div class="card-body">
                             <div class="bank-inner-details">
                                 <div class="row">
-                                    <form id="form" method="POST" action="{{route('materials.add',$class->id)}}" enctype="multipart/form-data">
+                                    <form id="form" method="POST" action="{{ route('materials.add', $class->id) }}"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
@@ -163,14 +164,15 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Lampiran</label>
-                                                <input type="file" name="files[]" id="real-file-input" class="form-control" multiple>
+                                                <input type="file" name="files[]" class="file-input form-control"
+                                                    multiple>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary" type="submit">Kirim</button>
                                     </form>
                                     <div class="wrapper mt-5">
                                         <form class="upload-form" action="#">
-                                            <input class="file-input" type="file" name="file" hidden>
+                                            {{-- <input class="file-input" type="file" name="file" hidden> --}}
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             <p>Browse File to Upload</p>
                                         </form>
@@ -190,11 +192,15 @@
             </div>
         </div>
     </div>
+    <!-- JavaScript -->
     <script>
+        // JavaScript
         const form = document.querySelector(".upload-form"),
             fileInput = document.querySelector(".file-input"),
             progressArea = document.querySelector(".progress-area"),
             uploadedArea = document.querySelector(".uploaded-area");
+
+        let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
 
         form.addEventListener("click", () => {
             fileInput.click();
@@ -203,18 +209,21 @@
         fileInput.onchange = ({
             target
         }) => {
-            let file = target.files[0];
-            if (file) {
-                let fileName = file.name;
-                if (fileName.length >= 12) {
-                    let splitName = fileName.split('.');
-                    fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+            let files = target.files;
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+                    let fileName = file.name;
+                    if (fileName.length >= 12) {
+                        let splitName = fileName.split('.');
+                        fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+                    }
+                    uploadFile(file, fileName);
                 }
-                uploadFile(fileName);
             }
-        }
+        };
 
-        function uploadFile(name) {
+        function uploadFile(file, name) {
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "php/upload.php");
             xhr.upload.addEventListener("progress", ({
@@ -227,36 +236,71 @@
                 (fileTotal < 1024) ? fileSize = fileTotal + " KB": fileSize = (loaded / (1024 * 1024)).toFixed(2) +
                     " MB";
                 let progressHTML = `<li class="row">
-                          <div class="content upload">
-                            <i class="fas fa-file-alt"></i>
-                            <div class="details">
-                              <span class="name">${name} • Mengunggah</span>
-                              <span class="percent">${fileLoaded}%</span>
-                            </div>
-                            <div class="progress-bar">
-                              <div class="progress" style="width: ${fileLoaded}%"></div>
-                            </div>
-                          </div>
-                        </li>`;
+                  <div class="content upload">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="details">
+                      <span class="name">${name} • Mengunggah</span>
+                      <span class="percent">${fileLoaded}%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress" style="width: ${fileLoaded}%"></div>
+                    </div>
+                  </div>
+                </li>`;
                 uploadedArea.classList.add("onprogress");
                 progressArea.innerHTML = progressHTML;
                 if (loaded == total) {
                     progressArea.innerHTML = "";
                     let uploadedHTML = `<li class="row">
-                            <div class="content upload">
-                              <i class="fas fa-file-alt"></i>
-                              <div class="details">
-                                <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
-                                <span class="size">${fileSize}</span>
-                              </div>
-                            </div>
-                          </li>`;
+                    <div class="content upload">
+                      <i class="fas fa-file-alt"></i>
+                      <div class="details">
+                        <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
+                        <span class="size">${fileSize}</span>
+                      </div>
+                    </div>
+                  </li>`;
                     uploadedArea.classList.remove("onprogress");
                     uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+
+                    // Simpan informasi file yang diunggah ke dalam array
+                    uploadedFiles.push({
+                        name,
+                        size: fileSize
+                    });
                 }
             });
-            let data = new FormData(form);
+            let data = new FormData();
+            data.append('file', file);
             xhr.send(data);
+        }
+
+        // Fungsi untuk mengirimkan array informasi file ke sisi server
+        function sendFilesToServer() {
+            // Kirim array ke sisi server dengan menggunakan metode POST atau sesuai kebutuhan Anda
+            // Misalnya, Anda dapat menggunakan fetch API atau jQuery.ajax untuk melakukan permintaan HTTP ke sisi server
+            // Pastikan untuk mengonversi array ke dalam format yang dapat digunakan di sisi server (JSON, FormData, dsb.)
+            console.log(uploadedFiles);
+
+            // Di sini, Anda dapat menambahkan logika pengiriman ke sisi server sesuai kebutuhan aplikasi Anda
+            // Misalnya:
+            // fetch('url_ke_endpoint_server', {
+            //     method: 'POST',
+            //     body: JSON.stringify(uploadedFiles),
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log('Success:', data);
+            // })
+            // .catch((error) => {
+            //     console.error('Error:', error);
+            // });
+
+            // Setelah pengiriman, Anda mungkin ingin mengosongkan array untuk persiapan unggahan berikutnya
+            uploadedFiles = [];
         }
     </script>
     <!-- /Page Wrapper -->
