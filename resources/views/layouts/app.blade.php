@@ -28,14 +28,20 @@
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="{{ asset('/plugins/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/plugins/fontawesome/css/all.min.css') }}">
-     <!-- Wizard CSS -->
+    <!-- Wizard CSS -->
     <link rel="stylesheet" href="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.css') }}">
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
     <!-- Dragula CSS -->
-		<link rel="stylesheet" href="{{asset('/plugins/dragula/css/dragula.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/plugins/dragula/css/dragula.min.css') }}">
+    <!-- Select CSS -->
+    <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
+    <!-- Ckeditor CSS-->
+    <link rel="stylesheet" href="{{ asset('/css/ckeditor.css') }}">
     {{-- izitoast --}}
-    <link rel="stylesheet" href="{{asset('/plugins/datatables/datatables.min.css')}}">
+     <!-- Feathericon CSS -->
+     <link rel="stylesheet" href="{{ asset('/css/feather.css') }}">
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables/datatables.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
     {{-- end izitoast --}}
@@ -49,7 +55,7 @@
         @include('layouts.modal')
     </div>
     <!-- /Main Wrapper -->
-    
+
     <!-- jQuery -->
     <script src="{{ asset('/js/jquery-3.7.1.min.js') }}"></script>
 
@@ -66,13 +72,23 @@
     <!-- Custom JS -->
     <script src="{{ asset('/js/script.js') }}"></script>
     <!-- Wizard JS -->
+     <!-- Feathericon js -->
+     <script src="{{asset('/js/feather.min.js')}}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
     <!-- Clipboard JS -->
-	<script src="{{asset('/plugins/clipboard/clipboard.min.js')}}"></script>
+    <!-- Select2 JS -->
+    <script src="{{ asset('/plugins/select2/js/select2.min.js') }}"></script>
+    <!-- ckeditor JS -->
+    <script src="{{asset('/js/ckeditor.js')}}"></script>
+
+    <!-- Bootstrap Tagsinput JS -->
+    <script src="{{asset('/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js')}}"></script>
+    <script src="{{ asset('/plugins/clipboard/clipboard.min.js') }}"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
-    <script src="{{asset('/plugins/datatables/datatables.min.js')}}"></script>
+    <script src="{{ asset('/plugins/datatables/datatables.min.js') }}"></script>
     <script>
         @if (session('success'))
             iziToast.success({

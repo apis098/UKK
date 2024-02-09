@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('file')->nullable();
-            $table->string('link')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('class_id');
             $table->timestamps();
+
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
