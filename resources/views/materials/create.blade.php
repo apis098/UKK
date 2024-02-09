@@ -3,55 +3,55 @@
     <style>
         ::selection {
             color: #fff;
-            background: #6990F2;
+            background: #9FA6B2;
         }
 
         .wrapper {
-            width: 430px;
-            background: #fff;
+            margin: 0;
             border-radius: 5px;
-            padding: 30px;
-            box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+            padding-left: 15px;
+            padding-right: 15px; 
         }
 
         .wrapper header {
-            color: #6990F2;
+            color: #9FA6B2;
             font-size: 27px;
             font-weight: 600;
             text-align: center;
         }
 
-        .wrapper form {
+        .wrapper .upload-form {
             height: 167px;
             display: flex;
             cursor: pointer;
-            margin: 30px 0;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             border-radius: 5px;
-            border: 2px dashed #6990F2;
+            border: 2px dashed #9FA6B2;
+            margin-top: -18px;
         }
 
-        form :where(i, p) {
-            color: #6990F2;
+        .upload-form :where(i, p) {
+            color: #9FA6B2;
         }
 
-        form i {
+        .upload-form i {
+            margin-top: 15px;
             font-size: 50px;
         }
 
-        form p {
+        .upload-form p {
             margin-top: 15px;
             font-size: 16px;
         }
 
         section .row {
-            margin-bottom: 10px;
+            margin-top: 10px;
             background: #E9F0FF;
             list-style: none;
             padding: 15px 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -171,8 +171,8 @@
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             <p>Browse File to Upload</p>
                                         </form>
-                                        <section class="progress-area"></section>
-                                        <section class="uploaded-area"></section>
+                                        <section class="rounded progress-area"></section>
+                                        <section class="rounded uploaded-area"></section>
                                     </div>
                                 </div>
                             </div>
@@ -224,10 +224,10 @@
                 (fileTotal < 1024) ? fileSize = fileTotal + " KB": fileSize = (loaded / (1024 * 1024)).toFixed(2) +
                     " MB";
                 let progressHTML = `<li class="row">
-                          <i class="fas fa-file-alt"></i>
-                          <div class="content">
+                          <div class="content upload">
+                            <i class="fas fa-file-alt"></i>
                             <div class="details">
-                              <span class="name">${name} • Uploading</span>
+                              <span class="name">${name} • Mengunggah</span>
                               <span class="percent">${fileLoaded}%</span>
                             </div>
                             <div class="progress-bar">
@@ -243,11 +243,10 @@
                             <div class="content upload">
                               <i class="fas fa-file-alt"></i>
                               <div class="details">
-                                <span class="name">${name} • Uploaded</span>
+                                <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
                                 <span class="size">${fileSize}</span>
                               </div>
                             </div>
-                            <i class="fas fa-check"></i>
                           </li>`;
                     uploadedArea.classList.remove("onprogress");
                     uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
