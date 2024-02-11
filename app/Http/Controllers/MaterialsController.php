@@ -39,7 +39,6 @@ class MaterialsController extends Controller
     }
     public function addMaterials(Request $request, string $class_id)
     {
-        dd($request->all());
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',

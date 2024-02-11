@@ -29,7 +29,7 @@
             flex-direction: column;
             border-radius: 5px;
             border: 2px dashed #9FA6B2;
-            margin-top: -18px;
+            margin-top: -65px;
         }
 
         .upload-form :where(i, p) {
@@ -164,11 +164,12 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Lampiran</label>
-                                                <input type="file" name="files[]" class="file-input form-control"
+                                                <input type="file" name="files[]" class="file-input form-control" hidden
                                                     multiple>
+                                                <div class="element"></div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Kirim</button>
+                                        <button class="btn btn-primary" hidden id="real-button" type="submit">Kirim</button>
                                     </form>
                                     <div class="wrapper mt-5">
                                         <form class="upload-form" action="#">
@@ -184,7 +185,7 @@
                         </div>
                         <div class=" blog-categories-btn pt-0">
                             <div class="bank-details-btn ">
-                                <a href="blog.html" class="btn bank-cancel-btn me-2">Tambah Tugas</a>
+                                <a class="btn bank-cancel-btn me-2" onclick="submitUploadForm()">Tambah Tugas</a>
                             </div>
                         </div>
                     </div>
@@ -194,21 +195,47 @@
     </div>
     <!-- JavaScript -->
     <script>
-        // JavaScript
-        const form = document.querySelector(".upload-form"),
-            fileInput = document.querySelector(".file-input"),
-            progressArea = document.querySelector(".progress-area"),
-            uploadedArea = document.querySelector(".uploaded-area");
+      // JavaScript
+    const form = document.querySelector(".upload-form"),
+        elementContainer = document.querySelector(".element"),
+        progressArea = document.querySelector(".progress-area"),
+        uploadedArea = document.querySelector(".uploaded-area");
 
-        let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
+    let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
 
-        form.addEventListener("click", () => {
-            fileInput.click();
-        });
+    form.addEventListener("click", () => {
+        if (elementContainer.children.length === 0) {
+            // Jika belum ada input file, buat dynamic input
+            createNewInput();
+        } else {
+            // Jika sudah ada input file, tunggu sampai upload selesai baru buat dynamic input
+            checkUploadCompletion();
+        }
+    });
 
-        fileInput.onchange = ({
-            target
-        }) => {
+    function checkUploadCompletion() {
+        if (!uploadedArea.classList.contains("onprogress")) {
+            // Jika tidak ada proses upload berlangsung
+            createNewInput();
+        } else {
+            // Jika masih ada proses upload, tunggu sebentar dan cek lagi
+            setTimeout(checkUploadCompletion, 1000);
+        }
+    }
+
+    function createNewInput() {
+        let newInput = document.createElement("input");
+        newInput.type = "file";
+        newInput.name = "files[]";
+        newInput.classList.add("file-input", "form-control");
+        newInput.setAttribute("multiple", true);
+        newInput.setAttribute("hidden", true);
+
+        // Append new input to the element container
+        elementContainer.appendChild(newInput);
+
+        // Add onchange event to the new input
+        newInput.onchange = ({ target }) => {
             let files = target.files;
             if (files.length > 0) {
                 for (let i = 0; i < files.length; i++) {
@@ -223,6 +250,10 @@
             }
         };
 
+        // Trigger click event on the new input to open file dialog
+        newInput.click();
+    }
+
         function uploadFile(file, name) {
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "php/upload.php");
@@ -236,30 +267,30 @@
                 (fileTotal < 1024) ? fileSize = fileTotal + " KB": fileSize = (loaded / (1024 * 1024)).toFixed(2) +
                     " MB";
                 let progressHTML = `<li class="row">
-                  <div class="content upload">
-                    <i class="fas fa-file-alt"></i>
-                    <div class="details">
-                      <span class="name">${name} • Mengunggah</span>
-                      <span class="percent">${fileLoaded}%</span>
+                    <div class="content upload">
+                        <i class="fas fa-file-alt"></i>
+                        <div class="details">
+                            <span class="name">${name} • Mengunggah</span>
+                            <span class="percent">${fileLoaded}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${fileLoaded}%"></div>
+                        </div>
                     </div>
-                    <div class="progress-bar">
-                      <div class="progress" style="width: ${fileLoaded}%"></div>
-                    </div>
-                  </div>
                 </li>`;
                 uploadedArea.classList.add("onprogress");
                 progressArea.innerHTML = progressHTML;
                 if (loaded == total) {
                     progressArea.innerHTML = "";
                     let uploadedHTML = `<li class="row">
-                    <div class="content upload">
-                      <i class="fas fa-file-alt"></i>
-                      <div class="details">
-                        <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
-                        <span class="size">${fileSize}</span>
-                      </div>
-                    </div>
-                  </li>`;
+                        <div class="content upload">
+                            <i class="fas fa-file-alt"></i>
+                            <div class="details">
+                                <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
+                                <span class="size">${fileSize}</span>
+                            </div>
+                        </div>
+                    </li>`;
                     uploadedArea.classList.remove("onprogress");
                     uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
 
@@ -274,6 +305,11 @@
             data.append('file', file);
             xhr.send(data);
         }
+        function submitUploadForm(){
+            const button = document.getElementById('real-button');
+            button.click();
+        }
     </script>
+
     <!-- /Page Wrapper -->
 @endsection
