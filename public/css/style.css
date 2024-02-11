@@ -55,7 +55,10 @@ body {
 	line-height: 1.5;
 	overflow-x: hidden;
 }
-
+img{
+	object-fit: cover; /* Memastikan gambar memenuhi seluruh area tanpa merubah rasio aspek */
+	object-position: center; /* Pusatkan gambar dalam bingkai */
+}
 h1,
 h2,
 h3,
