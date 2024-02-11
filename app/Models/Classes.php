@@ -23,4 +23,7 @@ class Classes extends Model
         $memberCount = PivotClass::where('class_id',$this->id)->count();
         return $memberCount;
     }
+    public function materials(){
+        return $this->hasMany(materials::class,'class_id');
+    }
 }

@@ -34,7 +34,7 @@ class ClassesController extends Controller
         $class = $pivotClass->classes;
         $member = $pivotClass->user;
         if($user_id != auth()->user()->id){
-            return redirect()->back()->with('info',$member->name.'telah dikeluarkan');
+            return redirect()->back()->with('info',$member->name.' telah dikeluarkan');
         }else{
             return redirect()->back()->with('info','Anda telah meninggalkan kelas ' .$class->name);
         }
@@ -107,7 +107,8 @@ class ClassesController extends Controller
     {
         $class = Classes::findOrFail($id);
         $member = $class->member;
-        return view('detailclass',compact('class','member'));
+        $materials = $class->materials;
+        return view('detailclass',compact('class','member','materials'));
     }
 
     /**

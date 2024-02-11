@@ -27,7 +27,8 @@
                                     </g>
                                 </svg> Tambah Tugas</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item align-items-center" href="{{route('materials.form',$class->id)}}"><svg class="mb-1"
+                            <a class="dropdown-item align-items-center"
+                                href="{{ route('materials.form', $class->id) }}"><svg class="mb-1"
                                     xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
                                     <path fill="none" stroke="currentColor" stroke-linecap="round"
                                         stroke-linejoin="round" stroke-width="2"
@@ -109,7 +110,7 @@
             {{-- tabs --}}
             <div class="card bg-white">
                 <div class="card-header">
-                    <h5 class="card-title">{{ $class->lesson }}</h5>
+                    <h5 class="card-title">Mata Pelajaran : {{ $class->lesson }}</h5>
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
@@ -149,29 +150,41 @@
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab2">
                             <div class="row pe-3 ps-3">
-                                <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
-                                    <div class="col-lg-9">
-                                        <div class="grid-container">
-                                            <div class="db-widgets d-flex justify-content-beetwen align-items-center">
-                                                <div class="left-icon me-3 p-1 text-center  ">
-                                                    <img class="ms-1"
-                                                        src="{{ asset('/img/icons/teacher-icon-02.svg') }}"
-                                                        alt="Dashboard Icon">
-                                                </div>
-                                                <div class="db-info mt-2">
-                                                    <h5 style="margin-bottom:0; ">Materi Hukum Kekekalan</h5>
-                                                    <h6>1 jam yang lalu</h6>
+                                @foreach ($materials as $data)
+                                    <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
+                                        <div class="col-lg-9">
+                                            <div class="grid-container">
+                                                <div class="db-widgets d-flex justify-content-beetwen align-items-center">
+                                                    <div class="left-icon me-3 p-1 text-center  ">
+                                                        <img class="ms-1"
+                                                            src="{{ asset('/img/icons/teacher-icon-02.svg') }}"
+                                                            alt="Dashboard Icon">
+                                                    </div>
+                                                    <div class="db-info mt-2">
+                                                        <h5 style="margin-bottom:0; ">{{ $data->name }}</h5>
+                                                        <h6> {{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</span>
+                                                        </h6>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="grid-container text-end">
-                                            <small>tidak ada batas waktu</small>
+                                        <div class="col-lg-3">
+                                            <div class="grid-container text-end">
+                                                <small>tidak ada batas waktu</small>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
+                            @forelse($materials as $data)
+                                {{--  --}}
+                            @empty
+                                <div class="align-items-center text-center mt-2">
+                                    <img class="img-fluid" width="230" height="230"
+                                        src="{{ asset('/img/nodata.png') }}" alt="">
+                                    <p class="text-dark fw-bolder">Belum ada materi</p>
+                                </div>
+                            @endforelse
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab3">
                             <!-- Page Header -->
@@ -179,7 +192,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="page-sub-header">
-                                            <h3 class="page-title">Daftar Murid</h3>
+                                            <h3 class="page-title">Daftar Anggota</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -241,6 +254,19 @@
                                                                     src="{{ asset('/storage/' . $row->foto) }}"
                                                                     alt="User Image">
                                                             </a>
+                                                        @elseif($row->foto == null && $row->gender == 'male')
+                                                            <a href="student-details.html"
+                                                                class="avatar avatar-sm me-2"><img
+                                                                    class="avatar-img rounded-circle"
+                                                                    src="{{ asset('/img/male.jpg') }}" alt="User Image">
+                                                            </a>
+                                                        @elseif($row->foto == null && $row->gender == 'famale')
+                                                            <a href="student-details.html"
+                                                                class="avatar avatar-sm me-2"><img
+                                                                    class="avatar-img rounded-circle"
+                                                                    src="{{ asset('/img/famale.jpg') }}"
+                                                                    alt="User Image">
+                                                            </a>
                                                         @else
                                                             <a href="student-details.html"
                                                                 class="avatar avatar-sm me-2"><img
@@ -265,18 +291,47 @@
                                                         <a href="javascript:;" class="btn btn-sm bg-success-light me-2 ">
                                                             <i class="feather-eye"></i>
                                                         </a>
-                                                        <a href="edit-student.html" class="btn btn-sm bg-danger-light">
+                                                        <a href="#" class="btn btn-sm bg-danger-light" data-bs-toggle="modal" data-bs-target="#kick-for-class-modal-{{$row->id}}">
                                                             <i class="feather-edit"></i>
                                                         </a>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <div class="modal fade contentmodal" id="kick-for-class-modal-{{$row->id}}" tabindex="-1"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content doctor-profile">
+                                                        <div class="modal-header pb-0 border-bottom-0  justify-content-end">
+                                                            <button type="button" class="close-btn" data-bs-dismiss="modal"
+                                                                aria-label="Close"><i class="feather-x-circle"></i></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form
+                                                                action="{{ route('out.class', ['class_id' => $class->id, 'user_id' => $row->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <div class="delete-wrap text-center">
+                                                                    <div class="del-icon"><i class="feather-x-circle"></i></div>
+                                                                    <h2>Apakah anda yakin ingin <br> mengeluarkan {{$row->name}} dari <br> kelas {{ $class->name }}?</h2>
+                                                                    <div class="submit-section">
+                                                                        <a href="#" class="btn btn-primary"
+                                                                            data-bs-dismiss="modal">Tidak</a>
+                                                                        <button type="submit" class="btn btn-dark ">Ya, saya
+                                                                            yakin</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             @forelse($member as $row)
-                            {{--  --}}
+                                {{--  --}}
                             @empty
                                 <div class="align-items-center text-center mt-2">
                                     <img class="img-fluid" width="230" height="230"

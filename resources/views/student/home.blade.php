@@ -89,9 +89,9 @@
                                                     <div class="del-icon"><i class="feather-x-circle"></i></div>
                                                     <h2>Apakah anda yakin ingin keluar dari kelas {{ $row->name }}?</h2>
                                                     <div class="submit-section">
-                                                        <a href="#" class="btn btn-danger"
+                                                        <a href="#" class="btn btn-primary"
                                                             data-bs-dismiss="modal">Tidak</a>
-                                                        <button type="submit" class="btn btn-secondary me-2">Ya, saya
+                                                        <button type="submit" class="btn btn-dark me-2">Ya, saya
                                                             yakin</button>
                                                     </div>
                                                 </div>
