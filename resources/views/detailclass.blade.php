@@ -17,8 +17,9 @@
                             </svg>
                         </a>
                         <div class="dropdown-menu me-2 pt-2 pb-2 text-center">
-                            <a class="dropdown-item align-items-center" href="{{route('task.form',$class->id)}}"><svg class="mb-1"
-                                    xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
+                            <a class="dropdown-item align-items-center" href="{{ route('task.form', $class->id) }}"><svg
+                                    class="mb-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                    viewBox="0 0 14 14">
                                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                                         <path
                                             d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
@@ -124,28 +125,39 @@
                     <div class="tab-content">
                         <div class="tab-pane show active" id="bottom-justified-tab1">
                             <div class="row pe-3 ps-3">
-                                <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
-                                    <div class="col-lg-9">
-                                        <div class="grid-container">
-                                            <div class="db-widgets d-flex justify-content-beetwen align-items-center">
-                                                <div class="left-icon p-1 me-3">
-                                                    <img class="ms-1"
-                                                        src="{{ asset('/img/icons/student-icon-01.svg') }}"
-                                                        alt="Dashboard Icon">
-                                                </div>
-                                                <div class="db-info mt-2">
-                                                    <h5 style="margin-bottom:0; ">Hukum Kekekalan</h5>
-                                                    <h6>1 jam yang lalu</h6>
+                                @foreach ($tasks as $task)
+                                    <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
+                                        <div class="col-lg-9">
+                                            <div class="grid-container">
+                                                <div class="db-widgets d-flex justify-content-beetwen align-items-center">
+                                                    <div class="left-icon p-1 me-3">
+                                                        <img class="ms-1"
+                                                            src="{{ asset('/img/icons/student-icon-01.svg') }}"
+                                                            alt="Dashboard Icon">
+                                                    </div>
+                                                    <div class="db-info mt-2">
+                                                        <h5 style="margin-bottom:0; ">{{$task->name}}</h5>
+                                                        <h6>{{$task->description}}</h6>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="grid-container text-end">
-                                            <small>tidak ada batas waktu</small>
+                                        <div class="col-lg-3">
+                                            <div class="grid-container text-end">
+                                                <small class="text-secondary">{{ \Carbon\Carbon::parse($task->created_at)->locale('id_ID')->diffForHumans() }}</small>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
+                                @forelse($tasks as $task)
+                                    {{--  --}}
+                                @empty
+                                    <div class="align-items-center text-center mt-2">
+                                        <img class="img-fluid" width="230" height="230"
+                                            src="{{ asset('/img/nodata.png') }}" alt="">
+                                        <p class="text-dark fw-bolder">Belum ada tugas</p>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab2">
@@ -162,7 +174,7 @@
                                                     </div>
                                                     <div class="db-info mt-2">
                                                         <h5 style="margin-bottom:0; ">{{ $data->name }}</h5>
-                                                        <h6> {{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</span>
+                                                        <h6> {{$data->description}}</span>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -170,7 +182,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="grid-container text-end">
-                                                <small>tidak ada batas waktu</small>
+                                                <small class="text-secondary">{{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -291,21 +303,36 @@
                                                         <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
                                                             <i class="feather-eye"></i>
                                                         </a>
-                                                        @if(auth()->user()->role == 'theacer')
-                                                        <a href="#" class="btn btn-sm bg-danger-light" data-bs-toggle="modal" data-bs-target="#kick-for-class-modal-{{$row->id}}" title="Keluarkan Murid">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="2.75" r="2.25"/><circle cx="10.25" cy="10.25" r="3.25"/><path d="m7.95 12.55l4.6-4.6M6 6.61A4.49 4.49 0 0 0 .5 11v1.5h4"/></g></svg>
-                                                        </a>
+                                                        @if (auth()->user()->role == 'theacer')
+                                                            <a href="#" class="btn btn-sm bg-danger-light"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#kick-for-class-modal-{{ $row->id }}"
+                                                                title="Keluarkan Murid">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                    height="25" viewBox="0 0 14 14">
+                                                                    <g fill="none" stroke="currentColor"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        <circle cx="5" cy="2.75" r="2.25" />
+                                                                        <circle cx="10.25" cy="10.25" r="3.25" />
+                                                                        <path
+                                                                            d="m7.95 12.55l4.6-4.6M6 6.61A4.49 4.49 0 0 0 .5 11v1.5h4" />
+                                                                    </g>
+                                                                </svg>
+                                                            </a>
                                                         @endif
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <div class="modal fade contentmodal" id="kick-for-class-modal-{{$row->id}}" tabindex="-1"
+                                            <div class="modal fade contentmodal"
+                                                id="kick-for-class-modal-{{ $row->id }}" tabindex="-1"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content doctor-profile">
-                                                        <div class="modal-header pb-0 border-bottom-0  justify-content-end">
-                                                            <button type="button" class="close-btn" data-bs-dismiss="modal"
-                                                                aria-label="Close"><i class="feather-x-circle"></i></button>
+                                                        <div
+                                                            class="modal-header pb-0 border-bottom-0  justify-content-end">
+                                                            <button type="button" class="close-btn"
+                                                                data-bs-dismiss="modal" aria-label="Close"><i
+                                                                    class="feather-x-circle"></i></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form
@@ -314,12 +341,16 @@
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <div class="delete-wrap text-center">
-                                                                    <div class="del-icon"><i class="feather-x-circle"></i></div>
-                                                                    <h2>Apakah anda yakin ingin <br> mengeluarkan {{$row->name}} dari <br> kelas {{ $class->name }}?</h2>
+                                                                    <div class="del-icon"><i class="feather-x-circle"></i>
+                                                                    </div>
+                                                                    <h2>Apakah anda yakin ingin <br> mengeluarkan
+                                                                        {{ $row->name }} dari <br> kelas
+                                                                        {{ $class->name }}?</h2>
                                                                     <div class="submit-section">
                                                                         <a href="#" class="btn btn-primary"
                                                                             data-bs-dismiss="modal">Tidak</a>
-                                                                        <button type="submit" class="btn btn-dark ">Ya, saya
+                                                                        <button type="submit" class="btn btn-dark ">Ya,
+                                                                            saya
                                                                             yakin</button>
                                                                     </div>
                                                                 </div>

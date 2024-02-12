@@ -108,7 +108,8 @@ class ClassesController extends Controller
         $class = Classes::findOrFail($id);
         $member = $class->member;
         $materials = $class->materials;
-        return view('detailclass',compact('class','member','materials'));
+        $tasks = $class->tasks;
+        return view('detailclass',compact('class','member','materials','tasks'));
     }
 
     /**

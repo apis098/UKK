@@ -26,4 +26,7 @@ class Classes extends Model
     public function materials(){
         return $this->hasMany(materials::class,'class_id');
     }
+    public function tasks(){
+        return $this->hasMany(Task::class,'class_id');
+    }
 }
