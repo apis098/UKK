@@ -64,8 +64,7 @@
                                     <a href="#" class="button-custom text-primary"><i
                                             class="fa-solid fa-list-check"></i></i>
                                         0 Tugas</a>
-                                    <a href="#" class="button-custom text-primary"><i class="fa-solid fa-book"></i> 0
-                                        Materi</a>
+                                    <a href="#" class="button-custom text-primary"><i class="fa-solid fa-book me-1"></i>{{$row->materials->count()}} Materi</a>
                                     <a href="#" class="button-custom-danger text-danger" data-bs-toggle="modal"
                                         data-bs-target="#out-class-modal-{{ $row->id }}"><i
                                             class="fa-solid fa-door-open"></i> Keluar</a>

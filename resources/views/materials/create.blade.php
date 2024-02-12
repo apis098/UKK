@@ -152,13 +152,13 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Judul<span class="text-danger">*</span></label>
-                                                <input type="text" name="name" class="form-control">
+                                                <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Petunjuk/Deskripsi</label>
-                                                <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
+                                                <textarea class="form-control" name="description" id="description" value="{{old('description')}}" id="" cols="30" rows="10"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
@@ -185,7 +185,7 @@
                         </div>
                         <div class=" blog-categories-btn pt-0">
                             <div class="bank-details-btn ">
-                                <a class="btn bank-cancel-btn me-2" onclick="submitUploadForm()">Tambah Tugas</a>
+                                <a class="btn bank-cancel-btn me-2" id="fake-button" onclick="submitUploadForm()">Tambah Tugas</a>
                             </div>
                         </div>
                     </div>
@@ -199,6 +199,7 @@
     const form = document.querySelector(".upload-form"),
         elementContainer = document.querySelector(".element"),
         progressArea = document.querySelector(".progress-area"),
+        fakeButton = document.querySelector('#fake-button'),
         uploadedArea = document.querySelector(".uploaded-area");
 
     let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
@@ -261,6 +262,7 @@
                 loaded,
                 total
             }) => {
+                fakeButton.classList.add('disabled');
                 let fileLoaded = Math.floor((loaded / total) * 100);
                 let fileTotal = Math.floor(total / 1000);
                 let fileSize;
@@ -281,6 +283,7 @@
                 uploadedArea.classList.add("onprogress");
                 progressArea.innerHTML = progressHTML;
                 if (loaded == total) {
+                    fakeButton.classList.remove('disabled');
                     progressArea.innerHTML = "";
                     let uploadedHTML = `<li class="row">
                         <div class="content upload">

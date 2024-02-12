@@ -42,7 +42,12 @@ class MaterialsController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'files.*' => 'file|mimes:jpg,jpeg,png,gif|max:2048', // Sesuaikan dengan kebutuhan Anda
+            'files.*' => 'file|mimes:jpg,jpeg,png,gif,pdf,mp4|max:100000', // Sesuaikan dengan kebutuhan Anda
+        ],
+        [
+            'name.required' => 'inputan judul harus diisi',
+            'files.file' => 'Tipe file tidak didukung, masukan file yang bertipe JPG, JPEG, PNG, GIF, PDF, MP4',
+            'files.max' => 'Ukuran file maksimal adalah 100 MB'
         ]);
         $data = new materials();
         $data->name = $request->input('name');
@@ -58,9 +63,9 @@ class MaterialsController extends Controller
                 $atachment->material_id = $data->id;
                 $atachment->save();
             }
-            return redirect()->back()->with('success', 'Sukses menambahkan materi baru!');
+            return redirect('/classes/'.$class_id)->with('success', 'Sukses menambahkan materi baru!');
         }
-        return redirect()->back()->with('success', 'Sukses menambahkan materi baru!');
+        return redirect('/classes/'.$class_id)->with('success', 'Sukses menambahkan materi baru!');
     }
 
     /**
