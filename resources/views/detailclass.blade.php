@@ -121,6 +121,14 @@
                                     class="fa-solid fa-book"></i> Materi</a></li>
                         <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab3" data-bs-toggle="tab"><i
                                     class="fa-solid fa-users"></i> Anggota</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab4" data-bs-toggle="tab"><svg
+                                    class="mb-1" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
+                                    viewBox="0 0 32 32">
+                                    <path fill="currentColor"
+                                        d="M30 20a6 6 0 1 0-10 4.46V32l4-1.894L28 32v-7.54A5.98 5.98 0 0 0 30 20m-4 8.84l-2-.947l-2 .947v-3.19a5.888 5.888 0 0 0 4 0ZM24 24a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4" />
+                                    <path fill="currentColor"
+                                        d="M25 5h-3V4a2.006 2.006 0 0 0-2-2h-8a2.006 2.006 0 0 0-2 2v1H7a2.006 2.006 0 0 0-2 2v21a2.006 2.006 0 0 0 2 2h9v-2H7V7h3v3h12V7h3v5h2V7a2.006 2.006 0 0 0-2-2m-5 3h-8V4h8Z" />
+                                </svg> Belum di nilai</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="bottom-justified-tab1">
@@ -148,7 +156,8 @@
                             <!-- Page Header -->
                             <div class="row pe-3 ps-3" id="task-element">
                                 @foreach ($tasks as $task)
-                                    <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
+                                    <a href="#"
+                                        class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
                                         <div class="col-lg-9">
                                             <div class="grid-container">
                                                 <div class="db-widgets d-flex justify-content-beetwen align-items-center">
@@ -170,7 +179,7 @@
                                                     class="text-secondary">{{ \Carbon\Carbon::parse($task->created_at)->locale('id_ID')->diffForHumans() }}</small>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 @endforeach
                                 @forelse($tasks as $task)
                                     {{--  --}}
@@ -184,8 +193,8 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab2">
-                             <!-- Page Header -->
-                             <div class="page-header">
+                            <!-- Page Header -->
+                            <div class="page-header">
                                 <div class="row">
                                     <div class="col-lg-8">
                                         <div class="page-sub-header">
@@ -206,7 +215,8 @@
                             </div>
                             <div class="row pe-3 ps-3" id="material-element">
                                 @foreach ($materials as $data)
-                                    <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
+                                    <a href="#"
+                                        class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
                                         <div class="col-lg-9">
                                             <div class="grid-container">
                                                 <div class="db-widgets d-flex justify-content-beetwen align-items-center">
@@ -229,7 +239,7 @@
                                                     class="text-secondary">{{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</small>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 @endforeach
                             </div>
                             @forelse($materials as $data)
@@ -403,6 +413,73 @@
                                 </div>
                             @endforelse
                         </div>
+                        <div class="tab-pane" id="bottom-justified-tab4">
+                            <div class="col-xl-12 d-flex">
+                                <!-- Feed Activity -->
+                                <div class="card flex-fill comman-shadow">
+                                    <div class="card-header d-flex align-items-center">
+                                        <h5 class="card-title ">Student Activity </h5>
+                                        <ul class="chart-list-out student-ellips">
+                                            <li class="star-menus"><a href="javascript:;"><i
+                                                        class="fas fa-ellipsis-v"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="activity-groups">
+                                            <div class="activity-awards">
+                                                <div class="award-boxs">
+                                                    <img src="{{asset('/img/icons/award-icon-01.svg')}}" alt="Award">
+                                                </div>
+                                                <div class="award-list-outs">
+                                                    <h4>1st place in "Chess”</h4>
+                                                    <h5>John Doe won 1st place in "Chess"</h5>
+                                                </div>
+                                                <div class="award-time-list">
+                                                    <span>1 Day ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="activity-awards">
+                                                <div class="award-boxs">
+                                                    <img src="{{asset('/img/icons/award-icon-02.svg')}}" alt="Award">
+                                                </div>
+                                                <div class="award-list-outs">
+                                                    <h4>Participated in "Carrom"</h4>
+                                                    <h5>Justin Lee participated in "Carrom"</h5>
+                                                </div>
+                                                <div class="award-time-list">
+                                                    <span>2 hours ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="activity-awards">
+                                                <div class="award-boxs">
+                                                    <img src="{{asset('/img/icons/award-icon-03.svg')}}" alt="Award">
+                                                </div>
+                                                <div class="award-list-outs">
+                                                    <h4>Internation conference in "St.John School"</h4>
+                                                    <h5>Justin Leeattended internation conference in "St.John School"</h5>
+                                                </div>
+                                                <div class="award-time-list">
+                                                    <span>2 Week ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="activity-awards mb-0">
+                                                <div class="award-boxs">
+                                                    <img src="{{asset('/img/icons/award-icon-04.svg')}}" alt="Award">
+                                                </div>
+                                                <div class="award-list-outs">
+                                                    <h4>Won 1st place in "Chess"</h4>
+                                                    <h5>John Doe won 1st place in "Chess"</h5>
+                                                </div>
+                                                <div class="award-time-list">
+                                                    <span>3 Day ago</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Feed Activity -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -410,7 +487,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.slim.js"
-    integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
+        integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             $('.member-search').on('input', function() {
