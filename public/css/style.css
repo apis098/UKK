@@ -722,6 +722,7 @@ table.table td h2 span {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
+	text-align: center;
 }
 .actions a:hover {
 	background-color: #3d5ee1 !important;
@@ -1522,6 +1523,7 @@ button.bg-danger:hover {
 	background-color:#F7F7FA !important;
 	color:#52536D !important;
 	border-radius: 50px;
+	text-align: center;
 }
 .bg-warning-light{
 	background-color:rgba(255, 152, 0,0.12) !important;

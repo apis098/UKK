@@ -17,7 +17,7 @@
                             </svg>
                         </a>
                         <div class="dropdown-menu me-2 pt-2 pb-2 text-center">
-                            <a class="dropdown-item align-items-center" href="profile.html"><svg class="mb-1"
+                            <a class="dropdown-item align-items-center" href="{{route('task.form',$class->id)}}"><svg class="mb-1"
                                     xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 14">
                                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                                         <path
@@ -288,12 +288,14 @@
                                                 </td>
                                                 <td class="text-end">
                                                     <div class="actions ">
-                                                        <a href="javascript:;" class="btn btn-sm bg-success-light me-2 ">
+                                                        <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
                                                             <i class="feather-eye"></i>
                                                         </a>
-                                                        <a href="#" class="btn btn-sm bg-danger-light" data-bs-toggle="modal" data-bs-target="#kick-for-class-modal-{{$row->id}}">
-                                                            <i class="feather-edit"></i>
+                                                        @if(auth()->user()->role == 'theacer')
+                                                        <a href="#" class="btn btn-sm bg-danger-light" data-bs-toggle="modal" data-bs-target="#kick-for-class-modal-{{$row->id}}" title="Keluarkan Murid">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="2.75" r="2.25"/><circle cx="10.25" cy="10.25" r="3.25"/><path d="m7.95 12.55l4.6-4.6M6 6.61A4.49 4.49 0 0 0 .5 11v1.5h4"/></g></svg>
                                                         </a>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

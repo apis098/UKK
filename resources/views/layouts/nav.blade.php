@@ -155,7 +155,13 @@
                     @endif
                     <div class="user-text">
                         <h6>{{ auth()->user()->name }}</h6>
-                        <p class="text-muted mb-0">{{ auth()->user()->role }}</p>
+                        <p class="text-muted mb-0">
+                            @if (auth()->user()->role == 'theacer')
+                                Pengajar
+                            @else
+                                Murid
+                            @endif
+                        </p>
                     </div>
                 </div>
             </a>
@@ -180,7 +186,13 @@
                     </div>
                     <div class="user-text">
                         <h6>{{ auth()->user()->name }}</h6>
-                        <p class="text-muted mb-0">{{ auth()->user()->role }}</p>
+                        <p class="text-muted mb-0">
+                            @if (auth()->user()->role == 'theacer')
+                                Pengajar
+                            @else
+                                Murid
+                            @endif
+                        </p>
                     </div>
                 </div>
                 <a class="dropdown-item" href="profile.html">My Profile</a>

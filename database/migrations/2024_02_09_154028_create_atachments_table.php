@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->string('link')->nullable();
             $table->unsignedBigInteger('material_id')->nullable();
+            $table->unsignedBigInteger('task_id')->nullable();
             $table->timestamps();
 
             $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
         });
     }
 

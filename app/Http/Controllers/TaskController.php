@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\atachment;
 use App\Models\Classes;
-use App\Models\materials;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
-class MaterialsController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,23 +22,13 @@ class MaterialsController extends Controller
      */
     public function create()
     {
-        // 
+        return view('task.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // 
-    }
-    public function materialsCreate(string $class_id)
-    {
+    public function taskCreate($class_id){
         $class = Classes::findOrFail($class_id);
-        return view('materials.create', compact('class'));
+        return view('task.create',compact('class'));
     }
-    public function addMaterials(Request $request, string $class_id)
-    {
+    public function taskStore(Request $request, string $class_id){
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
@@ -49,22 +39,29 @@ class MaterialsController extends Controller
             'files.file' => 'Tipe file tidak didukung, masukan file yang bertipe JPG, JPEG, PNG, GIF, PDF, MP4, DOCX, XLSX, PPTX',
             'files.max' => 'Ukuran file maksimal adalah 100 MB'
         ]);
-        $data = new materials();
-        $data->name = $request->input('name');
-        $data->description = $request->input('description');
+        $data = new Task();
+        $data->name = $request->name;
+        $data->description = $request->description;
         $data->user_id = auth()->user()->id;
         $data->class_id = $class_id;
         $data->save();
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $filename = $file->store('atachment', 'public');
+        if($request->hasFile('files')){
+            foreach($request->file('files') as $file){
+                $fileName = $file->store('atachment','public');
                 $atachment = new atachment();
-                $atachment->file = $filename;
-                $atachment->material_id = $data->id;
+                $atachment->file = $fileName;
+                $atachment->task_id = $data->id;
                 $atachment->save();
             }
         }
-        return redirect('/classes/'.$class_id)->with('success', 'Sukses menambahkan materi baru!');
+        return redirect('/classes/'.$class_id)->with('success', 'Sukses menambahkan tugas baru!');
+    }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        
     }
 
     /**
@@ -99,4 +96,3 @@ class MaterialsController extends Controller
         //
     }
 }
-

@@ -7,6 +7,7 @@ use App\Http\Controllers\CompletenessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,8 @@ Route::middleware('auth')->group(function () {
    Route::resource('materials',MaterialsController::class);
    Route::get('form/materials/{class_id}',[MaterialsController::class,'materialsCreate'])->name('materials.form');
    Route::post('add/materials/{class_id}',[MaterialsController::class,'addMaterials'])->name('materials.add');
+   // Task
+   Route::resource('task',TaskController::class);
+   Route::get('task/create/{class_id}',[TaskController::class,'taskCreate'])->name('task.form');
+   Route::post('task/store/{class_id}',[TaskController::class,'taskStore'])->name('task.add');
 });
