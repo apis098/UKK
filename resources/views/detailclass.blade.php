@@ -48,40 +48,8 @@
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>All Courses</h6>
-                                    <h3>04/06</h3>
-                                </div>
-                                <div class="db-icon">
-                                    <img src="{{ asset('/img/icons/teacher-icon-01.svg') }}" alt="Dashboard Icon">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                    <div class="card bg-comman w-100">
-                        <div class="card-body">
-                            <div class="db-widgets d-flex justify-content-between align-items-center">
-                                <div class="db-info">
-                                    <h6>All Projects</h6>
-                                    <h3>40/60</h3>
-                                </div>
-                                <div class="db-icon">
-                                    <img src="{{ asset('/img/icons/teacher-icon-02.svg') }}" alt="Dashboard Icon">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                    <div class="card bg-comman w-100">
-                        <div class="card-body">
-                            <div class="db-widgets d-flex justify-content-between align-items-center">
-                                <div class="db-info">
-                                    <h6>Test Attended</h6>
-                                    <h3>30/50</h3>
+                                    <h6>Tugas</h6>
+                                    <h3>{{ $tasks->count() }}</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{ asset('/img/icons/student-icon-01.svg') }}" alt="Dashboard Icon">
@@ -96,16 +64,48 @@
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>Test Passed</h6>
-                                    <h3>15/20</h3>
+                                    <h6>Materi</h6>
+                                    <h3>{{ $materials->count() }}</h3>
                                 </div>
                                 <div class="db-icon">
-                                    <img src="{{ asset('/img/icons/student-icon-02.svg') }}" alt="Dashboard Icon">
+                                    <img src="{{ asset('/img/icons/teacher-icon-02.svg') }}" alt="Dashboard Icon">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                    <div class="card bg-comman w-100">
+                        <div class="card-body">
+                            <div class="db-widgets d-flex justify-content-between align-items-center">
+                                <div class="db-info">
+                                    <h6>Anggota</h6>
+                                    <h3>{{ $member->count() }}</h3>
+                                </div>
+                                <div class="db-icon">
+                                    <img class="img-fluid" src="{{ asset('/img/member.png') }}" alt="Dashboard Icon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                    <div class="card bg-comman w-100">
+                        <div class="card-body">
+                            <div class="db-widgets d-flex justify-content-between align-items-center">
+                                <div class="db-info">
+                                    <h6>Belum di nilai</h6>
+                                    <h3>5</h3>
+                                </div>
+                                <div class="db-icon">
+                                    <img class="img-fluid" src="{{ asset('/img/task-value.png') }}" alt="Dashboard Icon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- /Overview Section -->
             {{-- tabs --}}
@@ -124,7 +124,29 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="bottom-justified-tab1">
-                            <div class="row pe-3 ps-3">
+                            <!-- Page Header -->
+                            <div class="page-header">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="page-sub-header">
+                                            <h3 class="page-title">Daftar Tugas</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="top-nav-search" style="margin-left: -7%;margin-top:-5%;">
+                                            <form>
+                                                <input type="text" class="form-control task-search"
+                                                    placeholder="Cari Tugas..">
+                                                <button class="btn" type="submit"><i
+                                                        class="fas fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Page Header -->
+                            <div class="row pe-3 ps-3" id="task-element">
                                 @foreach ($tasks as $task)
                                     <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
                                         <div class="col-lg-9">
@@ -136,15 +158,16 @@
                                                             alt="Dashboard Icon">
                                                     </div>
                                                     <div class="db-info mt-2">
-                                                        <h5 style="margin-bottom:0; ">{{$task->name}}</h5>
-                                                        <h6>{{$task->description}}</h6>
+                                                        <h5 style="margin-bottom:0; ">{{ $task->name }}</h5>
+                                                        <h6>{{ $task->description }}</h6>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="grid-container text-end">
-                                                <small class="text-secondary">{{ \Carbon\Carbon::parse($task->created_at)->locale('id_ID')->diffForHumans() }}</small>
+                                                <small
+                                                    class="text-secondary">{{ \Carbon\Carbon::parse($task->created_at)->locale('id_ID')->diffForHumans() }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +184,27 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab2">
-                            <div class="row pe-3 ps-3">
+                             <!-- Page Header -->
+                             <div class="page-header">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="page-sub-header">
+                                            <h3 class="page-title">Daftar Materi</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="top-nav-search" style="margin-left: -7%;margin-top:-5%;">
+                                            <form>
+                                                <input type="text" class="form-control material-search"
+                                                    placeholder="Cari Materi..">
+                                                <button class="btn" type="submit"><i
+                                                        class="fas fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pe-3 ps-3" id="material-element">
                                 @foreach ($materials as $data)
                                     <div class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center">
                                         <div class="col-lg-9">
@@ -174,7 +217,7 @@
                                                     </div>
                                                     <div class="db-info mt-2">
                                                         <h5 style="margin-bottom:0; ">{{ $data->name }}</h5>
-                                                        <h6> {{$data->description}}</span>
+                                                        <h6> {{ $data->description }}</span>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -182,7 +225,8 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="grid-container text-end">
-                                                <small class="text-secondary">{{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</small>
+                                                <small
+                                                    class="text-secondary">{{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -202,38 +246,24 @@
                             <!-- Page Header -->
                             <div class="page-header">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-lg-8">
                                         <div class="page-sub-header">
                                             <h3 class="page-title">Daftar Anggota</h3>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- /Page Header -->
-                            <div class="student-group-form">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search by ID ...">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search by Name ...">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search by Phone ...">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="search-student-btn">
-                                            <button type="btn" class="btn btn-primary">Cari</button>
+                                    <div class="col-lg-4">
+                                        <div class="top-nav-search" style="margin-left: -7%;margin-top:-5%;">
+                                            <form>
+                                                <input type="text" class="form-control member-search"
+                                                    placeholder="Cari anggota..">
+                                                <button class="btn" type="submit"><i
+                                                        class="fas fa-search"></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Page Header -->
                             <div class="table-responsive">
                                 <table class="table border-0 star-student table-hover table-center mb-0  table-striped">
@@ -247,7 +277,7 @@
                                             <th class="text-end">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="member-list">
                                         @foreach ($member as $row)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
@@ -379,4 +409,36 @@
             {{-- end tabs --}}
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.js"
+    integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('.member-search').on('input', function() {
+                var value = $(this).val().toLowerCase();
+                $('#member-list tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.task-search').on('input', function() {
+                var value = $(this).val().toLowerCase();
+                $('#task-element').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.material-search').on('input', function() {
+                var value = $(this).val().toLowerCase();
+                $('#material-element').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 @endsection

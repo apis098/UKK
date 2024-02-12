@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="{{ asset('/plugins/datatables/datatables.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    
     {{-- end izitoast --}}
 </head>
 
@@ -55,8 +56,8 @@
         @include('layouts.modal')
     </div>
     <!-- /Main Wrapper -->
-
-    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- jQuery --> 
     <script src="{{ asset('/js/jquery-3.7.1.min.js') }}"></script>
 
     <!-- Bootstrap Core JS -->
