@@ -152,13 +152,15 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Judul<span class="text-danger">*</span></label>
-                                                <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
+                                                <input type="text" name="name" id="name"
+                                                    value="{{ old('name') }}" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label>Petunjuk/Deskripsi</label>
-                                                <textarea class="form-control" name="description" id="description" value="{{old('description')}}" id="" cols="30" rows="10"></textarea>
+                                                <textarea class="form-control" name="description" id="description" value="{{ old('description') }}" id=""
+                                                    cols="30" rows="10"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12">
@@ -169,11 +171,11 @@
                                                 <div class="element"></div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" hidden id="real-button" type="submit">Kirim</button>
+                                        <button class="btn btn-primary" hidden id="real-button"
+                                            type="submit">Kirim</button>
                                     </form>
                                     <div class="wrapper mt-5">
                                         <form class="upload-form" action="#">
-                                            {{-- <input class="file-input" type="file" name="file" hidden multiple> --}}
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             <p>Unggah File</p>
                                         </form>
@@ -185,7 +187,8 @@
                         </div>
                         <div class=" blog-categories-btn pt-0">
                             <div class="bank-details-btn ">
-                                <a class="btn bank-cancel-btn me-2" id="fake-button" onclick="submitUploadForm()">Tambah Tugas</a>
+                                <a class="btn bank-cancel-btn me-2" id="fake-button" onclick="submitUploadForm()">Tambah
+                                    Tugas</a>
                             </div>
                         </div>
                     </div>
@@ -195,65 +198,67 @@
     </div>
     <!-- JavaScript -->
     <script>
-      // JavaScript
-    const form = document.querySelector(".upload-form"),
-        elementContainer = document.querySelector(".element"),
-        progressArea = document.querySelector(".progress-area"),
-        fakeButton = document.querySelector('#fake-button'),
-        uploadedArea = document.querySelector(".uploaded-area");
+        // JavaScript
+        const form = document.querySelector(".upload-form"),
+            elementContainer = document.querySelector(".element"),
+            progressArea = document.querySelector(".progress-area"),
+            fakeButton = document.querySelector('#fake-button'),
+            uploadedArea = document.querySelector(".uploaded-area");
 
-    let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
+        let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
 
-    form.addEventListener("click", () => {
-        if (elementContainer.children.length === 0) {
-            // Jika belum ada input file, buat dynamic input
-            createNewInput();
-        } else {
-            // Jika sudah ada input file, tunggu sampai upload selesai baru buat dynamic input
-            checkUploadCompletion();
-        }
-    });
-
-    function checkUploadCompletion() {
-        if (!uploadedArea.classList.contains("onprogress")) {
-            // Jika tidak ada proses upload berlangsung
-            createNewInput();
-        } else {
-            // Jika masih ada proses upload, tunggu sebentar dan cek lagi
-            setTimeout(checkUploadCompletion, 1000);
-        }
-    }
-
-    function createNewInput() {
-        let newInput = document.createElement("input");
-        newInput.type = "file";
-        newInput.name = "files[]";
-        newInput.classList.add("file-input", "form-control");
-        newInput.setAttribute("multiple", true);
-        newInput.setAttribute("hidden", true);
-
-        // Append new input to the element container
-        elementContainer.appendChild(newInput);
-
-        // Add onchange event to the new input
-        newInput.onchange = ({ target }) => {
-            let files = target.files;
-            if (files.length > 0) {
-                for (let i = 0; i < files.length; i++) {
-                    let file = files[i];
-                    let fileName = file.name;
-                    if (fileName.length >= 12) {
-                        let splitName = fileName.split('.');
-                        fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
-                    }
-                    uploadFile(file, fileName);
-                }
+        form.addEventListener("click", () => {
+            if (elementContainer.children.length === 0) {
+                // Jika belum ada input file, buat dynamic input
+                createNewInput();
+            } else {
+                // Jika sudah ada input file, tunggu sampai upload selesai baru buat dynamic input
+                checkUploadCompletion();
             }
-        };
+        });
 
-        // Trigger click event on the new input to open file dialog
-        newInput.click();
-    }
+        function checkUploadCompletion() {
+            if (!uploadedArea.classList.contains("onprogress")) {
+                // Jika tidak ada proses upload berlangsung
+                createNewInput();
+            } else {
+                // Jika masih ada proses upload, tunggu sebentar dan cek lagi
+                setTimeout(checkUploadCompletion, 1000);
+            }
+        }
+
+        function createNewInput() {
+            let newInput = document.createElement("input");
+            newInput.type = "file";
+            newInput.name = "files[]";
+            newInput.classList.add("file-input", "form-control");
+            newInput.setAttribute("multiple", true);
+            newInput.setAttribute("hidden", true);
+
+            // Append new input to the element container
+            elementContainer.appendChild(newInput);
+
+            // Add onchange event to the new input
+            newInput.onchange = ({
+                target
+            }) => {
+                let files = target.files;
+                if (files.length > 0) {
+                    for (let i = 0; i < files.length; i++) {
+                        let file = files[i];
+                        let fileName = file.name;
+                        if (fileName.length >= 12) {
+                            let splitName = fileName.split('.');
+                            fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+                        }
+                        uploadFile(file, fileName);
+                    }
+                }
+            };
+
+            // Trigger click event on the new input to open file dialog
+            newInput.click();
+        }
 
         function uploadFile(file, name) {
             let xhr = new XMLHttpRequest();
@@ -308,7 +313,8 @@
             data.append('file', file);
             xhr.send(data);
         }
-        function submitUploadForm(){
+
+        function submitUploadForm() {
             const button = document.getElementById('real-button');
             button.click();
         }

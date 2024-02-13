@@ -36,8 +36,8 @@
     <!-- Header Right Menu -->
     <ul class="nav user-menu">
         <!-- Notifications -->
-        <li class="nav-item dropdown noti-dropdown me-2">
-            <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown"
+        <li class="nav-item dropdown noti-dropdown me-2 btn-group dropstart">
+            <a href="#" class=" nav-link header-nav-list" data-bs-toggle="dropdown"
                 data-bs-target="#notificationModal" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-regular fa-bell"></i>
             </a>
@@ -121,17 +121,7 @@
         <!-- /Notifications -->
         <li class="nav-item zoom-screen me-2">
             <a href="#" class="nav-link header-nav-list win-maximize">
-                <i class="fa-solid fa-clipboard-list"></i>
-            </a>
-        </li>
-        <li class="nav-item zoom-screen me-2">
-            <a href="#" class="nav-link header-nav-list win-maximize">
-                <i class="fa-solid fa-book-bookmark"></i>
-            </a>
-        </li>
-        <li class="nav-item zoom-screen me-2">
-            <a href="#" class="nav-link header-nav-list win-maximize">
-                <i class="fa-solid fa-link"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="currentColor" d="m15 3l2.3 2.3l-2.89 2.87l1.42 1.42L18.7 6.7L21 9V3zM3 9l2.3-2.3l2.87 2.89l1.42-1.42L6.7 5.3L9 3H3zm6 12l-2.3-2.3l2.89-2.87l-1.42-1.42L5.3 17.3L3 15v6zm12-6l-2.3 2.3l-2.87-2.89l-1.42 1.42l2.89 2.87L15 21h6z"/></svg>
             </a>
         </li>
         <!-- User Menu -->

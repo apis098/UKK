@@ -38,13 +38,12 @@
     <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
     <!-- Ckeditor CSS-->
     <link rel="stylesheet" href="{{ asset('/css/ckeditor.css') }}">
-    {{-- izitoast --}}
-     <!-- Feathericon CSS -->
-     <link rel="stylesheet" href="{{ asset('/css/feather.css') }}">
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{{ asset('/css/feather.css') }}">
     <link rel="stylesheet" href="{{ asset('/plugins/datatables/datatables.min.css') }}">
+    {{-- izitoast --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
-    
     {{-- end izitoast --}}
 </head>
 
@@ -56,8 +55,10 @@
         @include('layouts.modal')
     </div>
     <!-- /Main Wrapper -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- jQuery --> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- jQuery -->
     <script src="{{ asset('/js/jquery-3.7.1.min.js') }}"></script>
 
     <!-- Bootstrap Core JS -->
@@ -73,8 +74,8 @@
     <!-- Custom JS -->
     <script src="{{ asset('/js/script.js') }}"></script>
     <!-- Wizard JS -->
-     <!-- Feathericon js -->
-     <script src="{{asset('/js/feather.min.js')}}"></script>
+    <!-- Feathericon js -->
+    <script src="{{ asset('/js/feather.min.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
     <script src="{{ asset('/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
@@ -82,12 +83,12 @@
     <!-- Select2 JS -->
     <script src="{{ asset('/plugins/select2/js/select2.min.js') }}"></script>
     <!-- ckeditor JS -->
-    <script src="{{asset('/js/ckeditor.js')}}"></script>
+    <script src="{{ asset('/js/ckeditor.js') }}"></script>
 
     <!-- Bootstrap Tagsinput JS -->
-    <script src="{{asset('/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js')}}"></script>
+    <script src="{{ asset('/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js') }}"></script>
     <script src="{{ asset('/plugins/clipboard/clipboard.min.js') }}"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <script src="{{ asset('/plugins/datatables/datatables.min.js') }}"></script>
     <script>

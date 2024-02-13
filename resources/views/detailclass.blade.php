@@ -119,8 +119,6 @@
                                 data-bs-toggle="tab"><i class="fa-solid fa-list-check"></i> Tugas</a></li>
                         <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab2" data-bs-toggle="tab"><i
                                     class="fa-solid fa-book"></i> Materi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab3" data-bs-toggle="tab"><i
-                                    class="fa-solid fa-users"></i> Anggota</a></li>
                         <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab4" data-bs-toggle="tab"><svg
                                     class="mb-1" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
                                     viewBox="0 0 32 32">
@@ -129,6 +127,8 @@
                                     <path fill="currentColor"
                                         d="M25 5h-3V4a2.006 2.006 0 0 0-2-2h-8a2.006 2.006 0 0 0-2 2v1H7a2.006 2.006 0 0 0-2 2v21a2.006 2.006 0 0 0 2 2h9v-2H7V7h3v3h12V7h3v5h2V7a2.006 2.006 0 0 0-2-2m-5 3h-8V4h8Z" />
                                 </svg> Belum di nilai</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab3" data-bs-toggle="tab"><i
+                                    class="fa-solid fa-users"></i> Anggota</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="bottom-justified-tab1">
@@ -156,7 +156,7 @@
                             <!-- Page Header -->
                             <div class="row pe-3 ps-3" id="task-element">
                                 @foreach ($tasks as $task)
-                                    <a href="#"
+                                    <a href="{{route('task.show',$task->id)}}"
                                         class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
                                         <div class="col-lg-9">
                                             <div class="grid-container">
@@ -428,7 +428,8 @@
                                         <div class="activity-groups">
                                             <div class="activity-awards">
                                                 <div class="award-boxs">
-                                                    <img src="{{asset('/img/icons/award-icon-01.svg')}}" alt="Award">
+                                                    <img src="{{ asset('/img/icons/award-icon-01.svg') }}"
+                                                        alt="Award">
                                                 </div>
                                                 <div class="award-list-outs">
                                                     <h4>1st place in "Chess”</h4>
@@ -440,7 +441,8 @@
                                             </div>
                                             <div class="activity-awards">
                                                 <div class="award-boxs">
-                                                    <img src="{{asset('/img/icons/award-icon-02.svg')}}" alt="Award">
+                                                    <img src="{{ asset('/img/icons/award-icon-02.svg') }}"
+                                                        alt="Award">
                                                 </div>
                                                 <div class="award-list-outs">
                                                     <h4>Participated in "Carrom"</h4>
@@ -452,7 +454,8 @@
                                             </div>
                                             <div class="activity-awards">
                                                 <div class="award-boxs">
-                                                    <img src="{{asset('/img/icons/award-icon-03.svg')}}" alt="Award">
+                                                    <img src="{{ asset('/img/icons/award-icon-03.svg') }}"
+                                                        alt="Award">
                                                 </div>
                                                 <div class="award-list-outs">
                                                     <h4>Internation conference in "St.John School"</h4>
@@ -464,7 +467,8 @@
                                             </div>
                                             <div class="activity-awards mb-0">
                                                 <div class="award-boxs">
-                                                    <img src="{{asset('/img/icons/award-icon-04.svg')}}" alt="Award">
+                                                    <img src="{{ asset('/img/icons/award-icon-04.svg') }}"
+                                                        alt="Award">
                                                 </div>
                                                 <div class="award-list-outs">
                                                     <h4>Won 1st place in "Chess"</h4>
