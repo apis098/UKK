@@ -20,4 +20,7 @@ class Task extends Model
     public function atachments(){
         return $this->hasMany(atachment::class,'task_id');
     }
+    public function collections(){
+        return $this->hasMany(Collection::class,'task_id');
+    }
 }
