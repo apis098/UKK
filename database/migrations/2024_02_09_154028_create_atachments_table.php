@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('file')->nullable();
             $table->string('link')->nullable();
+            $table->string('original_name')->nullable();
             $table->unsignedBigInteger('material_id')->nullable();
             $table->unsignedBigInteger('task_id')->nullable();
             $table->timestamps();

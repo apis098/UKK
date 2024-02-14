@@ -29,7 +29,6 @@ class TaskController extends Controller
         return view('task.create',compact('class'));
     }
     public function taskStore(Request $request, string $class_id){
-        dd($request->all());
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
@@ -48,10 +47,12 @@ class TaskController extends Controller
         $data->save();
         if($request->hasFile('files')){
             foreach($request->file('files') as $file){
+                $original_name = $file->getClientOriginalName();
                 $fileName = $file->store('atachment','public');
                 $atachment = new atachment();
                 $atachment->file = $fileName;
                 $atachment->task_id = $data->id;
+                $atachment->original_name = $original_name;
                 $atachment->save();
             }
         }
@@ -71,7 +72,8 @@ class TaskController extends Controller
     public function show(string $id)
     {
         $task = Task::findOrFail($id);
-        return view('task.detail',compact('task'));
+        $atachments = $task->atachments;
+        return view('task.detail',compact('task','atachments'));
     }
 
     /**

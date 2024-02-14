@@ -57,9 +57,11 @@ class MaterialsController extends Controller
         $data->save();
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
+                $original_name = $file->getClientOriginalName();
                 $filename = $file->store('atachment', 'public');
                 $atachment = new atachment();
                 $atachment->file = $filename;
+                $atachment->original_name = $original_name;
                 $atachment->material_id = $data->id;
                 $atachment->save();
             }

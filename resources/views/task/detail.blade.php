@@ -26,6 +26,7 @@
             color: #5465ff;
             text-decoration: none;
         }
+
         ::selection {
             color: #fff;
             background: #9FA6B2;
@@ -156,9 +157,10 @@
             <div class="container">
                 <!-- Title -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> {{$task->name}} - kelas {{$task->classes->name}}</h2>
+                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> {{ $task->name }} - kelas
+                        {{ $task->classes->name }}</h2>
                 </div>
-    
+
                 <!-- Main content -->
                 <div class="row">
                     <div class="col-lg-8">
@@ -171,18 +173,22 @@
                                             <td>
                                                 <div class="d-flex mb-2">
                                                     <div class="flex-shrink-0">
-                                                        <img  src="{{ asset('/img/icons/student-icon-01.svg') }}"alt="" width="35" class="img-fluid bg-primary rounded-circle">
+                                                        <img src="{{ asset('/img/icons/student-icon-01.svg') }}"alt=""
+                                                            width="35" class="img-fluid bg-primary rounded-circle">
                                                     </div>
                                                     <div class="flex-lg-grow-1 ms-3 align-items-center">
-                                                        <h6 class="mb-0 fw-bolder"><a href="#" class="text-reset">{{$task->name}}</a></h6>
-                                                        <small>{{$task->user->name}} - {{ \Carbon\Carbon::parse($task->created_at)->locale('id_ID')->diffForHumans() }}</small>
+                                                        <h6 class="mb-0 fw-bolder"><a href="#"
+                                                                class="text-reset">{{ $task->name }}</a></h6>
+                                                        <small>{{ $task->user->name }} -
+                                                            {{ \Carbon\Carbon::parse($task->created_at)->locale('id_ID')->diffForHumans() }}</small>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td></td>
                                             <td class="text-end">
                                                 <div class="btn-group dropstart">
-                                                    <a class="text-dark" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                                                    <a class="text-dark" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false" href="#">
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu me-2 pt-2 pb-2 text-start">
@@ -190,8 +196,7 @@
                                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                                         </a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item align-items-center"
-                                                            href="#">
+                                                        <a class="dropdown-item align-items-center" href="#">
                                                             <i class="fa-solid fa-trash-can"></i> Tambah Materi
                                                         </a>
                                                     </div>
@@ -205,31 +210,92 @@
                                                 <div class="d-flex flex-column">
                                                     <h6 class="mb-0">100 Point</h6>
                                                     <small>
-                                                        {{$task->description}}
+                                                        {{ $task->description }}
                                                     </small>
                                                 </div>
-                                                
+
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">
                                                 <div class="d-flex">
                                                     <div class="col-lg-12">
-                                                        <div class="card p-2 border border-secondary">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="col-lg-9 d-flex align-items-center">
-                                                                    <img src="{{ asset('/img/icons/student-icon-01.svg') }}" class="img-fluid" alt="">
-                                                                <p class="mb-0">halo</p>
-                                                                </div>
-                                                                <div class="col-lg-3 text-end">
-                                                                    <button class="btn btn-primary mr-auto btn-sm rounded-3 p-2">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
-                                                                            <path fill="currentColor" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75M8 6a1 1 0 1 1 0-2a1 1 0 0 1 0 2"/>
-                                                                        </svg>
-                                                                    </button>
+                                                        @foreach ($atachments as $atachment)
+                                                            <div class="card p-2 border border-secondary">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="col-lg-9 d-flex align-items-center">
+                                                                        <img src="{{ asset('/img/file-icon.jpg') }}"
+                                                                            width="45" class="img-fluid rounded-3 me-2"
+                                                                            alt="">
+                                                                        <p class="mb-0">{{ $atachment->original_name }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-lg-3 text-end">
+                                                                        <button type="button" data-bs-toggle="modal"
+                                                                            data-bs-target="#preview-modal{{ $atachment->id }}"
+                                                                            class="btn btn-primary mr-auto btn-sm rounded-3 p-2">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="20" height="20"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path fill="currentColor"
+                                                                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75M8 6a1 1 0 1 1 0-2a1 1 0 0 1 0 2" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                            <div class="modal fade" id="preview-modal{{ $atachment->id }}"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-xl">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title" id="myLargeModalLabel">
+                                                                                Detail {{ $atachment->original_name }}</h4>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body text-center">
+                                                                            {{-- <img src="{{asset('img/img-4.jpg')}}" class="img-fluid rounded-3" alt=""> --}}
+                                                                            @if (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'image/'))
+                                                                                <img src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    alt="{{ $atachment->original_name }}">
+                                                                            @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'video/'))
+                                                                                <video controls>
+                                                                                    <source
+                                                                                        src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                        type="{{ File::mimeType('storage/' . $atachment->file) }}">
+                                                                                </video>
+                                                                            @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'application/pdf'))
+                                                                                <embed
+                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    type="application/pdf" width="100%"
+                                                                                    height="600px">
+                                                                            @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
+                                                                                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
+                                                                                <iframe
+                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    width="100%" height="600px"></iframe>
+                                                                            @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
+                                                                                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))
+                                                                                <iframe
+                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    width="100%" height="600px"></iframe>
+                                                                            @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
+                                                                                    'application/vnd.openxmlformats-officedocument.presentationml.presentation'))
+                                                                                <iframe
+                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    width="100%" height="600px"></iframe>
+                                                                            @else
+                                                                                <p>Tidak ada pratinjau yang tersedia untuk
+                                                                                    tipe file ini.</p>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div><!-- /.modal-content -->
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.modal -->
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </td>
@@ -370,7 +436,7 @@
                     uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
 
                     submit_button.classList.remove('d-none');
-                    
+
                     // Simpan informasi file yang diunggah ke dalam array
                     uploadedFiles.push({
                         name,
