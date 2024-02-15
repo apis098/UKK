@@ -157,7 +157,7 @@
             <div class="container">
                 <!-- Title -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> {{ $task->name }} - kelas
+                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Tugas - kelas
                         {{ $task->classes->name }}</h2>
                 </div>
 
@@ -262,7 +262,7 @@
                                                                                 <img src="{{ asset('storage/' . $atachment->file) }}"
                                                                                     alt="{{ $atachment->original_name }}">
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'video/'))
-                                                                                <video controls>
+                                                                                <video width="100%" controls>
                                                                                     <source
                                                                                         src="{{ asset('storage/' . $atachment->file) }}"
                                                                                         type="{{ File::mimeType('storage/' . $atachment->file) }}">
@@ -275,7 +275,7 @@
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
                                                                                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
                                                                                 <iframe
-                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    src="https://view.officeapps.live.com/op/view.aspx?src={{ asset('storage/' . $atachment->file) }}"
                                                                                     width="100%" height="600px"></iframe>
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
                                                                                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))
@@ -285,7 +285,7 @@
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
                                                                                     'application/vnd.openxmlformats-officedocument.presentationml.presentation'))
                                                                                 <iframe
-                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                    src="https://view.officeapps.live.com/op/view.aspx?src={{ asset('storage/' . $atachment->file) }}"
                                                                                     width="100%" height="600px"></iframe>
                                                                             @else
                                                                                 <p>Tidak ada pratinjau yang tersedia untuk
@@ -309,19 +309,63 @@
                         <!-- Customer Notes -->
                         <div class="card mb-4">
                             <div class="card-body">
-                                <h3 class="h6">Tugas</h3>
-                                <button class="btn btn-outline-primary rounded-3 w-100 mb-3 upload-button">
-                                    <i class="fa-solid fa-plus"></i> Kumpulkan tugas
-                                </button>
-                                <div class="element"></div>
-                                <section class="rounded progress-area"></section>
-                                <section class="rounded uploaded-area"></section>
-                                <button class="btn btn-primary rounded-3 w-100">
-                                    Tandai sebagai selesai
-                                </button>
-                                <button id="submitButton" class="btn btn-warning text-light rounded-3 w-100 mt-2 d-none">
-                                    Serahkan
-                                </button>
+                                <form action="{{route('collect.store',$task->id)}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="d-flex justify-content-beetwen position-relative">
+                                        <h3 class="h6">Tugas</h3>
+                                        <small class="{{ $status === 'Diserahkan' ? 'text-success' : 'text-danger' }} position-absolute end-0">{{$status}}</small>
+                                    </div>
+                                    @if($status == 'Diserahkan' && $files != null)
+                                        @forelse($files as $file)
+                                        <section>
+                                            <div class="row d-flex">
+                                                <div class="content upload">
+                                                    <div class="details d-flex justify-content-start align-items-center">
+                                                        <i class="fas fa-file-alt me-1"></i>
+                                                        <span class="name">{{ strlen($file->original_name) > 21 ? substr($file->original_name, 0, 20) . '...' : $file->original_name }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        @empty
+                                        <div class="align-items-center text-center mt-2">
+                                            <img class="img-fluid"
+                                                src="{{ asset('/img/nodata.png') }}" width="100" alt="">
+                                            <p class="text-secondary">Tidak ada lampiran yang diserahkan</p>
+                                        </div>
+                                        @endforelse
+                                            <button type="button" onclick="cancelTriger()" class="btn btn-outline-secondary rounded-3 mt-2" style="width: 110%; margin-left:-5%">
+                                                Batalkan Pengiriman
+                                            </button>
+                                    @elseif($status == 'Diserahkan' && $files == null)
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <p class="text-center">Tidak ada lampiran yang diserahan</p>
+                                        </div>
+                                    @else
+                                        <button type="button" class="btn btn-outline-primary rounded-3 w-100 mb-3 upload-button">
+                                            <i class="fa-solid fa-plus"></i> Kumpulkan tugas
+                                        </button>
+                                        <div class="element"></div>
+                                        <section class="rounded progress-area"></section>
+                                        <section class="rounded uploaded-area"></section>
+                                        <button type="button" onclick="readTriger()" class="btn btn-primary rounded-3 w-100">
+                                            Tandai sebagai selesai
+                                        </button>
+                                        <button id="submitButton" type="submit" onclick="cancelTriger()"
+                                            class="btn btn-warning text-light rounded-3 w-100 mt-2 d-none">
+                                            Serahkan
+                                        </button>
+                                    @endif
+                                </form>
+                                <form id="mark-form" action="{{route('collect.store',$task->id)}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <button type="submit" id="real-read-button" class="btn btn-primary d-none"> tandai</button>
+                                </form>
+                                <form action="{{route('collection.destroy',$task->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')  
+                                    <button type="submit" id="cancel-button" class="btn btn-primary d-none"> hapus</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -335,7 +379,9 @@
             elementContainer = document.querySelector(".element"),
             progressArea = document.querySelector(".progress-area"),
             submit_button = document.querySelector('#submitButton'),
-            // fakeButton = document.querySelector('#fake-button'),
+            read_button = document.querySelector('#read-button'),
+            readButton = document.querySelector('#real-read-button'),
+            cancelButton = document.querySelector('#cancel-button'),
             uploadedArea = document.querySelector(".uploaded-area");
 
         let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
@@ -436,6 +482,7 @@
                     uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
 
                     submit_button.classList.remove('d-none');
+                    read_button.classList.add('d-none');
 
                     // Simpan informasi file yang diunggah ke dalam array
                     uploadedFiles.push({
@@ -447,6 +494,12 @@
             let data = new FormData();
             data.append('file', file);
             xhr.send(data);
+        }
+        function readTriger(){
+            readButton.click();
+        }
+        function cancelTriger(){
+            cancelButton.click();
         }
     </script>
 @endsection

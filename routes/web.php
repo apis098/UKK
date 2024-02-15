@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CompletenessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialsController;
@@ -47,4 +48,7 @@ Route::middleware('auth')->group(function () {
    Route::resource('task',TaskController::class);
    Route::get('task/create/{class_id}',[TaskController::class,'taskCreate'])->name('task.form');
    Route::post('task/store/{class_id}',[TaskController::class,'taskStore'])->name('task.add');
+   // collections
+   Route::resource('collection',CollectionController::class);
+   Route::post('task/collect/{task_id}',[CollectionController::class,'collect'])->name('collect.store');
 });

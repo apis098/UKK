@@ -12,6 +12,9 @@ class Collection extends Model
     protected $guarded = "id";
     protected $primaryKey = "id";
     public function task(){
-        return $this->belongTo(Task::class,'task_id');
+        return $this->belongsTo(Task::class,'task_id');
+    }
+    public function atachments(){
+        return $this->hasMany(atachment::class,'collection_id');
     }
 }

@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->string('file')->nullable();
-            $table->string('link')->nullable();
+            $table->string('status');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('task_id')->nullable();
             $table->timestamps();

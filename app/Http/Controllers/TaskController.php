@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\atachment;
 use App\Models\Classes;
+use App\Models\Collection;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -73,9 +74,18 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
         $atachments = $task->atachments;
-        return view('task.detail',compact('task','atachments'));
+        $status = 'Ditugaskan';
+        if(Collection::where('user_id',auth()->user()->id)->where('task_id',$id)->exists()){
+            $status = "Diserahkan";
+        }
+        $collection = [];
+        $files = [];
+        if($status == 'Diserahkan'){
+            $collection = Collection::where('user_id',auth()->user()->id)->where('task_id',$id)->first();
+            $files = $collection->atachments;
+        }
+        return view('task.detail',compact('task','atachments','status','collection','files'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
