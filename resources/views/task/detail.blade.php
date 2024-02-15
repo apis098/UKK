@@ -163,7 +163,7 @@
 
                 <!-- Main content -->
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="{{ auth()->user()->role === 'student' ? 'col-lg-8' : 'col-lg-12' }}">
                         <!-- Details -->
                         <div class="card mb-4">
                             <div class="card-body">
@@ -185,30 +185,32 @@
                                                 </div>
                                             </td>
                                             <td></td>
-                                            <td class="text-end">
-                                                <div class="btn-group dropstart">
-                                                    <a class="text-dark" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false" href="#">
-                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu me-2 pt-2 pb-2 text-start">
-                                                        <a class="dropdown-item align-items-center" href="#">
-                                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                            @if(auth()->user()->role == 'theacer')
+                                                <td class="text-end">
+                                                    <div class="btn-group dropstart">
+                                                        <a class="text-dark" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false" href="#">
+                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item align-items-center" href="#">
-                                                            <i class="fa-solid fa-trash-can"></i> Tambah Materi
-                                                        </a>
+                                                        <div class="dropdown-menu me-2 pt-2 pb-2 text-start">
+                                                            <a class="dropdown-item align-items-center" href="#">
+                                                                <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item align-items-center" href="#">
+                                                                <i class="fa-solid fa-trash-can"></i> Tambah Materi
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
+                                                </td>
+                                            @endif
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <td colspan="2">
                                                 <div class="d-flex flex-column">
-                                                    <h6 class="mb-0">100 Point</h6>
+                                                    <h6 class="mb-0">{{$task->default_point}} Point</h6>
                                                     <small>
                                                         {{ $task->description }}
                                                     </small>
@@ -259,7 +261,7 @@
                                                                         <div class="modal-body text-center">
                                                                             {{-- <img src="{{asset('img/img-4.jpg')}}" class="img-fluid rounded-3" alt=""> --}}
                                                                             @if (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'image/'))
-                                                                                <img src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                <img class="img-fluid" src="{{ asset('storage/' . $atachment->file) }}"
                                                                                     alt="{{ $atachment->original_name }}">
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'video/'))
                                                                                 <video width="100%" controls>
@@ -305,6 +307,7 @@
                             </div>
                         </div>
                     </div>
+                    @if(auth()->user()->role != 'theacer')
                     <div class="col-lg-4">
                         <!-- Customer Notes -->
                         <div class="card mb-4">
@@ -334,7 +337,7 @@
                                             <p class="text-secondary">Tidak ada lampiran yang diserahkan</p>
                                         </div>
                                         @endforelse
-                                            <button type="button" onclick="cancelTriger()" class="btn btn-outline-secondary rounded-3 mt-2" style="width: 110%; margin-left:-5%">
+                                            <button type="button" onclick="cancelTriger()" class="btn btn-outline-secondary rounded-3 mt-3" style="width: 110%; margin-left:-5%">
                                                 Batalkan Pengiriman
                                             </button>
                                     @elseif($status == 'Diserahkan' && $files == null)
@@ -348,7 +351,7 @@
                                         <div class="element"></div>
                                         <section class="rounded progress-area"></section>
                                         <section class="rounded uploaded-area"></section>
-                                        <button type="button" onclick="readTriger()" class="btn btn-primary rounded-3 w-100">
+                                        <button type="button" onclick="readTriger()" class="btn btn-primary rounded-3 w-100 read-button">
                                             Tandai sebagai selesai
                                         </button>
                                         <button id="submitButton" type="submit" onclick="cancelTriger()"
@@ -369,6 +372,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -379,7 +383,7 @@
             elementContainer = document.querySelector(".element"),
             progressArea = document.querySelector(".progress-area"),
             submit_button = document.querySelector('#submitButton'),
-            read_button = document.querySelector('#read-button'),
+            read_button = document.querySelector('.read-button'),
             readButton = document.querySelector('#real-read-button'),
             cancelButton = document.querySelector('#cancel-button'),
             uploadedArea = document.querySelector(".uploaded-area");

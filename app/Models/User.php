@@ -42,4 +42,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Classes::class, 'pivotclass', 'user_id', 'class_id');
     }
+    public function myClass(){
+        return $this->hasMany(Classes::class,'user_id');
+    }
 }

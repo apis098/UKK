@@ -8,35 +8,39 @@
                     <h4 class="mt-3">Kelas {{ $class->name }}</h4>
                 </div>
                 <div class="col-md-6 text-end ">
-                    <div class="btn-group dropstart">
-                        <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            class="btn btn-primary rounded-circle p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2" />
-                            </svg>
-                        </a>
-                        <div class="dropdown-menu me-2 pt-2 pb-2 text-center">
-                            <a class="dropdown-item align-items-center" href="{{ route('task.form', $class->id) }}"><svg
-                                    class="mb-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                    viewBox="0 0 14 14">
-                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                                        <path
-                                            d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
-                                        <rect width="5" height="2.5" x="4.5" y=".5" rx="1" />
-                                        <path d="M7 6v4m2-2H5" />
-                                    </g>
-                                </svg> Tambah Tugas</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item align-items-center"
-                                href="{{ route('materials.form', $class->id) }}"><svg class="mb-1"
-                                    xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
-                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="2"
-                                        d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6M8 3v9l3-3l3 3V3M8 3h6m0 0h4a2 2 0 0 1 2 2v7m-1 4v3m0 3v-3m0 0h3m-3 0h-3" />
-                                </svg> Tambah Materi</a>
+                    @if (auth()->user()->role == 'theacer')
+                        <div class="btn-group dropstart">
+                            <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                class="btn btn-primary rounded-circle p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu me-2 pt-2 pb-2 text-center">
+                                <a class="dropdown-item align-items-center" href="{{ route('task.form', $class->id) }}"><svg
+                                        class="mb-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 14 14">
+                                        <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path
+                                                d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                            <rect width="5" height="2.5" x="4.5" y=".5" rx="1" />
+                                            <path d="M7 6v4m2-2H5" />
+                                        </g>
+                                    </svg> Tambah Tugas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item align-items-center"
+                                    href="{{ route('materials.form', $class->id) }}"><svg class="mb-1"
+                                        xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 24 24">
+                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="2"
+                                            d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6M8 3v9l3-3l3 3V3M8 3h6m0 0h4a2 2 0 0 1 2 2v7m-1 4v3m0 3v-3m0 0h3m-3 0h-3" />
+                                    </svg> Tambah Materi</a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <!-- /Page Header -->
@@ -96,7 +100,7 @@
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
                                     <h6>Belum di nilai</h6>
-                                    <h3>5</h3>
+                                    <h3>{{ $collections->count() }}</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img class="img-fluid" src="{{ asset('/img/task-value.png') }}" alt="Dashboard Icon">
@@ -156,7 +160,7 @@
                             <!-- Page Header -->
                             <div class="row pe-3 ps-3" id="task-element">
                                 @foreach ($tasks as $task)
-                                    <a href="{{route('task.show',$task->id)}}"
+                                    <a href="{{ route('task.show', $task->id) }}"
                                         class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
                                         <div class="col-lg-9">
                                             <div class="grid-container">
@@ -414,75 +418,73 @@
                             @endforelse
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab4">
-                            <div class="col-xl-12 d-flex">
-                                <!-- Feed Activity -->
-                                <div class="card flex-fill comman-shadow">
-                                    <div class="card-header d-flex align-items-center">
-                                        <h5 class="card-title ">Student Activity </h5>
-                                        <ul class="chart-list-out student-ellips">
-                                            <li class="star-menus"><a href="javascript:;"><i
-                                                        class="fas fa-ellipsis-v"></i></a></li>
-                                        </ul>
+                            <!-- Page Header -->
+                            <div class="page-header">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="page-sub-header">
+                                            <h3 class="page-title">Daftar Materi</h3>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="activity-groups">
-                                            <div class="activity-awards">
-                                                <div class="award-boxs">
-                                                    <img src="{{ asset('/img/icons/award-icon-01.svg') }}"
-                                                        alt="Award">
-                                                </div>
-                                                <div class="award-list-outs">
-                                                    <h4>1st place in "Chess”</h4>
-                                                    <h5>John Doe won 1st place in "Chess"</h5>
-                                                </div>
-                                                <div class="award-time-list">
-                                                    <span>1 Day ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="activity-awards">
-                                                <div class="award-boxs">
-                                                    <img src="{{ asset('/img/icons/award-icon-02.svg') }}"
-                                                        alt="Award">
-                                                </div>
-                                                <div class="award-list-outs">
-                                                    <h4>Participated in "Carrom"</h4>
-                                                    <h5>Justin Lee participated in "Carrom"</h5>
-                                                </div>
-                                                <div class="award-time-list">
-                                                    <span>2 hours ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="activity-awards">
-                                                <div class="award-boxs">
-                                                    <img src="{{ asset('/img/icons/award-icon-03.svg') }}"
-                                                        alt="Award">
-                                                </div>
-                                                <div class="award-list-outs">
-                                                    <h4>Internation conference in "St.John School"</h4>
-                                                    <h5>Justin Leeattended internation conference in "St.John School"</h5>
-                                                </div>
-                                                <div class="award-time-list">
-                                                    <span>2 Week ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="activity-awards mb-0">
-                                                <div class="award-boxs">
-                                                    <img src="{{ asset('/img/icons/award-icon-04.svg') }}"
-                                                        alt="Award">
-                                                </div>
-                                                <div class="award-list-outs">
-                                                    <h4>Won 1st place in "Chess"</h4>
-                                                    <h5>John Doe won 1st place in "Chess"</h5>
-                                                </div>
-                                                <div class="award-time-list">
-                                                    <span>3 Day ago</span>
-                                                </div>
-                                            </div>
+                                    <div class="col-lg-4">
+                                        <div class="top-nav-search" style="margin-left: -7%;margin-top:-5%;">
+                                            <form>
+                                                <input type="text" class="form-control material-search"
+                                                    placeholder="Cari Materi..">
+                                                <button class="btn" type="submit"><i
+                                                        class="fas fa-search"></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /Feed Activity -->
                             </div>
+                            <div class="row pe-3 ps-3" id="material-element">
+                                @foreach ($collections as $data)
+                                    <a href="#"
+                                        class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
+                                        <div class="col-lg-9">
+                                            <div class="grid-container">
+                                                <div class="db-widgets d-flex justify-content-beetwen align-items-center">
+                                                    <div class="left-icon me-3 p-1 text-center">
+                                                        @if($data->user->foto != null && $data->user->google_id == 1)
+                                                            <img class="img-fluid rounded-3" width="50" src="{{ $data->user->foto }}" alt="Dashboard Icon">
+                                                        @elseif($data->user->foto != null)
+                                                            <img class="img-fluid rounded-3" width="50" src="{{ asset('/storage/'.$data->user->foto) }}" alt="Dashboard Icon">
+                                                        @elseif($data->user->foto == null && $data->user->gender == 'male')
+                                                            <img class="img-fluid rounded-3" width="50" src="{{ asset('/img/male.jpg') }}" alt="Dashboard Icon">
+                                                        @elseif($data->user->foto == null && $data->user->gender == 'famale')
+                                                            <img class="img-fluid rounded-3" width="50" src="{{ asset('/img/famale.jpg') }}" alt="Dashboard Icon">
+                                                        @else
+                                                             <img class="img-fluid rounded-3" width="50" src="{{ asset('/img/male.jpg') }}" alt="Dashboard Icon">
+                                                        @endif
+                                                    </div>
+                                                    <div class="db-info mt-2">
+                                                        <h5 style="margin-bottom:0; ">{{ $data->task->name }}
+                                                        </h5>
+                                                        <h6> {{ $data->user->name }} - {{$data->user->email}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="grid-container text-end">
+                                                <small
+                                                    class="text-secondary">{{ \Carbon\Carbon::parse($data->created_at)->locale('id_ID')->diffForHumans() }}</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
+                            @forelse($collections as $data)
+                                {{--  --}}
+                            @empty
+                                <div class="align-items-center text-center mt-2">
+                                    <img class="img-fluid" width="230" height="230"
+                                        src="{{ asset('/img/nodata.png') }}" alt="">
+                                    <p class="text-dark fw-bolder">Tidak ada tugas yang belum dinilai</p>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>

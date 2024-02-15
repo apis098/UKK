@@ -165,6 +165,13 @@
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
+                                                <label>Point<span class="text-danger">*</span></label>
+                                                <input type="number" name="point" id="point"
+                                                    value="{{ old('point') }}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
                                                 <label>Lampiran</label>
                                                 <input type="file" name="files[]" class="file-input form-control" hidden
                                                     multiple>
@@ -185,6 +192,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class=" blog-categories-btn pt-0">
                             <div class="bank-details-btn ">
                                 <a class="btn bank-cancel-btn me-2" id="fake-button" onclick="submitUploadForm()">Tambah

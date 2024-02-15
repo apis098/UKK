@@ -43,6 +43,7 @@ class TaskController extends Controller
         $data = new Task();
         $data->name = $request->name;
         $data->description = $request->description;
+        $data->default_point = $request->point;
         $data->user_id = auth()->user()->id;
         $data->class_id = $class_id;
         $data->save();

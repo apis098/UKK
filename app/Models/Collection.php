@@ -11,6 +11,9 @@ class Collection extends Model
     protected $tables = "collections";
     protected $guarded = "id";
     protected $primaryKey = "id";
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
     public function task(){
         return $this->belongsTo(Task::class,'task_id');
     }

@@ -18,6 +18,7 @@ class CollectionController extends Controller
         $data->user_id = auth()->user()->id;
         $data->task_id = $task_id;
         $data->status = 'mark';
+        $data->class_id = $task->classes->id;
         $data->save();
         if($request->hasFile('files')){
             foreach($request->file('files') as $file){

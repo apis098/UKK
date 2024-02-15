@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classes;
+use App\Models\Collection;
 use App\Models\PivotClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,30 +27,30 @@ class ClassesController extends Controller
     {
         //
     }
-    public function outClass(Request $request){
+    public function outClass(Request $request)
+    {
         $user_id = $request->user_id;
         $class_id = $request->class_id;
-        $pivotClass = PivotClass::where('user_id',$user_id)->where('class_id',$class_id)->first();
+        $pivotClass = PivotClass::where('user_id', $user_id)->where('class_id', $class_id)->first();
         $pivotClass->delete();
         $class = $pivotClass->classes;
         $member = $pivotClass->user;
-        if($user_id != auth()->user()->id){
-            return redirect()->back()->with('info',$member->name.' telah dikeluarkan');
-        }else{
-            return redirect()->back()->with('info','Anda telah meninggalkan kelas ' .$class->name);
+        if ($user_id != auth()->user()->id) {
+            return redirect()->back()->with('info', $member->name . ' telah dikeluarkan');
+        } else {
+            return redirect()->back()->with('info', 'Anda telah meninggalkan kelas ' . $class->name);
         }
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {   
-        $backgrounds = ['class1.jpg', 'class2.jpg', 'class3.jpg', 'class4.jpg', 'class5.jpg', 'class5.jpg','class6.jpg'];
- 
+    {
+        $backgrounds = ['class1.jpg', 'class2.jpg', 'class3.jpg', 'class4.jpg', 'class5.jpg', 'class5.jpg', 'class6.jpg'];
+
         $usedBackgrounds = Classes::pluck('image')->toArray();
         $availableBackgrounds = array_diff($backgrounds, $usedBackgrounds);
-        if (empty($availableBackgrounds)) 
-        {
+        if (empty($availableBackgrounds)) {
             $background = $backgrounds[0];
         } else {
             $background = reset($availableBackgrounds);
@@ -64,40 +65,41 @@ class ClassesController extends Controller
         $data->image = $background;
         $data->code = Str::random(10);
         $data->save();
-        
-        return redirect()->back()->with('success','Kelas berhasil dibuat');
+
+        return redirect()->back()->with('success', 'Kelas berhasil dibuat');
     }
     private function generateRandomImage()
     {
         $imagesInFolder = Storage::files('public/background');
         $usedImageNames = Classes::pluck('image')->toArray();
-    
+
         // Pastikan $usedImageNames adalah array
         if (!is_array($usedImageNames)) {
             $usedImageNames = [];
         }
-    
+
         $availableImages = array_diff($imagesInFolder, $usedImageNames);
-    
+
         if (!empty($availableImages)) {
             return basename($availableImages[0]);
         }
-    
+
         return basename($imagesInFolder[0]);
     }
-    public function joinClass(Request $request){
+    public function joinClass(Request $request)
+    {
         $code = $request->code;
-        $getClass = Classes::where('code',$code)->first();
-        if($getClass == null){
-            return redirect()->back()->with('error','Kelas tidak ditemukan');
-        }elseif($getClass && !PivotClass::where('user_id',auth()->user()->id)->where('class_id',$getClass->id)->exists()){
+        $getClass = Classes::where('code', $code)->first();
+        if ($getClass == null) {
+            return redirect()->back()->with('error', 'Kelas tidak ditemukan');
+        } elseif ($getClass && !PivotClass::where('user_id', auth()->user()->id)->where('class_id', $getClass->id)->exists()) {
             $join = new PivotClass();
             $join->user_id = auth()->user()->id;
             $join->class_id = $getClass->id;
             $join->save();
-            return redirect('/home')->with('success','Berhasil bergabung ke kelas '.$getClass->name);
-        }else{
-            return redirect()->back()->with('error','Anda telah bergabung ke kelas '.$getClass->name. ' sebelumnya'); 
+            return redirect('/home')->with('success', 'Berhasil bergabung ke kelas ' . $getClass->name);
+        } else {
+            return redirect()->back()->with('error', 'Anda telah bergabung ke kelas ' . $getClass->name . ' sebelumnya');
         }
     }
     /**
@@ -109,7 +111,18 @@ class ClassesController extends Controller
         $member = $class->member;
         $materials = $class->materials;
         $tasks = $class->tasks;
-        return view('detailclass',compact('class','member','materials','tasks'));
+        $collections = [];
+        if (auth()->user()->role == "theacer") {
+            $collections = Collection::where('class_id', $id)
+            ->where('point', 0)
+            ->get();
+        } elseif (auth()->user()->role == 'student') {
+            $collections = Collection::where('class_id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->where('point', 0)
+            ->get();
+        }
+        return view('detailclass', compact('class', 'member', 'materials', 'tasks','collections'));
     }
 
     /**
@@ -133,7 +146,7 @@ class ClassesController extends Controller
         $data->user_id = auth()->user()->id;
         $data->save();
 
-        return redirect()->back()->with('success','Kelas berhasil di edit');
+        return redirect()->back()->with('success', 'Kelas berhasil di edit');
     }
 
     /**
@@ -143,6 +156,6 @@ class ClassesController extends Controller
     {
         $data = Classes::findOrFail($id);
         $data->delete();
-        return redirect()->back()->with('success','Data berhasil dihapus');
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }

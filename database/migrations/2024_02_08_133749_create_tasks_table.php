@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->integer('default_point')->default(0);
             $table->unsignedBigInteger('class_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
