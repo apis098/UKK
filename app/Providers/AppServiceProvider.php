@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Classes;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Providers\NavComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('layouts.sidebar', NavComposer::class);
     }
 }

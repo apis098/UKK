@@ -42,7 +42,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Classes::class, 'pivotclass', 'user_id', 'class_id');
     }
-    public function myClass(){
-        return $this->hasMany(Classes::class,'user_id');
+    public function myClass()
+    {
+        return $this->hasMany(Classes::class, 'user_id');
+    }
+    public function tasksNotSubmitted()
+    {
+        return Task::whereDoesntHave('collections', function ($query) {
+            $query->where('user_id', $this->id);
+        })->get();
+    }
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'user_id');
     }
 }

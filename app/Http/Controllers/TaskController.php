@@ -6,6 +6,7 @@ use App\Models\atachment;
 use App\Models\Classes;
 use App\Models\Collection;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -25,21 +26,25 @@ class TaskController extends Controller
     {
         return view('task.create');
     }
-    public function taskCreate($class_id){
+    public function taskCreate($class_id)
+    {
         $class = Classes::findOrFail($class_id);
-        return view('task.create',compact('class'));
+        return view('task.create', compact('class'));
     }
-    public function taskStore(Request $request, string $class_id){
-        $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
-            'files.*' => 'file|mimes:jpg,jpeg,png,gif,pdf,mp4,docx,xlsx,pptx|max:100000',
-        ],
-        [
-            'name.required' => 'inputan judul harus diisi',
-            'files.file' => 'Tipe file tidak didukung, masukan file yang bertipe JPG, JPEG, PNG, GIF, PDF, MP4, DOCX, XLSX, PPTX',
-            'files.max' => 'Ukuran file maksimal adalah 100 MB'
-        ]);
+    public function taskStore(Request $request, string $class_id)
+    {
+        $request->validate(
+            [
+                'name' => 'required',
+                'description' => 'nullable',
+                'files.*' => 'file|mimes:jpg,jpeg,png,gif,pdf,mp4,docx,xlsx,pptx|max:100000',
+            ],
+            [
+                'name.required' => 'inputan judul harus diisi',
+                'files.file' => 'Tipe file tidak didukung, masukan file yang bertipe JPG, JPEG, PNG, GIF, PDF, MP4, DOCX, XLSX, PPTX',
+                'files.max' => 'Ukuran file maksimal adalah 100 MB'
+            ]
+        );
         $data = new Task();
         $data->name = $request->name;
         $data->description = $request->description;
@@ -47,10 +52,10 @@ class TaskController extends Controller
         $data->user_id = auth()->user()->id;
         $data->class_id = $class_id;
         $data->save();
-        if($request->hasFile('files')){
-            foreach($request->file('files') as $file){
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
                 $original_name = $file->getClientOriginalName();
-                $fileName = $file->store('atachment','public');
+                $fileName = $file->store('atachment', 'public');
                 $atachment = new atachment();
                 $atachment->file = $fileName;
                 $atachment->task_id = $data->id;
@@ -58,14 +63,24 @@ class TaskController extends Controller
                 $atachment->save();
             }
         }
-        return redirect('/classes/'.$class_id)->with('success', 'Sukses menambahkan tugas baru!');
+        $class = Classes::findOrFail($class_id);
+        $member = $class->member;
+        foreach($member as $m){
+            $item = new Collection();
+            $item->user_id = $m->id;
+            $item->task_id = $data->id;
+            $item->class_id = $class_id;
+            $item->status = 'not_collect';
+            $item->save();
+        }
+        return redirect('/classes/' . $class_id)->with('success', 'Sukses menambahkan tugas baru!');
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -76,16 +91,19 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $atachments = $task->atachments;
         $status = 'Ditugaskan';
-        if(Collection::where('user_id',auth()->user()->id)->where('task_id',$id)->exists()){
+        if (Collection::where('user_id', auth()->user()->id)->where('task_id', $id)->where('status','collect')->exists()) {
             $status = "Diserahkan";
         }
         $collection = [];
         $files = [];
-        if($status == 'Diserahkan'){
-            $collection = Collection::where('user_id',auth()->user()->id)->where('task_id',$id)->first();
+        if ($status == 'Diserahkan') {
+            $collection = Collection::where('user_id', auth()->user()->id)->where('task_id', $id)->where('status','collect')->first();
             $files = $collection->atachments;
         }
-        return view('task.detail',compact('task','atachments','status','collection','files'));
+        // Ambil id kelas dari task
+        $classId = $task->classes->id;
+
+        return view('task.detail', compact('task', 'atachments', 'status', 'collection', 'files'));
     }
     /**
      * Show the form for editing the specified resource.

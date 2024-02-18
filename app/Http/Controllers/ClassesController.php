@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use App\Models\Collection;
 use App\Models\PivotClass;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -93,6 +95,14 @@ class ClassesController extends Controller
         if ($getClass == null) {
             return redirect()->back()->with('error', 'Kelas tidak ditemukan');
         } elseif ($getClass && !PivotClass::where('user_id', auth()->user()->id)->where('class_id', $getClass->id)->exists()) {
+            $tasks = $getClass->tasks;
+            foreach($tasks as $task){
+                $collection =  new Collection();
+                $collection->class_id = $getClass->id;
+                $collection->task_id = $task->id;
+                $collection->user_id = auth()->user()->id;
+                $collection->save();
+            }
             $join = new PivotClass();
             $join->user_id = auth()->user()->id;
             $join->class_id = $getClass->id;
@@ -109,20 +119,43 @@ class ClassesController extends Controller
     {
         $class = Classes::findOrFail($id);
         $member = $class->member;
+        $memberIds = $member->pluck('id')->toArray();
         $materials = $class->materials;
         $tasks = $class->tasks;
         $collections = [];
         if (auth()->user()->role == "theacer") {
             $collections = Collection::where('class_id', $id)
-            ->where('point', 0)
-            ->get();
+                ->where('status','collect')
+                ->where('point', 0)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            // Mendapatkan ID tugas yang sudah dikumpulkan oleh anggota kelas
+            $submittedMemberIds = Collection::where('class_id', $class->id)
+                ->whereIn('user_id', $memberIds)
+                ->whereNotNull('task_id')
+                ->pluck('user_id')
+                ->toArray();
+
+            // Mendapatkan anggota kelas yang belum mengumpulkan tugas
+            $pendingMembers = $member->reject(function ($member) use ($submittedMemberIds) {
+                return in_array($member->id, $submittedMemberIds);
+            });
+            // Mendapatkan ID anggota kelas yang belum mengumpulkan tugas
+            $pendingMemberIds = $pendingMembers->pluck('id')->toArray();
+
+            // Mendapatkan tugas yang belum dikumpulkan oleh anggota kelas
+            $pendingTasks = Collection::where('class_id', $class->id)
+                ->whereNotIn('user_id', $pendingMemberIds)
+                ->get();    
         } elseif (auth()->user()->role == 'student') {
             $collections = Collection::where('class_id', $id)
-            ->where('user_id', auth()->user()->id)
-            ->where('point', 0)
-            ->get();
+                ->where('status','not_collect')
+                ->where('user_id', auth()->user()->id)
+                ->where('point', 0)
+                ->orderBy('created_at', 'desc')
+                ->get();
         }
-        return view('detailclass', compact('class', 'member', 'materials', 'tasks','collections'));
+        return view('detailclass', compact('class', 'member', 'materials', 'tasks', 'collections'));
     }
 
     /**

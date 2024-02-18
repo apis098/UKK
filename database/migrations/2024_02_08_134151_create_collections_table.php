@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->string('status')->default('not_collect');
             $table->integer('point')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('class_id');
@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
         });
     }
 

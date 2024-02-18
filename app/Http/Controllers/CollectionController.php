@@ -14,11 +14,9 @@ class CollectionController extends Controller
      */
     public function collect(Request $request, string $task_id){
         $task = Task::findOrFail($task_id);
-        $data = new Collection();
-        $data->user_id = auth()->user()->id;
-        $data->task_id = $task_id;
-        $data->status = 'mark';
-        $data->class_id = $task->classes->id;
+        $data = Collection::where('user_id',auth()->user()->id)->where('task_id',$task_id)->first();
+        // dd($data);
+        $data->status = 'collect';
         $data->save();
         if($request->hasFile('files')){
             foreach($request->file('files') as $file){
@@ -29,9 +27,6 @@ class CollectionController extends Controller
                 $atachment->file = $fileName;
                 $atachment->original_name = $original_name;
                 $atachment->save();
-                $collect = Collection::findOrFail($data->id);
-                $collect->status = 'collect';
-                $collect->save();
             }
         }
         return redirect()->back()->with('success','Berhasil mengumpulkan tugas '. $task->name);
@@ -88,7 +83,8 @@ class CollectionController extends Controller
     {
         $collection = Collection::where('user_id',auth()->user()->id)->where('task_id',$task_id)->get();
         foreach($collection as $data){
-            $data->delete();
+            $data->status = 'not_collect';
+            $data->save();
         }
         return redirect()->back()->with('info', 'Pengumpulan dibatalkan');
     }
