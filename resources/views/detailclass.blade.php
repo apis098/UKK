@@ -423,14 +423,14 @@
                                 <div class="row">
                                     <div class="col-lg-8">
                                         <div class="page-sub-header">
-                                            <h3 class="page-title">Daftar Materi</h3>
+                                            <h3 class="page-title">Daftar Tugas Yang Belum Dinilai</h3>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="top-nav-search" style="margin-left: -7%;margin-top:-5%;">
                                             <form>
                                                 <input type="text" class="form-control material-search"
-                                                    placeholder="Cari Materi..">
+                                                    placeholder="Cari..">
                                                 <button class="btn" type="submit"><i
                                                         class="fas fa-search"></i></button>
                                             </form>
