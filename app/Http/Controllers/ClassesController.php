@@ -149,7 +149,7 @@ class ClassesController extends Controller
                 ->get();    
         } elseif (auth()->user()->role == 'student') {
             $collections = Collection::where('class_id', $id)
-                ->where('status','not_collect')
+                ->where('status','collect')
                 ->where('user_id', auth()->user()->id)
                 ->where('point', 0)
                 ->orderBy('created_at', 'desc')
