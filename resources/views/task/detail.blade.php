@@ -185,7 +185,7 @@
                                                 </div>
                                             </td>
                                             <td></td>
-                                            @if(auth()->user()->role == 'theacer')
+                                            @if (auth()->user()->role == 'theacer')
                                                 <td class="text-end">
                                                     <div class="btn-group dropstart">
                                                         <a class="text-dark" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -210,7 +210,7 @@
                                         <tr>
                                             <td colspan="2">
                                                 <div class="d-flex flex-column">
-                                                    <h6 class="mb-0">{{$task->default_point}} Point</h6>
+                                                    <h6 class="mb-0">{{ $task->default_point }} Point</h6>
                                                     <small>
                                                         {{ $task->description }}
                                                     </small>
@@ -261,7 +261,8 @@
                                                                         <div class="modal-body text-center">
                                                                             {{-- <img src="{{asset('img/img-4.jpg')}}" class="img-fluid rounded-3" alt=""> --}}
                                                                             @if (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'image/'))
-                                                                                <img class="img-fluid" src="{{ asset('storage/' . $atachment->file) }}"
+                                                                                <img class="img-fluid"
+                                                                                    src="{{ asset('storage/' . $atachment->file) }}"
                                                                                     alt="{{ $atachment->original_name }}">
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file), 'video/'))
                                                                                 <video width="100%" controls>
@@ -307,71 +308,81 @@
                             </div>
                         </div>
                     </div>
-                    @if(auth()->user()->role != 'theacer')
-                    <div class="col-lg-4">
-                        <!-- Customer Notes -->
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <form action="{{route('collect.store',$task->id)}}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="d-flex justify-content-beetwen position-relative">
-                                        <h3 class="h6">Tugas</h3>
-                                        <small class="{{ $status === 'Diserahkan' ? 'text-success' : 'text-danger' }} position-absolute end-0">{{$status}}</small>
-                                    </div>
-                                    @if($status == 'Diserahkan' && $files != null)
-                                        @forelse($files as $file)
-                                        <section>
-                                            <div class="row d-flex">
-                                                <div class="content upload">
-                                                    <div class="details d-flex justify-content-start align-items-center">
-                                                        <i class="fas fa-file-alt me-1"></i>
-                                                        <span class="name">{{ strlen($file->original_name) > 21 ? substr($file->original_name, 0, 20) . '...' : $file->original_name }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        @empty
-                                        <div class="align-items-center text-center mt-2">
-                                            <img class="img-fluid"
-                                                src="{{ asset('/img/nodata.png') }}" width="100" alt="">
-                                            <p class="text-secondary">Tidak ada lampiran yang diserahkan</p>
+                    @if (auth()->user()->role != 'theacer')
+                        <div class="col-lg-4">
+                            <!-- Customer Notes -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <form action="{{ route('collect.store', $task->id) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="d-flex justify-content-beetwen position-relative">
+                                            <h3 class="h6">Tugas</h3>
+                                            <small class="{{ $status === 'Diserahkan' ? 'text-success' : ($status === 'Terlambat Diserahkan' ? 'text-warning' : 'text-danger') }} position-absolute end-0">{{ $status }}</small>
                                         </div>
-                                        @endforelse
-                                            <button type="button" onclick="cancelTriger()" class="btn btn-outline-secondary rounded-3 mt-3" style="width: 110%; margin-left:-5%">
+                                        @if ($status == 'Diserahkan' || ($status == 'Terlambat Diserahkan' && $files != null))
+                                            @forelse($files as $file)
+                                                <section>
+                                                    <div class="row d-flex">
+                                                        <div class="content upload">
+                                                            <div
+                                                                class="details d-flex justify-content-start align-items-center">
+                                                                <i class="fas fa-file-alt me-1"></i>
+                                                                <span
+                                                                    class="name">{{ strlen($file->original_name) > 21 ? substr($file->original_name, 0, 20) . '...' : $file->original_name }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            @empty
+                                                <div class="align-items-center text-center mt-2">
+                                                    <img class="img-fluid" src="{{ asset('/img/nodata.png') }}"
+                                                        width="100" alt="">
+                                                    <p class="text-secondary">Tidak ada lampiran yang diserahkan</p>
+                                                </div>
+                                            @endforelse
+                                            <button type="button" onclick="cancelTriger()"
+                                                class="btn btn-outline-secondary rounded-3 mt-3"
+                                                style="width: 110%; margin-left:-5%">
                                                 Batalkan Pengiriman
                                             </button>
-                                    @elseif($status == 'Diserahkan' && $files == null)
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <p class="text-center">Tidak ada lampiran yang diserahan</p>
-                                        </div>
-                                    @else
-                                        <button type="button" class="btn btn-outline-primary rounded-3 w-100 mb-3 upload-button">
-                                            <i class="fa-solid fa-plus"></i> Kumpulkan tugas
-                                        </button>
-                                        <div class="element"></div>
-                                        <section class="rounded progress-area"></section>
-                                        <section class="rounded uploaded-area"></section>
-                                        <button type="button" onclick="readTriger()" class="btn btn-primary rounded-3 w-100 read-button">
-                                            Tandai sebagai selesai
-                                        </button>
-                                        <button id="submitButton" type="submit" onclick="cancelTriger()"
-                                            class="btn btn-warning text-light rounded-3 w-100 mt-2 d-none">
-                                            Serahkan
-                                        </button>
-                                    @endif
-                                </form>
-                                <form id="mark-form" action="{{route('collect.store',$task->id)}}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <button type="submit" id="real-read-button" class="btn btn-primary d-none"> tandai</button>
-                                </form>
-                                <form action="{{route('collection.destroy',$task->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')  
-                                    <button type="submit" id="cancel-button" class="btn btn-primary d-none"> hapus</button>
-                                </form>
+                                        @elseif($status == 'Diserahkan' || ($status == 'Terlambat Diserahkan' && $files == null))
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <p class="text-center">Tidak ada lampiran yang diserahan</p>
+                                            </div>
+                                        @else
+                                            <button type="button"
+                                                class="btn btn-outline-primary rounded-3 w-100 mb-3 upload-button">
+                                                <i class="fa-solid fa-plus"></i> Kumpulkan tugas
+                                            </button>
+                                            <div class="element"></div>
+                                            <section class="rounded progress-area"></section>
+                                            <section class="rounded uploaded-area"></section>
+                                            <button type="button" onclick="readTriger()"
+                                                class="btn btn-primary rounded-3 w-100 read-button">
+                                                Tandai sebagai selesai
+                                            </button>
+                                            <button id="submitButton" type="submit" onclick="cancelTriger()"
+                                                class="btn btn-warning text-light rounded-3 w-100 mt-2 d-none">
+                                                Serahkan
+                                            </button>
+                                        @endif
+                                    </form>
+                                    <form id="mark-form" action="{{ route('collect.store', $task->id) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <button type="submit" id="real-read-button" class="btn btn-primary d-none">
+                                            tandai</button>
+                                    </form>
+                                    <form action="{{ route('collection.destroy', $task->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" id="cancel-button" class="btn btn-primary d-none">
+                                            hapus</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                 </div>
             </div>
@@ -499,10 +510,12 @@
             data.append('file', file);
             xhr.send(data);
         }
-        function readTriger(){
+
+        function readTriger() {
             readButton.click();
         }
-        function cancelTriger(){
+
+        function cancelTriger() {
             cancelButton.click();
         }
     </script>

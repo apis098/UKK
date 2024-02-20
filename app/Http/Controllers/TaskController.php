@@ -7,6 +7,7 @@ use App\Models\Classes;
 use App\Models\Collection;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -38,6 +39,18 @@ class TaskController extends Controller
                 'name' => 'required',
                 'description' => 'nullable',
                 'files.*' => 'file|mimes:jpg,jpeg,png,gif,pdf,mp4,docx,xlsx,pptx|max:100000',
+                'deadline' => [
+                    'required',
+                    'date',
+                    function ($attribute, $value, $fail) {
+                        $deadline = Carbon::parse($value);
+                        $now = Carbon::now();
+        
+                        if ($deadline <= $now) {
+                            $fail("Inputan tenggat tidak boleh kurang dari waktu sekarang");
+                        }
+                    },
+                ],
             ],
             [
                 'name.required' => 'inputan judul harus diisi',
@@ -50,6 +63,7 @@ class TaskController extends Controller
         $data->description = $request->description;
         $data->default_point = $request->point;
         $data->user_id = auth()->user()->id;
+        $data->deadline = $request->deadline;
         $data->class_id = $class_id;
         $data->save();
         if ($request->hasFile('files')) {
@@ -90,6 +104,8 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
         $atachments = $task->atachments;
+        // $deadline = Carbon::parse($task->deadline);
+        $deadline =  $task->deadline;
         $status = 'Ditugaskan';
         if (Collection::where('user_id', auth()->user()->id)->where('task_id', $id)->where('status','collect')->exists()) {
             $status = "Diserahkan";
@@ -99,8 +115,12 @@ class TaskController extends Controller
         if ($status == 'Diserahkan') {
             $collection = Collection::where('user_id', auth()->user()->id)->where('task_id', $id)->where('status','collect')->first();
             $files = $collection->atachments;
+            $collect_at = $collection->collect_at;
+            if ($collect_at > $deadline) {
+                $status = 'Terlambat Diserahkan';
+            }         
         }
-        // Ambil id kelas dari task
+        
         $classId = $task->classes->id;
 
         return view('task.detail', compact('task', 'atachments', 'status', 'collection', 'files'));

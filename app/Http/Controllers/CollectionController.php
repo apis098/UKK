@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\atachment;
 use App\Models\Collection;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CollectionController extends Controller
@@ -13,10 +14,11 @@ class CollectionController extends Controller
      * Display a listing of the resource.
      */
     public function collect(Request $request, string $task_id){
+        $now = Carbon::now();
         $task = Task::findOrFail($task_id);
         $data = Collection::where('user_id',auth()->user()->id)->where('task_id',$task_id)->first();
-        // dd($data);
         $data->status = 'collect';
+        $data->collect_at = $now;
         $data->save();
         if($request->hasFile('files')){
             foreach($request->file('files') as $file){

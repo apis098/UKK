@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('status')->default('not_collect');
             $table->integer('point')->default(0);
+            $table->dateTime('collect_at')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('class_id');
             $table->unsignedBigInteger('task_id')->nullable();

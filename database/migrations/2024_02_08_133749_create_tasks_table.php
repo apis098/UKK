@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('default_point')->default(0);
+            $table->dateTime('deadline')->nullable();
             $table->unsignedBigInteger('class_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

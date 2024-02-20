@@ -172,6 +172,13 @@
                                         </div>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
+                                                <label>Tenggat<span class="text-danger">*</span></label>
+                                                <input type="datetime-local" name="deadline" id="deadline"
+                                                    value="{{ old('deadline') }}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
                                                 <label>Lampiran</label>
                                                 <input type="file" name="files[]" class="file-input form-control" hidden
                                                     multiple>
