@@ -33,8 +33,7 @@ class NavComposer
             $tasks = Task::whereIn('class_id', $classIds)->get();
             $taskIds = $tasks->pluck('id')->toArray();
             $user = auth()->user();
-            $notCollect = Collection::where('user_id',auth()->user()->id)->where('status','not_collet')->get();
-            // dd($notCollect);
+            $notCollect = Collection::where('user_id',auth()->user()->id)->where('status','not_collect')->get();
         }
 
         $view->with([
