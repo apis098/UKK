@@ -318,7 +318,11 @@
                                         @csrf
                                         <div class="d-flex justify-content-beetwen position-relative">
                                             <h3 class="h6">Tugas</h3>
-                                            <small class="{{ $status === 'Diserahkan' ? 'text-success' : ($status === 'Terlambat Diserahkan' ? 'text-warning' : 'text-danger') }} position-absolute end-0">{{ $status }}</small>
+                                            @if($status == 'Diserahkan' || $status == 'Terlambat Diserahkan' && $collection->point > 0)
+                                                <small class="text-success position-absolute end-0">{{ $collection->point }}/{{$collection->task->default_point}}</small>
+                                            @else
+                                                <small class="{{ $status === 'Diserahkan' ? 'text-success' : ($status === 'Terlambat Diserahkan' ? 'text-warning' : 'text-danger') }} position-absolute end-0">{{ $status }}</small>
+                                            @endif
                                         </div>
                                         @if ($status == 'Diserahkan' || ($status == 'Terlambat Diserahkan' && $files != null))
                                             @forelse($files as $file)
