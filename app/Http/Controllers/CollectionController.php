@@ -7,6 +7,7 @@ use App\Models\Collection;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PHPUnit\TestRunner\TestResult\Collector;
 
 class CollectionController extends Controller
 {
@@ -32,6 +33,26 @@ class CollectionController extends Controller
             }
         }
         return redirect()->back()->with('success','Berhasil mengumpulkan tugas '. $task->name);
+    }
+    public function markCollection(Request $request, string $id){
+        $request->validate(
+            [
+                'point'=> 'required'
+            ],
+            [
+                'point,required' => 'Inputan nilai harus diisi!' 
+            ]
+        );
+        $collection = Collection::findOrFail($id);
+        if($collection->default_point != null && $request->input('point') > $collection->default_point || $request->input('point') > 100){
+            return redirect()->back()->with('error','Nilai yang anda berikan lebih dari yang sudah ditetapkan');
+        }elseif($request->input('point') <= 0){
+            return redirect()->back()->with('error','Nilai yang anda berikan tidak boleh kurang dari 0');
+        }else{
+            $collection->point = $request->input('point');
+            $collection->save();
+            return redirect()->back()->with('success','Berhasil memberikan nilai kepada ' . $collection->user->name);
+        }
     }
     public function index()
     {

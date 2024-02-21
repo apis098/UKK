@@ -51,4 +51,6 @@ Route::middleware('auth')->group(function () {
    // collections
    Route::resource('collection',CollectionController::class);
    Route::post('task/collect/{task_id}',[CollectionController::class,'collect'])->name('collect.store');
+
+   Route::post('mark/collection/{id}',[CollectionController::class,'markCollection'])->name('mark.collection');
 });

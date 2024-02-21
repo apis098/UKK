@@ -517,18 +517,21 @@
                                                                     </h6>
                                                                     <p class="mt-2 mb-0">Lampiran yang diserahkan : </p>
                                                                 </div>
-                                                                <div class="col-lg-4 d-flex justify-content-end">
-                                                                    <input type="number"
-                                                                        class="form-control form-control-sm w-50 me-2">
-                                                                    <button type="button"
-                                                                        class="btn btn-primary btn-sm rounded-3"><svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width="18" height="18"
-                                                                            viewBox="0 0 24 24">
-                                                                            <path fill="currentColor"
-                                                                                d="M21.04 12.13c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1l-2.05-2.05l1-1c.11-.11.25-.17.39-.17m-1.97 1.75l2.05 2.05L15.06 22H13v-2.06zM11 19l-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h4.18C9.6 1.84 10.7 1 12 1c1.3 0 2.4.84 2.82 2H19c1.1 0 2 .9 2 2v4l-2 2V5h-2v2H7V5H5v14zm1-16c-.55 0-1 .45-1 1s.45 1 1 1s1-.45 1-1s-.45-1-1-1" />
-                                                                        </svg> Nilai</button>
-                                                                </div>
+                                                                <form method="POST" action="{{ route('mark.collection', $data->id) }}"enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="d-flex justify-content-end">
+                                                                        <input type="number" name="point" class="form-control form-control-sm w-50 me-2">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary btn-sm rounded-3"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="18" height="18"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path fill="currentColor"
+                                                                                    d="M21.04 12.13c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1l-2.05-2.05l1-1c.11-.11.25-.17.39-.17m-1.97 1.75l2.05 2.05L15.06 22H13v-2.06zM11 19l-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h4.18C9.6 1.84 10.7 1 12 1c1.3 0 2.4.84 2.82 2H19c1.1 0 2 .9 2 2v4l-2 2V5h-2v2H7V5H5v14zm1-16c-.55 0-1 .45-1 1s.45 1 1 1s1-.45 1-1s-.45-1-1-1" />
+                                                                            </svg> Nilai</button>
+
+                                                                    </div>
+                                                                </form>
                                                             </div>
                                                             <div class="card-body mb-0">
                                                                 <div class="activity-groups">
@@ -551,7 +554,7 @@
                                                                             <div class="award-time-list">
                                                                                 <button type="button"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#preview-file-modal-{{$file->id}}"
+                                                                                    data-bs-target="#preview-file-modal-{{ $file->id }}"
                                                                                     class="btn btn-outline-primary rounded-3"><i
                                                                                         class="fa-solid fa-circle-info"></i></button>
                                                                             </div>
@@ -580,7 +583,7 @@
                             </div>
                             @forelse($collections as $data)
                                 @foreach ($data->atachments as $file)
-                                    <div class="modal fade" id="preview-file-modal-{{$file->id}}" tabindex="-1"
+                                    <div class="modal fade" id="preview-file-modal-{{ $file->id }}" tabindex="-1"
                                         role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-xl">
                                             <div class="modal-content">
