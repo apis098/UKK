@@ -440,27 +440,37 @@
                             </div>
                             <div class="row pe-3 ps-3" id="material-not-rated">
                                 @foreach ($collections as $data)
-                                    <a href="{{ auth()->user()->role === 'student' ? route('task.show',$data->id) : '#'}}" data-bs-toggle="{{ auth()->user()->role === 'theacer' ? 'modal' : ''}}" data-bs-target="{{ auth()->user()->role === 'theacer' ? '#notRatedModal' . $data->id : ''}}" class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
+                                    <a href="{{ auth()->user()->role === 'student' ? route('task.show', $data->id) : '#' }}"
+                                        data-bs-toggle="{{ auth()->user()->role === 'theacer' ? 'modal' : '' }}"
+                                        data-bs-target="{{ auth()->user()->role === 'theacer' ? '#notRatedModal' . $data->id : '' }}"
+                                        class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
                                         <div class="col-lg-9">
                                             <div class="grid-container">
                                                 <div class="db-widgets d-flex justify-content-beetwen align-items-center">
                                                     <div class="left-icon me-3 p-1 text-center">
-                                                        @if($data->user->foto != null && $data->user->google_id == 1)
-                                                            <img class="img-fluid rounded-3" width="50" src="{{ $data->user->foto }}" alt="Dashboard Icon">
+                                                        @if ($data->user->foto != null && $data->user->google_id == 1)
+                                                            <img class="img-fluid rounded-3" width="50"
+                                                                src="{{ $data->user->foto }}" alt="Dashboard Icon">
                                                         @elseif($data->user->foto != null)
-                                                            <img class="img-fluid rounded-3" width="50" src="{{ asset('/storage/'.$data->user->foto) }}" alt="Dashboard Icon">
+                                                            <img class="img-fluid rounded-3" width="50"
+                                                                src="{{ asset('/storage/' . $data->user->foto) }}"
+                                                                alt="Dashboard Icon">
                                                         @elseif($data->user->foto == null && $data->user->gender == 'male')
-                                                            <img class="img-fluid rounded-3" width="50" src="{{ asset('/img/male.jpg') }}" alt="Dashboard Icon">
+                                                            <img class="img-fluid rounded-3" width="50"
+                                                                src="{{ asset('/img/male.jpg') }}" alt="Dashboard Icon">
                                                         @elseif($data->user->foto == null && $data->user->gender == 'famale')
-                                                            <img class="img-fluid rounded-3" width="50" src="{{ asset('/img/famale.jpg') }}" alt="Dashboard Icon">
+                                                            <img class="img-fluid rounded-3" width="50"
+                                                                src="{{ asset('/img/famale.jpg') }}"
+                                                                alt="Dashboard Icon">
                                                         @else
-                                                             <img class="img-fluid rounded-3" width="50" src="{{ asset('/img/male.jpg') }}" alt="Dashboard Icon">
+                                                            <img class="img-fluid rounded-3" width="50"
+                                                                src="{{ asset('/img/male.jpg') }}" alt="Dashboard Icon">
                                                         @endif
                                                     </div>
                                                     <div class="db-info mt-2">
                                                         <h5 style="margin-bottom:0; ">{{ $data->task->name }}
                                                         </h5>
-                                                        <h6> {{ $data->user->name }} - {{$data->user->email}}</span>
+                                                        <h6> {{ $data->user->name }} - {{ $data->user->email }}</span>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -473,54 +483,94 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div class="modal fade" id="notRatedModal{{ $data->id }}"
-                                        tabindex="-1" role="dialog"
-                                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="notRatedModal{{ $data->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <img class="modal-title img-thumbnail img-fluid rounded-circle me-2" width="50" src="{{asset('img/famale.jpg')}}" alt="">
+                                                    <img class="modal-title img-thumbnail img-fluid rounded-circle me-2"
+                                                        width="50" src="{{ asset('img/famale.jpg') }}"
+                                                        alt="">
                                                     <h6 class="modal-title me-2" id="myLargeModalLabel">
-                                                        {{$data->user->name}} - <small>6 Jam yang lalu</small>
+                                                        {{ $data->user->name }} -
+                                                        <small>{{ \Carbon\Carbon::parse($data->collect_at)->locale('id_ID')->diffForHumans() }}</small>
                                                     </h6>
-                                                    <div class="modal-title badge badge-warning badge-sm">Terlambat dikumpulkan</div>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"
+                                                    @if ($data->status == 'collect' && $data->collect_at < $data->task->deadline)
+                                                        <div class="modal-title badge badge-success badge-sm">Diserahkan
+                                                        </div>
+                                                    @elseif($data->status == 'collect' && $data->collect_at > $data->task->deadline)
+                                                        <div class="modal-title badge badge-warning badge-sm"> Terlambat
+                                                            Diserahkan</div>
+                                                    @endif
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="col-xl-12 d-flex">						
+                                                    <div class="col-xl-12 d-flex">
                                                         <!-- Feed Activity -->
                                                         <div class="card flex-fill comman-shadow">
                                                             <div class="card-header d-flex align-items-center">
                                                                 <div class="col-lg-8 d-flex flex-column">
-                                                                    <h5 class="card-title ">{{$data->task->name}}</h5>
-                                                                    <h6  class="text-success">Point 0/{{$data->task->default_point}}</h6>
+                                                                    <h5 class="card-title ">{{ $data->task->name }}</h5>
+                                                                    <h6 class="text-success">Point
+                                                                        {{ $data->point }}/{{ $data->task->default_point }}
+                                                                    </h6>
                                                                     <p class="mt-2 mb-0">Lampiran yang diserahkan : </p>
                                                                 </div>
                                                                 <div class="col-lg-4 d-flex justify-content-end">
-                                                                    <input type="number" class="form-control form-control-sm w-50 me-2">
-                                                                    <button type="button" class="btn btn-primary btn-sm rounded-3"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21.04 12.13c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1l-2.05-2.05l1-1c.11-.11.25-.17.39-.17m-1.97 1.75l2.05 2.05L15.06 22H13v-2.06zM11 19l-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h4.18C9.6 1.84 10.7 1 12 1c1.3 0 2.4.84 2.82 2H19c1.1 0 2 .9 2 2v4l-2 2V5h-2v2H7V5H5v14zm1-16c-.55 0-1 .45-1 1s.45 1 1 1s1-.45 1-1s-.45-1-1-1"/></svg> Nilai</button>						
+                                                                    <input type="number"
+                                                                        class="form-control form-control-sm w-50 me-2">
+                                                                    <button type="button"
+                                                                        class="btn btn-primary btn-sm rounded-3"><svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="18" height="18"
+                                                                            viewBox="0 0 24 24">
+                                                                            <path fill="currentColor"
+                                                                                d="M21.04 12.13c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1l-2.05-2.05l1-1c.11-.11.25-.17.39-.17m-1.97 1.75l2.05 2.05L15.06 22H13v-2.06zM11 19l-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h4.18C9.6 1.84 10.7 1 12 1c1.3 0 2.4.84 2.82 2H19c1.1 0 2 .9 2 2v4l-2 2V5h-2v2H7V5H5v14zm1-16c-.55 0-1 .45-1 1s.45 1 1 1s1-.45 1-1s-.45-1-1-1" />
+                                                                        </svg> Nilai</button>
                                                                 </div>
                                                             </div>
                                                             <div class="card-body mb-0">
-                                                                <div class="activity-groups">        
-                                                                    <div class="activity-awards">
-                                                                        <div class="award-boxs">
-                                                                            <img class="img-fluid rounded-3" src="{{asset('/img/file-icon.jpg')}}"  alt="Award">
+                                                                <div class="activity-groups">
+                                                                    @forelse($data->atachments as $file)
+                                                                        <div class="activity-awards mb-3">
+                                                                            <div class="award-boxs">
+                                                                                <img class="img-fluid rounded-3"
+                                                                                    src="{{ asset('/img/file-icon.jpg') }}"
+                                                                                    alt="Award">
+                                                                            </div>
+                                                                            <div class="award-list-outs">
+                                                                                <h4>{{ strlen($file->original_name) > 55 ? substr($file->original_name, 0, 55) . '...' : $file->original_name }}
+                                                                                </h4>
+                                                                                <h5>Ditambahkan pada
+                                                                                    {{ \Carbon\Carbon::parse($file->created_at)->locale('id_ID')->format('j F Y ') }}
+                                                                                    pukul
+                                                                                    {{ \Carbon\Carbon::parse($file->created_at)->locale('id_ID')->format(' H:i') }}
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="award-time-list">
+                                                                                <button type="button"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#preview-file-modal-{{$file->id}}"
+                                                                                    class="btn btn-outline-primary rounded-3"><i
+                                                                                        class="fa-solid fa-circle-info"></i></button>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="award-list-outs">
-                                                                            <h4>1st place in "Chess”</h4>
-                                                                            <h5>John Doe won 1st place in "Chess"</h5>
+
+                                                                    @empty
+                                                                        <div class="align-items-center text-center mt-2">
+                                                                            <img class="img-fluid" width="120"
+                                                                                height="120"
+                                                                                src="{{ asset('/img/nodata.png') }}"
+                                                                                alt="">
+                                                                            <p class="text-dark">Tidak ada lampiran yang
+                                                                                diserahkan</p>
                                                                         </div>
-                                                                        <div class="award-time-list">
-                                                                            <button class="btn btn-outline-primary rounded-3"><i class="fa-solid fa-circle-info"></i></button>
-                                                                        </div>
-                                                                    </div>
+                                                                    @endforelse
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- /Feed Activity -->	
+                                                        <!-- /Feed Activity -->
                                                     </div>
                                                 </div>
                                             </div><!-- /.modal-content -->
@@ -529,7 +579,53 @@
                                 @endforeach
                             </div>
                             @forelse($collections as $data)
-                                {{--  --}}
+                                @foreach ($data->atachments as $file)
+                                    <div class="modal fade" id="preview-file-modal-{{$file->id}}" tabindex="-1"
+                                        role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myLargeModalLabel">
+                                                        Detail {{ $file->original_name }}</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    @if (Str::startsWith(File::mimeType('storage/' . $file->file), 'image/'))
+                                                        <img class="img-fluid"
+                                                            src="{{ asset('storage/' . $file->file) }}"
+                                                            alt="{{ $file->original_name }}">
+                                                    @elseif (Str::startsWith(File::mimeType('storage/' . $file->file), 'video/'))
+                                                        <video width="100%" controls>
+                                                            <source src="{{ asset('storage/' . $dile->file) }}"
+                                                                type="{{ File::mimeType('storage/' . $file->file) }}">
+                                                        </video>
+                                                    @elseif (Str::startsWith(File::mimeType('storage/' . $file->file), 'application/pdf'))
+                                                        <embed src="{{ asset('storage/' . $file->file) }}"
+                                                            type="application/pdf" width="100%" height="600px">
+                                                    @elseif (Str::startsWith(File::mimeType('storage/' . $file->file),
+                                                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
+                                                        <iframe
+                                                            src="https://view.officeapps.live.com/op/view.aspx?src={{ asset('storage/' . $file->file) }}"
+                                                            width="100%" height="600px"></iframe>
+                                                    @elseif (Str::startsWith(File::mimeType('storage/' . $file->file),
+                                                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))
+                                                        <iframe src="{{ asset('storage/' . $dile->file) }}"
+                                                            width="100%" height="600px"></iframe>
+                                                    @elseif (Str::startsWith(File::mimeType('storage/' . $file->file),
+                                                            'application/vnd.openxmlformats-officedocument.presentationml.presentation'))
+                                                        <iframe
+                                                            src="https://view.officeapps.live.com/op/view.aspx?src={{ asset('storage/' . $dile->file) }}"
+                                                            width="100%" height="600px"></iframe>
+                                                    @else
+                                                        <p>Tidak ada pratinjau yang tersedia untuk
+                                                            tipe file ini.</p>
+                                                    @endif
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                @endforeach
                             @empty
                                 <div class="align-items-center text-center mt-2">
                                     <img class="img-fluid" width="230" height="230"
