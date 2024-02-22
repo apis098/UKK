@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <!-- Mirrored from preschool.dreamstechnologies.com/template/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Feb 2024 17:09:38 GMT -->
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <<title>{{config('app.name','Laravel')}}</title>
+    <title>{{config('app.name','Laravel')}}</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('/img/logo-small.png') }}">
