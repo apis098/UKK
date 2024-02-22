@@ -44,7 +44,7 @@ class CollectionController extends Controller
             ]
         );
         $collection = Collection::findOrFail($id);
-        if($collection->default_point != null && $request->input('point') > $collection->default_point || $request->input('point') > 100){
+        if($collection->task->default_point != null && $request->input('point') > $collection->task->default_point || $request->input('point') > 100){
             return redirect()->back()->with('error','Nilai yang anda berikan lebih dari yang sudah ditetapkan');
         }elseif($request->input('point') <= 0){
             return redirect()->back()->with('error','Nilai yang anda berikan tidak boleh kurang dari 0');

@@ -124,7 +124,7 @@
         @endif
         @if ($errors->any())
              iziToast.error({
-                title: 'Sukses',
+                title: 'Gagal',
                 message: '{{ $errors->first() }}',
                 position: 'topCenter'
             });

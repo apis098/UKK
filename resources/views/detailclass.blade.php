@@ -130,7 +130,7 @@
                                         d="M30 20a6 6 0 1 0-10 4.46V32l4-1.894L28 32v-7.54A5.98 5.98 0 0 0 30 20m-4 8.84l-2-.947l-2 .947v-3.19a5.888 5.888 0 0 0 4 0ZM24 24a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4" />
                                     <path fill="currentColor"
                                         d="M25 5h-3V4a2.006 2.006 0 0 0-2-2h-8a2.006 2.006 0 0 0-2 2v1H7a2.006 2.006 0 0 0-2 2v21a2.006 2.006 0 0 0 2 2h9v-2H7V7h3v3h12V7h3v5h2V7a2.006 2.006 0 0 0-2-2m-5 3h-8V4h8Z" />
-                                </svg> Belum di nilai</a></li>
+                                </svg> {{auth()->user()->role == 'theacer' ? 'Belum di nilai' : 'Belum Dikerjakan'}}</a></li>
                         <li class="nav-item"><a class="nav-link" href="#bottom-justified-tab3" data-bs-toggle="tab"><i
                                     class="fa-solid fa-users"></i> Anggota</a></li>
                     </ul>
@@ -423,7 +423,7 @@
                                 <div class="row">
                                     <div class="col-lg-8">
                                         <div class="page-sub-header">
-                                            <h3 class="page-title">Daftar Tugas Yang Belum Dinilai</h3>
+                                            <h3 class="page-title">Daftar Tugas Yang Belum {{auth()->user()->role == 'theacer' ? 'Dinilai':'Dikerjakan'}}</h3>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -633,7 +633,7 @@
                                 <div class="align-items-center text-center mt-2">
                                     <img class="img-fluid" width="230" height="230"
                                         src="{{ asset('/img/nodata.png') }}" alt="">
-                                    <p class="text-dark fw-bolder">Tidak ada tugas yang belum dinilai</p>
+                                    <p class="text-dark fw-bolder">Tidak ada tugas yang belum {{auth()->user()->role == 'theacer' ? 'dgitinilai':'dikerjakan'}}</p>
                                 </div>
                             @endforelse
                         </div>

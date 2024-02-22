@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('collect_at')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('class_id');
+            $table->string('feedback')->nullable();
             $table->unsignedBigInteger('task_id')->nullable();
             $table->timestamps();
 

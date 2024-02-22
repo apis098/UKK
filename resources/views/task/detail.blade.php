@@ -157,8 +157,18 @@
             <div class="container">
                 <!-- Title -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Tugas - kelas
-                        {{ $task->classes->name }}</h2>
+                    <div class="col-lg-7">
+                        <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Tugas - kelas
+                            {{ $task->classes->name }}</h2>
+                    </div>
+                    <div class="col-lg-5 text-end">
+                        <small class=" mb-0">
+                            <a href="#" class="text-muted">Tenggat pengumpulan pada
+                                {{ \Carbon\Carbon::parse($task->deadline)->locale('id_ID')->format('j F Y ') }}
+                                pukul
+                                {{ \Carbon\Carbon::parse($task->deadline)->locale('id_ID')->format(' H:i') }}</a>
+                        </small>
+                    </div>
                 </div>
 
                 <!-- Main content -->
@@ -198,7 +208,7 @@
                                                             </a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item align-items-center" href="#">
-                                                                <i class="fa-solid fa-trash-can"></i> Tambah Materi
+                                                                <i class="fa-solid fa-trash-can"></i> Hapus
                                                             </a>
                                                         </div>
                                                     </div>
@@ -318,10 +328,12 @@
                                         @csrf
                                         <div class="d-flex justify-content-beetwen position-relative">
                                             <h3 class="h6">Tugas</h3>
-                                            @if($status == 'Diserahkan' || $status == 'Terlambat Diserahkan' && $collection->point > 0)
-                                                <small class="text-success position-absolute end-0">{{ $collection->point }}/{{$collection->task->default_point}}</small>
+                                            @if ($status == 'Diserahkan' && $collection->point > 0 || $status == 'Terlambat Diserahkan' && $collection->point > 0)
+                                                <small
+                                                    class="text-success position-absolute end-0">{{ $collection->point }}/{{ $collection->task->default_point }}</small>
                                             @else
-                                                <small class="{{ $status === 'Diserahkan' ? 'text-success' : ($status === 'Terlambat Diserahkan' ? 'text-warning' : 'text-danger') }} position-absolute end-0">{{ $status }}</small>
+                                                <small
+                                                    class="{{ $status === 'Diserahkan' ? 'text-success' : ($status === 'Terlambat Diserahkan' ? 'text-warning' : 'text-danger') }} position-absolute end-0">{{ $status }}</small>
                                             @endif
                                         </div>
                                         @if ($status == 'Diserahkan' || ($status == 'Terlambat Diserahkan' && $files != null))
