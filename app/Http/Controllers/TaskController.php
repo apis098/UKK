@@ -92,6 +92,7 @@ class TaskController extends Controller
             $notification->recipient_id = $m->id;
             $notification->sender_id = auth()->user()->id;
             $notification->class_id = $class_id;
+            $notification->task_id = $data->id;
             $notification->message ='Menambahkan tugas baru di kelas ' . $class->name;
             $notification->route = 'task/'.$data->id;
             $notification->save();

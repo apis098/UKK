@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\atachment;
 use App\Models\Collection;
+use App\Models\Notifications;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,6 +33,14 @@ class CollectionController extends Controller
                 $atachment->save();
             }
         }
+        $notification = new Notifications;
+        $notification->recipient_id = $task->user_id;
+        $notification->sender_id = auth()->user()->id;
+        $notification->class_id = $task->class_id;
+        $notification->collection_id = $data->id;
+        $notification->message ='Mengumpulkan tugas ' . $task->name;
+        $notification->route = 'classes/'.$task->class_id;
+        $notification->save();
         return redirect()->back()->with('success','Berhasil mengumpulkan tugas '. $task->name);
     }
     public function markCollection(Request $request, string $id){
@@ -51,6 +60,14 @@ class CollectionController extends Controller
         }else{
             $collection->point = $request->input('point');
             $collection->save();
+            $notification = new Notifications;
+            $notification->recipient_id = $collection->user_id;
+            $notification->sender_id = auth()->user()->id;
+            $notification->class_id = $collection->class_id;
+            $notification->collection_id = $collection->id;
+            $notification->message ='Memberi nilai pada tugas ' . $collection->task->name;
+            $notification->route = 'task/'.$collection->task_id;
+            $notification->save();
             return redirect()->back()->with('success','Berhasil memberikan nilai kepada ' . $collection->user->name);
         }
     }

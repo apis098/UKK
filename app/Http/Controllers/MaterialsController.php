@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\atachment;
 use App\Models\Classes;
 use App\Models\materials;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
 
 class MaterialsController extends Controller
@@ -65,6 +66,19 @@ class MaterialsController extends Controller
                 $atachment->material_id = $data->id;
                 $atachment->save();
             }
+        }
+        $class = Classes::findOrFail($class_id);
+        $member = $class->member;
+        foreach($member as $m){
+             // notifikasi
+             $notification = new Notifications;
+             $notification->recipient_id = $m->id;
+             $notification->sender_id = auth()->user()->id;
+             $notification->class_id = $class_id;
+             $notification->material_id = $data->id;
+             $notification->message ='Menambahkan materi baru di kelas ' . $class->name;
+             $notification->route = 'materials/'.$data->id;
+             $notification->save();
         }
         return redirect('/classes/'.$class_id)->with('success', 'Sukses menambahkan materi baru!');
     }
