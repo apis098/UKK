@@ -8707,7 +8707,10 @@ ol.breadcrumb.bg-secondary {
 		margin-left: 78px;
 	}
 }
-
+.none-button {
+    background: none;
+    border: none;
+}
 @media (max-width: 1399px) {
 	.award-list-outs {
 		max-width: 350px;

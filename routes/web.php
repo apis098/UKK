@@ -7,6 +7,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CompletenessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialsController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
    // collections
    Route::resource('collection',CollectionController::class);
    Route::post('task/collect/{task_id}',[CollectionController::class,'collect'])->name('collect.store');
-
    Route::post('mark/collection/{id}',[CollectionController::class,'markCollection'])->name('mark.collection');
+   // notifications
+   Route::resource('notification', NotificationController::class);
+   Route::patch('read-all-notification',[NotificationController::class,'readAllNotifications'])->name('read.all.notification');
 });

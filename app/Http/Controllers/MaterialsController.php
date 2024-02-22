@@ -74,7 +74,9 @@ class MaterialsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $materials = materials::findOrFail($id);
+        $atachments = $materials->atachment;
+        return view('materials.detail',compact('materials','atachments'));
     }
 
     /**

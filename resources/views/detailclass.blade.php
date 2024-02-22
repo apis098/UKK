@@ -219,7 +219,7 @@
                             </div>
                             <div class="row pe-3 ps-3" id="material-element">
                                 @foreach ($materials as $data)
-                                    <a href="#"
+                                    <a href="{{route('materials.show', $data->id)}}"
                                         class="custom-card pt-2 pb-2 bg-light mb-2 d-flex align-items-center scale">
                                         <div class="col-lg-9">
                                             <div class="grid-container">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\atachment;
 use App\Models\Classes;
 use App\Models\Collection;
+use App\Models\Notifications;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
@@ -86,6 +87,14 @@ class TaskController extends Controller
             $item->class_id = $class_id;
             $item->status = 'not_collect';
             $item->save();
+            // notifikasi
+            $notification = new Notifications;
+            $notification->recipient_id = $m->id;
+            $notification->sender_id = auth()->user()->id;
+            $notification->class_id = $class_id;
+            $notification->message ='Menambahkan tugas baru di kelas ' . $class->name;
+            $notification->route = 'task/'.$data->id;
+            $notification->save();
         }
         return redirect('/classes/' . $class_id)->with('success', 'Sukses menambahkan tugas baru!');
     }

@@ -23,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('layouts.sidebar', NavComposer::class);
+        View::composer('layouts.nav', NavComposer::class);
     }
 }

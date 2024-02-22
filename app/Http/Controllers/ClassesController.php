@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classes;
 use App\Models\Collection;
+use App\Models\Notifications;
 use App\Models\PivotClass;
 use App\Models\Task;
 use App\Models\User;
@@ -107,6 +108,14 @@ class ClassesController extends Controller
             $join->user_id = auth()->user()->id;
             $join->class_id = $getClass->id;
             $join->save();
+            // notifications
+            $notification = new Notifications;
+            $notification->recipient_id = $getClass->user_id;
+            $notification->sender_id = auth()->user()->id;
+            $notification->class_id = $getClass->id;
+            $notification->message ='bergabung ke kalas '.$getClass->name;
+            $notification->route = 'classes/'.$getClass->id;
+            $notification->save();
             return redirect('/home')->with('success', 'Berhasil bergabung ke kelas ' . $getClass->name);
         } else {
             return redirect()->back()->with('error', 'Anda telah bergabung ke kelas ' . $getClass->name . ' sebelumnya');
