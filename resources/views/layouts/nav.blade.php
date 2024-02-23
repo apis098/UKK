@@ -65,7 +65,7 @@
                     <div id="no-data-element" class="align-items-center text-center mt-5 transition d-none">
                         <img class="img-fluid" width="130" height="130"
                             src="{{ asset('/img/nodata.png') }}" alt="">
-                        <p class="text-dark ">Belum ada notifikasi</p>
+                        <p class="text-dark ">Belum ada notifikasi terbaru</p>
                     </div>
                     <ul class="notification-list transition">
                         @forelse($notifications as $notification)
@@ -109,7 +109,7 @@
                             <div class="align-items-center text-center mt-5">
                                 <img class="img-fluid" width="130" height="130"
                                     src="{{ asset('/img/nodata.png') }}" alt="">
-                                <p class="text-dark ">Belum ada notifikasi</p>
+                                <p class="text-dark ">Belum ada notifikasi terbaru</p>
                             </div>
                         @endforelse
                     </ul>

@@ -37,17 +37,27 @@ class ClassesController extends Controller
         $class = Classes::findOrFail($class_id);
         $pivotClass = PivotClass::where('user_id', $user_id)->where('class_id', $class_id)->first();
         $pivotClass->delete();
-        $class = $pivotClass->classes;
+        $classes = $pivotClass->classes;
         $member = $pivotClass->user;
-        $tasks  = $class->tasks;
-      
+        $tasks  = $classes->tasks;
         foreach($tasks as $task){
             $collection = Collection::where('user_id',$user_id)->where('task_id',$task->id)->delete();
         }
         if ($user_id != auth()->user()->id) {
+            $notification = new Notifications;
+            $notification->recipient_id = $user_id;
+            $notification->sender_id = auth()->user()->id;
+            $notification->message ='Mengeluarkan anda dari kelas ' . $class->name;
+            $notification->route = '/';
+            $notification->save();
             return redirect()->back()->with('info', $member->name . ' telah dikeluarkan');
         } else {
-            $tasks = $class->tasks;
+            $notification = new Notifications;
+            $notification->recipient_id = $class->user->id;
+            $notification->sender_id = $user_id;
+            $notification->message ='Telah meninggalkan kelas ' . $class->name;
+            $notification->route = '/';
+            $notification->save();
             return redirect()->back()->with('info', 'Anda telah meninggalkan kelas ' . $class->name);
         }
     }
