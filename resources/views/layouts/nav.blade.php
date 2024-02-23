@@ -1,6 +1,16 @@
 <!-- Header -->
 <div class="header">
-
+    <style>
+    .transition { 
+    transition: opacity 1s; 
+    } 
+    .removed { 
+    opacity: 0; 
+    }
+    .added{
+    opacity: 1; 
+    }
+    </style>
     <!-- Logo -->
     <div class="header-left ">
         <a href="index.html" class="logo">
@@ -37,7 +47,7 @@
     <ul class="nav user-menu">
         <!-- Notifications -->
         <li class="nav-item dropdown noti-dropdown me-2 btn-group dropstart">
-            <a href="#"  id="notification-button" class=" nav-link header-nav-list" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="#" id="notification-icon" class=" nav-link header-nav-list" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-regular fa-bell"></i>
                 @if ($unreadNotificationCount > 0)
                     <span id="notification-badge" style="top: 10%;"
@@ -49,12 +59,17 @@
                 <div class="topnav-dropdown-header">
                     <span class="notification-title fw-bolder"><i class="fa-regular fa-bell fa-lg"></i> Notifikasi
                     </span>
-                    {{-- <a href="javascript:void(0)" class="clear-noti"> Clear All </a> --}}
+                    <button type="button" id="notification-button" class="clear-noti btn btn-link mt-1"> Bersihkan </button>
                 </div>
                 <div class="noti-content">
-                    <ul class="notification-list">
+                    <div id="no-data-element" class="align-items-center text-center mt-5 transition d-none">
+                        <img class="img-fluid" width="130" height="130"
+                            src="{{ asset('/img/nodata.png') }}" alt="">
+                        <p class="text-dark ">Belum ada notifikasi</p>
+                    </div>
+                    <ul class="notification-list transition">
                         @forelse($notifications as $notification)
-                            <li class="notification-message">
+                            <li class="notification-message" id="notification-list">
                                 <form action="{{route('notification.update',$notification->id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
@@ -195,6 +210,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     $(document).ready(function() {
         $("#notification-button").click(function() {
             const badge = document.getElementById('notification-badge');
+            var icon = document.querySelector('#notification-icon');
+            var notificationList = document.querySelector('#notification-list');
+            var noDataElement = document.querySelector('#no-data-element');
             $.ajax({
                 type: "PATCH",
                 url: "{{ route('read.all.notification') }}",
@@ -203,6 +221,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 },
                 success: function(response) {
                     if (response.success) {
+                        icon.click();
+                        notificationList.classList.add("d-none"); 
+                        noDataElement.classList.remove('d-none');
+                        noDataElement.classList.add('added');
                         badge.style.display = "none";
                     }
                 },

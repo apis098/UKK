@@ -34,13 +34,20 @@ class ClassesController extends Controller
     {
         $user_id = $request->user_id;
         $class_id = $request->class_id;
+        $class = Classes::findOrFail($class_id);
         $pivotClass = PivotClass::where('user_id', $user_id)->where('class_id', $class_id)->first();
         $pivotClass->delete();
         $class = $pivotClass->classes;
         $member = $pivotClass->user;
+        $tasks  = $class->tasks;
+      
+        foreach($tasks as $task){
+            $collection = Collection::where('user_id',$user_id)->where('task_id',$task->id)->delete();
+        }
         if ($user_id != auth()->user()->id) {
             return redirect()->back()->with('info', $member->name . ' telah dikeluarkan');
         } else {
+            $tasks = $class->tasks;
             return redirect()->back()->with('info', 'Anda telah meninggalkan kelas ' . $class->name);
         }
     }
