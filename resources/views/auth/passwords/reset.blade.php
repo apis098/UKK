@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <!-- Mirrored from preschool.dreamstechnologies.com/template/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Feb 2024 17:09:38 GMT -->
 
@@ -54,11 +54,12 @@
                             <h1>Ubah kata sandi</h1>
                             <p class="account-subtitle">Silahkan perbarui sandi anda</p>
                             <!-- Form -->
-                            <form method="POST" action="{{ route('password.update') }}">
+                            <form method="POST" action="{{ route('update.password') }}">
                                 @csrf
+                                @method('PUT')
                                 <div class="form-group">
                                     <label>Email <span class="login-danger">*</span></label>
-                                    <input class="form-control" type="email" id="email" name="email"  @error('email') is-invalid @enderror value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                    <input readonly class="form-control" type="email" id="email" name="email"  @error('email') is-invalid @enderror value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
                                     <span class="profile-views"><i class="fas fa-solid fa-envelope"></i></span>
                                 </div>
                                 @error('email')
@@ -119,7 +120,7 @@
         @endif
         @if ($errors->any())
              iziToast.error({
-                title: 'Sukses',
+                title: 'Gagal',
                 message: '{{ $errors->first() }}',
                 position: 'topCenter'
             });

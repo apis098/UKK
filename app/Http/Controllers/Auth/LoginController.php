@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -65,7 +67,21 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Email atau Password Salah')->withInput();
         }
     }
-    
+    public function updatePassword(Request $request){
+        $request->validate(
+            [
+                'password' => 'required',
+                'password_confirmation' => 'same:password|required'
+            ],
+            [
+                'password.required' => 'Inputan password harus di isi',
+                'password_confirmation.same' => 'Inputan password tidak sama', 
+            ]);
+        $user = User::where('email',$request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect('/login')->with('success','Berhasil memperbarui sandi, silahkan login di halaman ini');
+    }
     public function showLoginForm()
     {
         return view('auth.login');

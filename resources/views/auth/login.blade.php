@@ -52,7 +52,7 @@
                         <div class="login-right-wrap">
                             <h1>Selamat datang di Educlass</h1>
                             <p class="account-subtitle">Belum punya akun? <a href="/register">register disini</a></p>
-                            <h2>Sign in</h2>
+                            <h2>Form login</h2>
                             <!-- Form -->
                             <form method="POST" action="{{ route('loginAction') }}">
                                 @csrf
@@ -67,12 +67,6 @@
                                     <span class="profile-views feather-eye toggle-password"></span>
                                 </div>
                                 <div class="forgotpass">
-                                    <div class="remember-me">
-                                        <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Ingat saya
-                                            <input type="checkbox" name="radio">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
                                     @if (Route::has('password.request'))
                                         <a href="{{ route('password.request') }}">Lupa sandi?</a>
                                     @endif

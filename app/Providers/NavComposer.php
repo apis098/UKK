@@ -42,7 +42,7 @@ class NavComposer
         if (Auth::check()) {
             $notifications = Notifications::where('recipient_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->get();
             $unreadNotificationCount = Notifications::where('recipient_id', auth()->user()->id)->where('status', 'belum')->count();
         }
         $view->with([

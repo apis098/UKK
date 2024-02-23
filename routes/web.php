@@ -32,7 +32,7 @@ Route::get('/auth/redirect', [SocialiteController::class, 'redirectGoogle'])->na
 Route::get('/google/redirect', [SocialiteController::class, 'googleCallback'])->name('google.callback');
 Route::post('login/action', [LoginController::class, 'actionlogin'])->name('loginAction');
 Route::post('register/action', [RegisterController::class, 'store'])->name('register.store');
-
+Route::put('update-password', [LoginController::class,'updatePassword'])->name('update.password');
 Route::middleware('auth')->group(function () {
    Route::get('/home', [HomeController::class, 'index'])->name('home');
    // classes
