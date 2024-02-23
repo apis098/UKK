@@ -32,6 +32,10 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+    {{-- izitoast --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    {{-- end izitoast --}}
 </head>
 
 <body>
@@ -48,11 +52,6 @@
                         <div class="login-right-wrap">
                             <h1>Reset Password</h1>
                             <p class="account-subtitle">Kami bisa membantumu mengatur ulang sandi</p>
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
                             <!-- Form -->
                             <form action="{{route('password.email')}}" method="POST">
 								@csrf
@@ -90,7 +89,36 @@
 
     <!-- Custom JS -->
     <script src="{{ asset('/js/script.js') }}"></script>
-
+    <script>
+        @if (session('status'))
+            iziToast.success({
+                title: 'Sukses',
+                message: '{{ session('status') }}',
+                position: 'topCenter'
+            });
+        @endif
+        @if (session('success'))
+            iziToast.success({
+                title: 'Sukses',
+                message: '{{ session('success') }}',
+                position: 'topCenter'
+            });
+        @endif
+        @if ($errors->any())
+             iziToast.error({
+                title: 'Gagal',
+                message: '{{ $errors->first() }}',
+                position: 'topCenter'
+            });
+        @endif
+        @if (session('error'))
+            iziToast.error({
+                title: 'Gagal',
+                message: '{{ session('error') }}',
+                position: 'topCenter'
+            });
+        @endif
+    </script>
 </body>
 
 <!-- Mirrored from preschool.dreamstechnologies.com/template/forgot-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Feb 2024 17:10:51 GMT -->
