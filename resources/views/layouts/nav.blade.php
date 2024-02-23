@@ -67,9 +67,9 @@
                             src="{{ asset('/img/nodata.png') }}" alt="">
                         <p class="text-dark ">Belum ada notifikasi terbaru</p>
                     </div>
-                    <ul class="notification-list transition">
+                    <ul class="notification-list transition"  id="notification-list">
                         @forelse($notifications as $notification)
-                            <li class="notification-message" id="notification-list">
+                            <li class="notification-message">
                                 <form action="{{route('notification.update',$notification->id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
