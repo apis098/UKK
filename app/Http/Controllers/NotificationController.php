@@ -20,6 +20,15 @@ class NotificationController extends Controller
             'success' => true,
         ]);
     }
+    public function deleteAllNotifications(){
+        $notification = Notifications::where('recipient_id',auth()->user()->id)->get();
+        foreach($notification as $data){
+            $data->delete();
+        }
+        return response()->json([
+            'success' => true,
+        ]);
+    }
     public function index()
     {
         //

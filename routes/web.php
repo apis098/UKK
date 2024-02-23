@@ -56,4 +56,5 @@ Route::middleware('auth')->group(function () {
    // notifications
    Route::resource('notification', NotificationController::class);
    Route::patch('read-all-notification',[NotificationController::class,'readAllNotifications'])->name('read.all.notification');
+   Route::delete('delete-all-notification',[NotificationController::class,'deleteAllNotifications'])->name('delete.all.notification');
 });

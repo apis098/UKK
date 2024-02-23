@@ -41,7 +41,6 @@ class NavComposer
         $unreadNotificationCount = [];
         if (Auth::check()) {
             $notifications = Notifications::where('recipient_id', auth()->user()->id)
-            ->where('status','belum')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
             $unreadNotificationCount = Notifications::where('recipient_id', auth()->user()->id)->where('status', 'belum')->count();

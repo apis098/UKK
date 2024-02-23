@@ -214,8 +214,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             var notificationList = document.querySelector('#notification-list');
             var noDataElement = document.querySelector('#no-data-element');
             $.ajax({
-                type: "PATCH",
-                url: "{{ route('read.all.notification') }}",
+                type: "DELETE",
+                url: "{{ route('delete.all.notification') }}",
                 data: {
                     "_token": "{{ csrf_token() }}"
                 },
@@ -225,6 +225,26 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                         notificationList.classList.add("d-none"); 
                         noDataElement.classList.remove('d-none');
                         noDataElement.classList.add('added');
+                        badge.style.display = "none";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    badge.style.display = "block";
+                }
+            });
+        });
+    });
+    $(document).ready(function() {
+        $("#notification-icon").click(function() {
+            const badge = document.getElementById('notification-badge');
+            $.ajax({
+                type: "PATCH",
+                url: "{{ route('read.all.notification') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.success) {
                         badge.style.display = "none";
                     }
                 },
