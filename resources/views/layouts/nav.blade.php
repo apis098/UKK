@@ -1,15 +1,17 @@
 <!-- Header -->
 <div class="header">
     <style>
-    .transition { 
-    transition: opacity 1s; 
-    } 
-    .removed { 
-    opacity: 0; 
-    }
-    .added{
-    opacity: 1; 
-    }
+        .transition {
+            transition: opacity 1s;
+        }
+
+        .removed {
+            opacity: 0;
+        }
+
+        .added {
+            opacity: 1;
+        }
     </style>
     <!-- Logo -->
     <div class="header-left ">
@@ -47,7 +49,8 @@
     <ul class="nav user-menu">
         <!-- Notifications -->
         <li class="nav-item dropdown noti-dropdown me-2 btn-group dropstart">
-            <a href="#" id="notification-icon" class=" nav-link header-nav-list" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="#" id="notification-icon" class=" nav-link header-nav-list" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fa-regular fa-bell"></i>
                 @if ($unreadNotificationCount > 0)
                     <span id="notification-badge" style="top: 10%;"
@@ -59,21 +62,22 @@
                 <div class="topnav-dropdown-header">
                     <span class="notification-title fw-bolder"><i class="fa-regular fa-bell fa-lg"></i> Notifikasi
                     </span>
-                    <button type="button" id="notification-button" class="clear-noti btn btn-link mt-1"> Bersihkan </button>
+                    <button type="button" id="notification-button" class="clear-noti btn btn-link mt-1"> Bersihkan
+                    </button>
                 </div>
                 <div class="noti-content">
                     <div id="no-data-element" class="align-items-center text-center mt-5 transition d-none">
-                        <img class="img-fluid" width="130" height="130"
-                            src="{{ asset('/img/nodata.png') }}" alt="">
+                        <img class="img-fluid" width="130" height="130" src="{{ asset('/img/nodata.png') }}"
+                            alt="">
                         <p class="text-dark ">Belum ada notifikasi terbaru</p>
                     </div>
-                    <ul class="notification-list transition"  id="notification-list">
+                    <ul class="notification-list transition" id="notification-list">
                         @forelse($notifications as $notification)
                             <li class="notification-message">
-                                <form action="{{route('notification.update',$notification->id)}}" method="POST">
+                                <form action="{{ route('notification.update', $notification->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button class="none-button text-start p-1" type="submit" >
+                                    <button class="none-button text-start p-1" type="submit">
                                         <div class="media d-flex ms-2">
                                             <span class="avatar avatar-sm flex-shrink-0">
                                                 @if ($notification->sender->google_id == 1 && $notification->sender->foto != null)
@@ -101,7 +105,12 @@
                                                         class="notification-time">{{ \Carbon\Carbon::parse($notification->created_at)->locale('id_ID')->diffForHumans() }}</span>
                                                 </p>
                                             </div>
-                                        </div>
+                                            @if($notification->status == 'belum')
+                                                <div class="position-absolute" style="top: 10%; left:11%">
+                                                    <i class="text-danger fa-sm fa-solid fa-circle"></i>
+                                                </div>
+                                            @endif
+                                        </div>  
                                     </button>
                                 </form>
                             </li>
@@ -138,7 +147,8 @@
                         <img class="rounded-circle" src="{{ asset('/storage/' . auth()->user()->foto) }}"
                             width="31" alt="2">
                     @elseif(auth()->user()->foto == null && auth()->user()->gender == 'male')
-                        <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31" alt="3">
+                        <img class="rounded-circle" src="{{ asset('/img/male.jpg') }}" width="31"
+                            alt="3">
                     @elseif(auth()->user()->foto == null && auth()->user()->gender == 'famale')
                         <img class="rounded-circle" src="{{ asset('/img/famale.jpg') }}" width="31"
                             alt="3">
@@ -202,8 +212,8 @@
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- jQuery -->
 <script src="{{ asset('/js/jquery-3.7.1.min.js') }}"></script>
 <script>
@@ -222,7 +232,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 success: function(response) {
                     if (response.success) {
                         icon.click();
-                        notificationList.classList.add("d-none"); 
+                        notificationList.classList.add("d-none");
                         noDataElement.classList.remove('d-none');
                         noDataElement.classList.add('added');
                         badge.style.display = "none";
