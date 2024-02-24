@@ -39,7 +39,6 @@
 </head>
 
 <body>
-
     <!-- Main Wrapper -->
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
