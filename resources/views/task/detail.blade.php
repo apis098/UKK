@@ -328,7 +328,9 @@
                                         @csrf
                                         <div class="d-flex justify-content-beetwen position-relative">
                                             <h3 class="h6">Tugas</h3>
-                                            @if ($status == 'Diserahkan' && $collection->point > 0 || $status == 'Terlambat Diserahkan' && $collection->point > 0)
+                                            @if (
+                                                ($status == 'Diserahkan' && $collection->point > 0) ||
+                                                    ($status == 'Terlambat Diserahkan' && $collection->point > 0))
                                                 <small
                                                     class="text-success position-absolute end-0">{{ $collection->point }}/{{ $collection->task->default_point }}</small>
                                             @else
@@ -371,7 +373,7 @@
                                                 class="btn btn-outline-primary rounded-3 w-100 mb-3 upload-button">
                                                 <i class="fa-solid fa-plus"></i> Kumpulkan tugas
                                             </button>
-                                            <div class="element"></div>
+                                            <div class="element" id="element-container"></div>
                                             <section class="rounded progress-area"></section>
                                             <section class="rounded uploaded-area"></section>
                                             <button type="button" onclick="readTriger()"
@@ -416,8 +418,9 @@
             uploadedArea = document.querySelector(".uploaded-area");
 
         let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
-
+        num = 1;
         uploadButton.addEventListener("click", () => {
+            num++;
             if (elementContainer.children.length === 0) {
                 // Jika belum ada input file, buat dynamic input
                 createNewInput();
@@ -442,7 +445,7 @@
             newInput.type = "file";
             newInput.name = "files[]";
             newInput.classList.add("file-input", "form-control");
-            newInput.setAttribute("multiple", true);
+            newInput.setAttribute("id", 'input-file-' + num)
             newInput.setAttribute("hidden", true);
 
             // Append new input to the element container
@@ -500,13 +503,14 @@
                 if (loaded == total) {
                     // fakeButton.classList.remove('disabled');
                     progressArea.innerHTML = "";
-                    let uploadedHTML = `<li class="row">
-                        <div class="content upload">
+                    let uploadedHTML = `<li class="row" id="atachment-detail-${num}">
+                        <div class="content upload d-flex">
                             <i class="fas fa-file-alt"></i>
                             <div class="details">
-                                <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
-                                <span class="size">${fileSize}</span>
+                                <small class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></small>
+                                <small class="size">${fileSize}</small>
                             </div>
+                            <a class="align-items-center" onclick="closeAtachment(${num})" href="#"><p class="text-danger mt-3 fa-solid fa-circle-xmark"></p></a>
                         </div>
                     </li>`;
                     uploadedArea.classList.remove("onprogress");
@@ -533,6 +537,19 @@
 
         function cancelTriger() {
             cancelButton.click();
+        }
+
+        function closeAtachment(num) {
+            const card = document.getElementById('atachment-detail-' + num);
+            const input = document.getElementById('input-file-' + num);
+            card.remove();
+            input.remove();
+            let divElement = document.getElementById('element-container');
+            let childElements = divElement.querySelectorAll('input');
+            if (childElements.length < 1) {
+                read_button.classList.remove('d-none');
+                submit_button.classList.add('d-none');
+            }
         }
     </script>
 @endsection
