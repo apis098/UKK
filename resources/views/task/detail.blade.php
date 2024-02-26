@@ -194,7 +194,6 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td></td>
                                             @if (auth()->user()->role == 'theacer')
                                                 <td class="text-end">
                                                     <div class="btn-group dropstart">
@@ -253,6 +252,11 @@
                                                                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75M8 6a1 1 0 1 1 0-2a1 1 0 0 1 0 2" />
                                                                             </svg>
                                                                         </button>
+                                                                        @if(auth()->user()->role == 'theacer')
+                                                                        <button title="Hapus lampiran" type="button" class="btn btn-danger mr-auto btn-sm rounded-3 p-2">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M8 9h8v10H8z" opacity=".3"/><path fill="currentColor" d="m15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"/></svg>
+                                                                        </button>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>

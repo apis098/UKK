@@ -186,7 +186,6 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td></td>
                                             @if (auth()->user()->role == 'theacer')
                                                 <td class="text-end">
                                                     <div class="btn-group dropstart">
@@ -304,12 +303,19 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            {{-- @if(auth()->user()->role == "theacer")
+                                            <td colspan="2">
+                                                <button type="button" class="btn btn-primary mr-auto btn-sm rounded-3 p-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M8 9h8v10H8z" opacity=".3"/><path fill="currentColor" d="m15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"/></svg>
+                                                </button>
+                                            </td>
+                                            @endif --}}
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
