@@ -203,8 +203,9 @@
         uploadedArea = document.querySelector(".uploaded-area");
 
     let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
-
+    num = 1;
     form.addEventListener("click", () => {
+        num++;
         if (elementContainer.children.length === 0) {
             // Jika belum ada input file, buat dynamic input
             createNewInput();
@@ -229,7 +230,7 @@
         newInput.type = "file";
         newInput.name = "files[]";
         newInput.classList.add("file-input", "form-control");
-        newInput.setAttribute("multiple", true);
+        newInput.setAttribute("id",'input-file-'+num);
         newInput.setAttribute("hidden", true);
 
         // Append new input to the element container
@@ -285,13 +286,16 @@
                 if (loaded == total) {
                     fakeButton.classList.remove('disabled');
                     progressArea.innerHTML = "";
-                    let uploadedHTML = `<li class="row">
-                        <div class="content upload">
+                    let uploadedHTML = `<li class="row" id="detail-atachment-${num}">
+                        <div class="content upload col-lg-10">
                             <i class="fas fa-file-alt"></i>
                             <div class="details">
                                 <span class="name">${name} • Selesai Diunggah <i class="fas fa-check"></i></span>
                                 <span class="size">${fileSize}</span>
                             </div>
+                        </div>
+                        <div class="col-lg-2 text-end">
+                            <button type="button" class="align-items-center btn btn-link" onclick="closeAtachment(${num})" ><p class="text-danger mt-3 fa-solid fa-circle-xmark"></p></button>
                         </div>
                     </li>`;
                     uploadedArea.classList.remove("onprogress");
@@ -311,6 +315,12 @@
         function submitUploadForm(){
             const button = document.getElementById('real-button');
             button.click();
+        }
+        function closeAtachment(num){
+            const card = document.getElementById('detail-atachment-'+num);
+            const fileInput = document.getElementById('input-file-'+num);
+            card.remove();
+            fileInput.remove();
         }
     </script>
 
