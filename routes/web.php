@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
    Route::resource('task',TaskController::class);
    Route::get('task/create/{class_id}',[TaskController::class,'taskCreate'])->name('task.form');
    Route::post('task/store/{class_id}',[TaskController::class,'taskStore'])->name('task.add');
+   Route::delete('delete-atachment/{id}',[TaskController::class,'deleteAtachment'])->name('task.atachment.delete');
    // collections
    Route::resource('collection',CollectionController::class);
    Route::post('task/collect/{task_id}',[CollectionController::class,'collect'])->name('collect.store');

@@ -135,6 +135,14 @@ class TaskController extends Controller
 
         return view('task.detail', compact('task', 'atachments', 'status', 'collection', 'files'));
     }
+    public function deleteAtachment(string $id){    
+        $atachment = atachment::findOrFail($id);
+        $atachment->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Lampiran telah dihapus',
+        ]);
+    }   
     /**
      * Show the form for editing the specified resource.
      */
@@ -156,6 +164,6 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // 
     }
 }

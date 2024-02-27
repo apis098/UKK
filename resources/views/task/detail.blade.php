@@ -230,9 +230,10 @@
                                         <tr>
                                             <td colspan="2">
                                                 <div class="d-flex">
-                                                    <div class="col-lg-12">
-                                                        @foreach ($atachments as $atachment)
-                                                            <div class="card p-2 border border-secondary">
+                                                    <div id="atachment-list" class="col-lg-12">
+                                                        @forelse ($atachments as $atachment)
+                                                            <div class="card p-2 border border-secondary"
+                                                                id="atachment-card-{{ $atachment->id }}">
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="col-lg-9 d-flex align-items-center">
                                                                         <img src="{{ asset('/img/file-icon.jpg') }}"
@@ -252,10 +253,27 @@
                                                                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75M8 6a1 1 0 1 1 0-2a1 1 0 0 1 0 2" />
                                                                             </svg>
                                                                         </button>
-                                                                        @if(auth()->user()->role == 'theacer')
-                                                                        <button title="Hapus lampiran" type="button" class="btn btn-danger mr-auto btn-sm rounded-3 p-2">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M8 9h8v10H8z" opacity=".3"/><path fill="currentColor" d="m15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"/></svg>
-                                                                        </button>
+                                                                        @if (auth()->user()->role == 'theacer')
+                                                                            <form
+                                                                                id="delete-atachment-form-{{ $atachment->id }}"
+                                                                                hidden
+                                                                                action="{{ route('task.atachment.delete', $atachment->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                            </form>
+                                                                            <button title="Hapus lampiran" type="button"
+                                                                                onclick="deleteAtachmentButton({{ $atachment->id }})"
+                                                                                class="btn btn-danger mr-auto btn-sm rounded-3 p-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    viewBox="0 0 24 24">
+                                                                                    <path fill="currentColor"
+                                                                                        d="M8 9h8v10H8z" opacity=".3" />
+                                                                                    <path fill="currentColor"
+                                                                                        d="m15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" />
+                                                                                </svg>
+                                                                            </button>
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -293,17 +311,20 @@
                                                                                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
                                                                                 <iframe
                                                                                     src="https://view.officeapps.live.com/op/view.aspx?src={{ asset('storage/' . $atachment->file) }}"
-                                                                                    width="100%" height="600px"></iframe>
+                                                                                    width="100%"
+                                                                                    height="600px"></iframe>
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
                                                                                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))
                                                                                 <iframe
                                                                                     src="{{ asset('storage/' . $atachment->file) }}"
-                                                                                    width="100%" height="600px"></iframe>
+                                                                                    width="100%"
+                                                                                    height="600px"></iframe>
                                                                             @elseif (Str::startsWith(File::mimeType('storage/' . $atachment->file),
                                                                                     'application/vnd.openxmlformats-officedocument.presentationml.presentation'))
                                                                                 <iframe
                                                                                     src="https://view.officeapps.live.com/op/view.aspx?src={{ asset('storage/' . $atachment->file) }}"
-                                                                                    width="100%" height="600px"></iframe>
+                                                                                    width="100%"
+                                                                                    height="600px"></iframe>
                                                                             @else
                                                                                 <p>Tidak ada pratinjau yang tersedia untuk
                                                                                     tipe file ini.</p>
@@ -312,7 +333,18 @@
                                                                     </div><!-- /.modal-content -->
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                        @endforeach
+                                                        @empty
+                                                            <div class="align-items-center text-center ">
+                                                                <img class="img-fluid" width="200" height="200"
+                                                                    src="{{ asset('/img/nodata.png') }}" alt="">
+                                                                <p class="text-dark ">Tidak ada lampiran</p>
+                                                            </div>
+                                                        @endforelse
+                                                        <div id="no-data-img" class="align-items-center text-center  d-none">
+                                                            <img class="img-fluid" width="200" height="200"
+                                                                src="{{ asset('/img/nodata.png') }}" alt="">
+                                                            <p class="text-dark ">Tidak ada lampiran</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -410,87 +442,88 @@
             </div>
         </div>
     </div>
-    <script>
-        // JavaScript
-        const uploadButton = document.querySelector(".upload-button"),
-            elementContainer = document.querySelector(".element"),
-            progressArea = document.querySelector(".progress-area"),
-            submit_button = document.querySelector('#submitButton'),
-            read_button = document.querySelector('.read-button'),
-            readButton = document.querySelector('#real-read-button'),
-            cancelButton = document.querySelector('#cancel-button'),
-            uploadedArea = document.querySelector(".uploaded-area");
+    @if (auth()->user()->role == 'student')
+        <script>
+            // JavaScript
+            const uploadButton = document.querySelector(".upload-button"),
+                elementContainer = document.querySelector(".element"),
+                progressArea = document.querySelector(".progress-area"),
+                submit_button = document.querySelector('#submitButton'),
+                read_button = document.querySelector('.read-button'),
+                readButton = document.querySelector('#real-read-button'),
+                cancelButton = document.querySelector('#cancel-button'),
+                uploadedArea = document.querySelector(".uploaded-area");
 
-        let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
-        num = 1;
-        uploadButton.addEventListener("click", () => {
-            num++;
-            if (elementContainer.children.length === 0) {
-                // Jika belum ada input file, buat dynamic input
-                createNewInput();
-            } else {
-                // Jika sudah ada input file, tunggu sampai upload selesai baru buat dynamic input
-                checkUploadCompletion();
-            }
-        });
-
-        function checkUploadCompletion() {
-            if (!uploadedArea.classList.contains("onprogress")) {
-                // Jika tidak ada proses upload berlangsung
-                createNewInput();
-            } else {
-                // Jika masih ada proses upload, tunggu sebentar dan cek lagi
-                setTimeout(checkUploadCompletion, 1000);
-            }
-        }
-
-        function createNewInput() {
-            let newInput = document.createElement("input");
-            newInput.type = "file";
-            newInput.name = "files[]";
-            newInput.classList.add("file-input", "form-control");
-            newInput.setAttribute("id", 'input-file-' + num)
-            newInput.setAttribute("hidden", true);
-
-            // Append new input to the element container
-            elementContainer.appendChild(newInput);
-
-            // Add onchange event to the new input
-            newInput.onchange = ({
-                target
-            }) => {
-                let files = target.files;
-                if (files.length > 0) {
-                    for (let i = 0; i < files.length; i++) {
-                        let file = files[i];
-                        let fileName = file.name;
-                        if (fileName.length >= 12) {
-                            let splitName = fileName.split('.');
-                            fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
-                        }
-                        uploadFile(file, fileName);
-                    }
+            let uploadedFiles = []; // Array untuk menyimpan informasi file yang diunggah
+            num = 1;
+            uploadButton.addEventListener("click", () => {
+                num++;
+                if (elementContainer.children.length === 0) {
+                    // Jika belum ada input file, buat dynamic input
+                    createNewInput();
+                } else {
+                    // Jika sudah ada input file, tunggu sampai upload selesai baru buat dynamic input
+                    checkUploadCompletion();
                 }
-            };
+            });
 
-            // Trigger click event on the new input to open file dialog
-            newInput.click();
-        }
+            function checkUploadCompletion() {
+                if (!uploadedArea.classList.contains("onprogress")) {
+                    // Jika tidak ada proses upload berlangsung
+                    createNewInput();
+                } else {
+                    // Jika masih ada proses upload, tunggu sebentar dan cek lagi
+                    setTimeout(checkUploadCompletion, 1000);
+                }
+            }
 
-        function uploadFile(file, name) {
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", "php/upload.php");
-            xhr.upload.addEventListener("progress", ({
-                loaded,
-                total
-            }) => {
-                // fakeButton.classList.add('disabled');
-                let fileLoaded = Math.floor((loaded / total) * 100);
-                let fileTotal = Math.floor(total / 1000);
-                let fileSize;
-                (fileTotal < 1024) ? fileSize = fileTotal + " KB": fileSize = (loaded / (1024 * 1024)).toFixed(2) +
-                    " MB";
-                let progressHTML = `<li class="row">
+            function createNewInput() {
+                let newInput = document.createElement("input");
+                newInput.type = "file";
+                newInput.name = "files[]";
+                newInput.classList.add("file-input", "form-control");
+                newInput.setAttribute("id", 'input-file-' + num)
+                newInput.setAttribute("hidden", true);
+
+                // Append new input to the element container
+                elementContainer.appendChild(newInput);
+
+                // Add onchange event to the new input
+                newInput.onchange = ({
+                    target
+                }) => {
+                    let files = target.files;
+                    if (files.length > 0) {
+                        for (let i = 0; i < files.length; i++) {
+                            let file = files[i];
+                            let fileName = file.name;
+                            if (fileName.length >= 12) {
+                                let splitName = fileName.split('.');
+                                fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+                            }
+                            uploadFile(file, fileName);
+                        }
+                    }
+                };
+
+                // Trigger click event on the new input to open file dialog
+                newInput.click();
+            }
+
+            function uploadFile(file, name) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "php/upload.php");
+                xhr.upload.addEventListener("progress", ({
+                    loaded,
+                    total
+                }) => {
+                    // fakeButton.classList.add('disabled');
+                    let fileLoaded = Math.floor((loaded / total) * 100);
+                    let fileTotal = Math.floor(total / 1000);
+                    let fileSize;
+                    (fileTotal < 1024) ? fileSize = fileTotal + " KB": fileSize = (loaded / (1024 * 1024)).toFixed(2) +
+                        " MB";
+                    let progressHTML = `<li class="row">
                     <div class="content upload">
                         <i class="fas fa-file-alt"></i>
                         <div class="details">
@@ -502,12 +535,12 @@
                         </div>
                     </div>
                 </li>`;
-                uploadedArea.classList.add("onprogress");
-                progressArea.innerHTML = progressHTML;
-                if (loaded == total) {
-                    // fakeButton.classList.remove('disabled');
-                    progressArea.innerHTML = "";
-                    let uploadedHTML = `<li class="row" id="atachment-detail-${num}">
+                    uploadedArea.classList.add("onprogress");
+                    progressArea.innerHTML = progressHTML;
+                    if (loaded == total) {
+                        // fakeButton.classList.remove('disabled');
+                        progressArea.innerHTML = "";
+                        let uploadedHTML = `<li class="row" id="atachment-detail-${num}">
                         <div class="content upload d-flex">
                             <i class="fas fa-file-alt"></i>
                             <div class="details">
@@ -517,43 +550,95 @@
                             <a class="align-items-center" onclick="closeAtachment(${num})" href="#"><p class="text-danger mt-3 fa-solid fa-circle-xmark"></p></a>
                         </div>
                     </li>`;
-                    uploadedArea.classList.remove("onprogress");
-                    uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+                        uploadedArea.classList.remove("onprogress");
+                        uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
 
-                    submit_button.classList.remove('d-none');
-                    read_button.classList.add('d-none');
+                        submit_button.classList.remove('d-none');
+                        read_button.classList.add('d-none');
 
-                    // Simpan informasi file yang diunggah ke dalam array
-                    uploadedFiles.push({
-                        name,
-                        size: fileSize
+                        // Simpan informasi file yang diunggah ke dalam array
+                        uploadedFiles.push({
+                            name,
+                            size: fileSize
+                        });
+                    }
+                });
+                let data = new FormData();
+                data.append('file', file);
+                xhr.send(data);
+            }
+
+            function readTriger() {
+                readButton.click();
+            }
+
+            function cancelTriger() {
+                cancelButton.click();
+            }
+
+            function closeAtachment(num) {
+                const card = document.getElementById('atachment-detail-' + num);
+                const input = document.getElementById('input-file-' + num);
+                card.remove();
+                input.remove();
+                let divElement = document.getElementById('element-container');
+                let childElements = divElement.querySelectorAll('input');
+                if (childElements.length < 1) {
+                    read_button.classList.remove('d-none');
+                    submit_button.classList.add('d-none');
+                }
+            }
+        </script>
+    @endif
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('/js/jquery-3.7.1.min.js') }}"></script>
+    <script>
+        function deleteAtachmentButton(num) {
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Ingin menghapus lampiran ini?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, saya yakin!",
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const atachmentCard = document.getElementById('atachment-card-' + num);
+                    const noDataElement = document.querySelector('#no-data-img');
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ url('delete-atachment') }}/" + num,
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                let atachmentList = document.querySelector('#atachment-list');
+                                let atachmentItem = atachmentList.querySelector('.card');
+                                if(atachmentItem.length == null){
+                                    noDataElement.classList.remove('d-none');
+                                }else{
+                                    noDataElement.classList.add('d-none');
+                                }
+                                atachmentCard.remove();
+                                iziToast.info({
+                                    title: 'Info',
+                                    message: response.message,
+                                    position: 'topCenter'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            badge.style.display = "block";
+                        }
                     });
                 }
             });
-            let data = new FormData();
-            data.append('file', file);
-            xhr.send(data);
-        }
-
-        function readTriger() {
-            readButton.click();
-        }
-
-        function cancelTriger() {
-            cancelButton.click();
-        }
-
-        function closeAtachment(num) {
-            const card = document.getElementById('atachment-detail-' + num);
-            const input = document.getElementById('input-file-' + num);
-            card.remove();
-            input.remove();
-            let divElement = document.getElementById('element-container');
-            let childElements = divElement.querySelectorAll('input');
-            if (childElements.length < 1) {
-                read_button.classList.remove('d-none');
-                submit_button.classList.add('d-none');
-            }
         }
     </script>
 @endsection
