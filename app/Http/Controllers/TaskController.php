@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -137,6 +138,7 @@ class TaskController extends Controller
     }
     public function deleteAtachment(string $id){    
         $atachment = atachment::findOrFail($id);
+        Storage::delete('public/'.$atachment->file);
         $atachment->delete();
         return response()->json([
             'success' => true,
@@ -148,7 +150,8 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // $task = Task::findOrFail($id);
+        // return view('task.edit',compact('task'));
     }
 
     /**
@@ -156,7 +159,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $task = Task::findOrFail($id);
     }
 
     /**

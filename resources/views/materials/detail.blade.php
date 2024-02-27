@@ -222,9 +222,9 @@
                                         <tr>
                                             <td colspan="2">
                                                 <div class="d-flex">
-                                                    <div class="col-lg-12">
-                                                        @foreach ($atachments as $atachment)
-                                                            <div class="card p-2 border border-secondary">
+                                                    <div id="atachment-list" class="col-lg-12">
+                                                        @forelse ($atachments as $atachment)
+                                                            <div id="atachment-card-{{$atachment->id}}" class="card p-2 border border-secondary">
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="col-lg-9 d-flex align-items-center">
                                                                         <img src="{{ asset('/img/file-icon.jpg') }}"
@@ -244,6 +244,20 @@
                                                                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75M8 6a1 1 0 1 1 0-2a1 1 0 0 1 0 2" />
                                                                             </svg>
                                                                         </button>
+                                                                        @if(auth()->user()->role == 'theacer')
+                                                                            <button title="Hapus lampiran" type="button"
+                                                                                    onclick="deleteAtachmentButton({{ $atachment->id }})"
+                                                                                    class="btn btn-danger mr-auto btn-sm rounded-3 p-2">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                        width="20" height="20"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path fill="currentColor"
+                                                                                            d="M8 9h8v10H8z" opacity=".3" />
+                                                                                        <path fill="currentColor"
+                                                                                            d="m15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" />
+                                                                                    </svg>
+                                                                            </button>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -299,7 +313,18 @@
                                                                     </div><!-- /.modal-content -->
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                        @endforeach
+                                                        @empty
+                                                            <div class="align-items-center text-center">
+                                                                <img class="img-fluid" width="200" height="200"
+                                                                    src="{{ asset('/img/nodata.png') }}" alt="">
+                                                                <p class="text-dark ">Tidak ada lampiran</p>
+                                                            </div>
+                                                        @endforelse
+                                                        <div id="no-data-img" class="align-items-center text-center  d-none">
+                                                            <img class="img-fluid" width="200" height="200"
+                                                                src="{{ asset('/img/nodata.png') }}" alt="">
+                                                            <p class="text-dark ">Tidak ada lampiran</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -449,6 +474,52 @@
 
         function cancelTriger() {
             cancelButton.click();
+        }
+    </script>
+    <script>
+        function deleteAtachmentButton(num) {
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Ingin menghapus lampiran ini?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, saya yakin!",
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const atachmentCard = document.getElementById('atachment-card-' + num);
+                    const noDataElement = document.querySelector('#no-data-img');
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ url('delete-atachment') }}/" + num,
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                let atachmentList = document.querySelector('#atachment-list');
+                                let atachmentItem = atachmentList.querySelector('.card');
+                                if(atachmentItem.length == null){
+                                    noDataElement.classList.remove('d-none');
+                                }else{
+                                    noDataElement.classList.add('d-none');
+                                }
+                                atachmentCard.remove();
+                                iziToast.info({
+                                    title: 'Info',
+                                    message: response.message,
+                                    position: 'topCenter'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            badge.style.display = "block";
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection
