@@ -36,6 +36,7 @@ class TaskController extends Controller
     }
     public function taskStore(Request $request, string $class_id)
     {
+        // dd($request->all());
         $request->validate(
             [
                 'name' => 'required',
@@ -138,7 +139,7 @@ class TaskController extends Controller
     }
     public function deleteAtachment(string $id){    
         $atachment = atachment::findOrFail($id);
-        Storage::delete('public/'.$atachment->file);
+        Storage::delete('public/' . $atachment->file);
         $atachment->delete();
         return response()->json([
             'success' => true,
@@ -150,8 +151,8 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        // $task = Task::findOrFail($id);
-        // return view('task.edit',compact('task'));
+        $task = Task::findOrFail($id);
+        return view('task.edit',compact('task'));
     }
 
     /**
@@ -159,7 +160,17 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        dd($request->all());
         $task = Task::findOrFail($id);
+        $task->name = $request->name;
+        $task->description = $request->description;
+        $task->default_point = $request->point;
+        $task->deadline = $request->deadline;
+        $task->save();
+        return response()->json([
+            'success' => true,
+        ]);
+        // return redirect('task/'.$task->id)->with('success', 'Berhasil mengedit tugas');
     }
 
     /**

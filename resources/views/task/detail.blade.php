@@ -202,7 +202,7 @@
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </a>
                                                         <div class="dropdown-menu me-2 pt-2 pb-2 text-start">
-                                                            <a class="dropdown-item align-items-center" href="#">
+                                                            <a class="dropdown-item align-items-center" href="{{route('task.edit',$task->id)}}">
                                                                 <i class="fa-solid fa-pen-to-square"></i> Edit
                                                             </a>
                                                             <div class="dropdown-divider"></div>
